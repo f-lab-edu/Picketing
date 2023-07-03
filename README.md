@@ -3,14 +3,30 @@
 
 
 ## 프로젝트 목표
-- 객체 지향 프로그래밍을 이해하고
+- 인터파크 티켓, yes24와 같은 티켓 예매 플랫폼 서비스를 구현하는 것이 목표입니다
+- 객체 지향 프로그래밍을 이해하고, 이를 실제 코드에 녹여내어 의미있는 코드를 작성하는 것이 목표입니다
+- 프로젝트를 구현함에 있어서, 근거가 명확한 구현을 하는 것이 목표입니다
+- 실패할 단위 테스트를 작성하여, 테스트의 의도를 명확히 하는 것이 목표입니다
+- 100,000명이 동시 접속하여도 Request를 무리없이 처리할 수 있는 티켓팅 플랫폼 구현이 목표입니다
 
 ## 브랜치 관리 전략
-- Git Flow 이용
-- main / dev / feature / hotfix
-- `feat/#이슈번호`
+- Git Flow를 이용하여 브랜치를 관리합니다
+- 모든 브랜치에 대해 PR을 통하여 코드 리뷰를 완료 후 Merge를 진행합니다
+  - `main` : 제품으로 출시될 수 있는 브랜치입니다
+  - `develop` : 다음 출시 버전을 개발하는 브랜치로, 기능 개발이 완료된 부분에 대해서 Merge 하는 브랜치 입니다 (feature에서 리뷰 완료한 브랜치를 Merge합니다)
+  - `feature` : 기능 개발을 진행할 때 이용하는 브랜치입니다
+  - `hotfix` : 배포를 진행한 후에 발생된 버그를 수정해야 할 때 사용하는 브랜치입니다
+
+- `feature` 브랜치는 `feat/#이슈번호` 로 관리합니다
+- `release` 브랜치는 프로젝트 기간 중에는 사용 예정되어있지 않습니다
+
+#### 참고 
+- 우아한 형제들 기술 블로그 "우린 Git-flow를 사용하고 있어요" (http://woowabros.github.io/experience/2017/10/30/baemin-mobile-git-branch-strategy.html)
  
 ## PR 규칙
+- 신규 기능 개발 건은 `develop` 브랜치를 base로 `feat/#이슈번호` 의 브랜치명으로 생성한 후에 작업합니다
+- 신규 기능 개발 작업 이후 PR을 날립니다
+- 리뷰어 1명 이상의 `Approve` 를 받아야 `Merge PR` 을 할 수 있습니다
 
 ## Commit Message 규칙
 - Angular Commit Message Convention 을 따릅니다 (https://gist.github.com/stephenparish/9941e89d80e2bc58a153)
