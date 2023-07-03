@@ -1,0 +1,36 @@
+plugins {
+    id 'application'
+    id 'org.springframework.boot' version '3.1.0'
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.picketing.www'
+version = '1.0-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring dependencies
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.1.0'
+
+    // Test framework
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+
+    // Utils
+    implementation 'com.google.guava:guava:31.0.1-jre'
+    implementation 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+application {
+    mainClass = 'com.picketing.www.App'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
