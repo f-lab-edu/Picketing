@@ -26,8 +26,8 @@ package com.picketing.www.business.domain;
 ### 추이적 의존성
 추이적 의존성은 대상을 유추 할 수 있는 경우를 의미합니다
 
-예를 들어 `Account` 라는 클래스에 `String getUserName()` 혹은 `void setUserName(String userName)` 라는 네이밍을 지정 한
-경우, 우리는 Account 클래스에 userName 이라는 필드가 존재할 수 있다는 것을 유추 할 수 있습니다.
+예를 들어 `User` 라는 클래스에 `String getUserName()` 혹은 `void setUserName(String userName)` 라는 네이밍을 지정 한
+경우, 우리는 User 클래스에 userName 이라는 필드가 존재할 수 있다는 것을 유추 할 수 있습니다.
 
 따라서 추이적 의존성이란, 대상을 추론할 수 있는가 에 대한 여부입니다
 
