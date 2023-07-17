@@ -30,4 +30,15 @@ public class UserService {
         UserPersist persist = userRepository.findById(userId);
         return userFactory.create(persist);
     }
+
+    public User login(User user) {
+        UserPersist userPersist = userRepository.findByEmail(user.getEmail())
+                .orElseThrow(() -> new BadRequestException("Invalid Email"));
+
+        if (!user.matchPassword(userPersist.password())) {
+            throw new BadRequestException("Invalid Password");
+        }
+
+        return userFactory.create(userPersist);
+    }
 }

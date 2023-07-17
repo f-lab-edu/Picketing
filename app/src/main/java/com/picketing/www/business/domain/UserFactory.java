@@ -1,8 +1,10 @@
 package com.picketing.www.business.domain;
 
 import com.picketing.www.persistence.table.UserPersist;
+import com.picketing.www.presentation.dto.request.user.UserSignInRequest;
 import com.picketing.www.presentation.dto.request.user.UserSignUpRequest;
 import com.picketing.www.presentation.dto.response.user.UserDetailResponse;
+import com.picketing.www.presentation.dto.response.user.UserSignInResponse;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -49,4 +51,22 @@ public class UserFactory {
                 user.name
         );
     }
+
+    public User create(UserSignInRequest userSignInRequest) {
+        return new User(
+                userSignInRequest.email(),
+                userSignInRequest.password(),
+                null,
+                null,
+                null,
+                null
+        );
+    }
+
+    public UserSignInResponse signInResponse(User user) {
+        return new UserSignInResponse(
+                user.email
+        );
+    }
+
 }

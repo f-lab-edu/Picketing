@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -33,5 +34,12 @@ public class UserRepository {
 
     public UserPersist findById(Long userId) {
         return store.get(userId);
+    }
+
+    public Optional<UserPersist> findByEmail(String email) {
+        return store.values()
+                .stream()
+                .filter(u -> u.email().equals(email))
+                .findFirst();
     }
 }
