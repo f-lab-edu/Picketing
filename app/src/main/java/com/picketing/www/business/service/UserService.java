@@ -1,6 +1,7 @@
 package com.picketing.www.business.service;
 
 import com.picketing.www.application.exception.BadRequestException;
+import com.picketing.www.application.exception.UserNotFoundException;
 import com.picketing.www.business.domain.User;
 import com.picketing.www.business.domain.UserFactory;
 import com.picketing.www.persistence.repository.UserRepository;
@@ -33,7 +34,7 @@ public class UserService {
 
     public User login(User user) {
         UserPersist userPersist = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new BadRequestException("Invalid Email"));
+                .orElseThrow(() -> new UserNotFoundException("Invalid Email"));
 
         if (!user.matchPassword(userPersist.password())) {
             throw new BadRequestException("Invalid Password");

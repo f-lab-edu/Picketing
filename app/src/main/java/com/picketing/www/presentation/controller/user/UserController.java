@@ -33,6 +33,8 @@ public class UserController {
 
     @PostMapping("/signin")
     public UserSignInResponse signIn(@RequestBody UserSignInRequest userSignInRequest) {
-        return userFactory.signInResponse(userService.login(userFactory.create(userSignInRequest)));
+        return userFactory.signInResponse(
+                userService.login(userFactory.create(userSignInRequest))
+        );
     }
 }
