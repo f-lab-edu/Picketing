@@ -16,7 +16,8 @@ repositories {
 
 dependencies {
     // Spring dependencies
-    implementation 'org.springframework.boot:spring-boot-starter-web:3.1.0'
+    implementation 'org.springframework:spring-tx:6.0.9'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.1.1'
 
     // Test framework
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
