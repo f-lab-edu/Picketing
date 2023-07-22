@@ -1,5 +1,6 @@
 package com.picketing.www.presentation.controller.user;
 
+import com.picketing.www.application.Constant;
 import com.picketing.www.business.domain.User;
 import com.picketing.www.business.domain.UserFactory;
 import com.picketing.www.business.service.UserService;
@@ -32,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public UserSignInResponse signIn(@RequestBody UserSignInRequest userSignInRequest) {
+    public UserSignInResponse signIn(@SessionAttribute(name = Constant.LOGIN_USER, required = false) @RequestBody UserSignInRequest userSignInRequest) {
         return userFactory.signInResponse(
                 userService.login(userFactory.create(userSignInRequest))
         );

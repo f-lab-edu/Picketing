@@ -1,5 +1,6 @@
 package com.picketing.www.business.service;
 
+import com.picketing.www.application.Constant;
 import com.picketing.www.application.exception.BadRequestException;
 import com.picketing.www.application.exception.ErrorCode;
 import com.picketing.www.application.exception.InvalidPasswordException;
@@ -8,6 +9,7 @@ import com.picketing.www.business.domain.User;
 import com.picketing.www.business.domain.UserFactory;
 import com.picketing.www.persistence.repository.UserRepository;
 import com.picketing.www.persistence.table.UserPersist;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ public class UserService {
 
     private final UserFactory userFactory;
     private final UserRepository userRepository;
+    private final HttpSession httpSession;
 
     public Long create(User user) {
         String email = user.getEmail();
@@ -42,6 +45,9 @@ public class UserService {
             throw new InvalidPasswordException(ErrorCode.INVALID_PASSWORD);
         }
 
-        return userFactory.create(userPersist);
+        User loginUser = userFactory.create(userPersist);
+        httpSession.setAttribute(Constant.LOGIN_USER, loginUser.getEmail());
+
+        return loginUser;
     }
 }
