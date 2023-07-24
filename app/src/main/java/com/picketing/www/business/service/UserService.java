@@ -1,6 +1,5 @@
 package com.picketing.www.business.service;
 
-import com.picketing.www.application.Constant;
 import com.picketing.www.application.exception.BadRequestException;
 import com.picketing.www.application.exception.ErrorCode;
 import com.picketing.www.application.exception.InvalidPasswordException;
@@ -23,6 +22,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final HttpSession httpSession;
 
+    private static final String SESSION_LOGIN_USER = "login_user";
+
     public Long create(User user) {
         String email = user.getEmail();
         if (userRepository.existByEmail(email)) {
@@ -41,12 +42,13 @@ public class UserService {
         UserPersist userPersist = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
 
-        if (!user.matchPassword(userPersist.password())) {
+        User loginUser = userFactory.create(userPersist);
+
+        if (!user.match(loginUser)) {
             throw new InvalidPasswordException(ErrorCode.INVALID_PASSWORD);
         }
 
-        User loginUser = userFactory.create(userPersist);
-        httpSession.setAttribute(Constant.LOGIN_USER, loginUser.getEmail());
+        httpSession.setAttribute(SESSION_LOGIN_USER, loginUser.getEmail());
 
         return loginUser;
     }
