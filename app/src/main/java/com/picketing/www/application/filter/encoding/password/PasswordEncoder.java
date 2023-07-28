@@ -3,17 +3,20 @@ package com.picketing.www.application.filter.encoding.password;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class PasswordEncoder {
 
   private final String salt;
   private final String SALT_ENV_KEY = "PASSWORD_SALT";
   private final String ALGORITHM = "SHA-512";
 
-  private final Long ITERATION = 48L;
+  private final Long iteration;
 
   public PasswordEncoder() {
     this.salt = System.getenv(SALT_ENV_KEY);
+    this.iteration = Long.valueOf(salt.length());
     if (this.salt == null) {
       throw new IllegalArgumentException(SALT_ENV_KEY + " environment variable is not set");
     }
@@ -30,7 +33,7 @@ public class PasswordEncoder {
       MessageDigest messageDigest = MessageDigest.getInstance(this.ALGORITHM);
       String saltedPassword = plainTextPassword + this.salt;
       byte[] hashedBytes = messageDigest.digest(saltedPassword.getBytes(StandardCharsets.UTF_8));
-      for (long i = 0; i < this.ITERATION; i++) {
+      for (long i = 0; i < this.iteration; i++) {
         hashedBytes = messageDigest.digest(hashedBytes);
       }
       return bytesToHex(hashedBytes);
