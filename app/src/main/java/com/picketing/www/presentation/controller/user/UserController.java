@@ -25,7 +25,6 @@ public class UserController {
 
   @PostMapping
   public IdentityResponse create(@RequestBody @Validated UserSignUpRequest userSignUpRequest) {
-    System.out.println("userSignUpRequest = " + userSignUpRequest);
     User user = userFactory.create(userSignUpRequest);
     Long id = userService.create(user);
     return new IdentityResponse(id);
