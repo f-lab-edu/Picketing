@@ -9,5 +9,5 @@ public class Schedule {
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalTime startTime;
-    private LocalTime endTim;
+    private LocalTime endTime;
 }
