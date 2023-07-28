@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 
 public class HttpRequestWrapper extends HttpServletRequestWrapper {
 
-  private final String body;
+  private String body;
 
   public HttpRequestWrapper(HttpServletRequest request) throws IOException {
     super(request);
@@ -27,18 +27,12 @@ public class HttpRequestWrapper extends HttpServletRequestWrapper {
         }
       } else {
       }
-    } catch (IOException ex) {
-      throw ex;
     } finally {
       if (bufferedReader != null) {
-        try {
-          bufferedReader.close();
-        } catch (IOException ex) {
-          throw ex;
-        }
+        bufferedReader.close();
       }
     }
-    body = stringBuilder.toString();
+    this.body = stringBuilder.toString();
   }
 
   @Override
@@ -53,5 +47,9 @@ public class HttpRequestWrapper extends HttpServletRequestWrapper {
 
   public String getBody() {
     return this.body;
+  }
+
+  public void setBody(String body) throws IOException {
+    this.body = body;
   }
 }
