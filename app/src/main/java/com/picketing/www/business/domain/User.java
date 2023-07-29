@@ -1,6 +1,7 @@
 package com.picketing.www.business.domain;
 
 import com.picketing.www.application.exception.BadRequestException;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
@@ -14,6 +15,8 @@ public class User {
     final LocalDateTime createdAt;
     final LocalDateTime modifiedAt;
 
+
+    @Builder
     User(String email, String password, String name, String phoneNumber, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.email = email;
         this.password = password;

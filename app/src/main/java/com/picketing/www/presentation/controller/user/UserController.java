@@ -20,6 +20,8 @@ public class UserController {
     private final UserFactory userFactory;
     private final UserService userService;
 
+    private static final String LOGIN_USER = "login_user";
+
     @PostMapping
     public IdentityResponse create(@RequestBody UserSignUpRequest userSignUpRequest) {
         User user = userFactory.create(userSignUpRequest);
@@ -33,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public UserSignInResponse signIn(@SessionAttribute(name = Constant.LOGIN_USER, required = false) @RequestBody UserSignInRequest userSignInRequest) {
+    public UserSignInResponse signIn(@SessionAttribute(name = LOGIN_USER, required = false) @RequestBody UserSignInRequest userSignInRequest) {
         return userFactory.signInResponse(
                 userService.login(userFactory.create(userSignInRequest))
         );
