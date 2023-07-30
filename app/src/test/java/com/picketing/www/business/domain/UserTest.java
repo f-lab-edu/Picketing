@@ -74,5 +74,7 @@ public class UserTest {
             assertThrows(BadRequestException.class,
                     () -> userFactory.create(userSignUpRequest));
         }
+
+
     }
 }

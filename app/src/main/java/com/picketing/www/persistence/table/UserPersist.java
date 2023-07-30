@@ -1,7 +1,10 @@
 package com.picketing.www.persistence.table;
 
+import lombok.Builder;
+
 import java.time.LocalDateTime;
 
+@Builder
 public record UserPersist(
     String email,
     String password,
