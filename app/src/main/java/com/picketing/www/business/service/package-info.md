@@ -3,15 +3,20 @@ package com.picketing.www.business.service;
 ```
 
 # 목적
+
 presentation 계층에서 사용하게 될 도메인의 usecase
 
 # 제한
+
 이 패키지에는 작성되면 안되는 제한을 설명합니다
+
 * 도메인 핵심 로직이 작성되면 안됩니다.
 * 리턴하거나 요청을 받는 로직에서는 `변환 계층*`이 포함되어야 합니다.
 
 # 추가 설명
+
 ### 변환 계층
+
 * 메시지를 수신하는 경우 Dto -> Domain
 * 메시지를 송신하는 경우 Domain -> Dto
 
