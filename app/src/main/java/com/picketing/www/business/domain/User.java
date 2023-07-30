@@ -8,11 +8,11 @@ import com.picketing.www.application.exception.BadRequestException;
 
 public class User {
 	final String email;
+	final String password;
 	final String name;
 	final String phoneNumber;
 	final LocalDateTime createdAt;
 	final LocalDateTime modifiedAt;
-	final String password;
 
 	User(String email, String password, String name, String phoneNumber, LocalDateTime createdAt,
 		LocalDateTime modifiedAt) {
