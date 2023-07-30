@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 import com.picketing.www.application.exception.BadRequestException;
 
 public class User {
-
 	final String email;
 	final String name;
 	final String phoneNumber;
@@ -28,9 +27,14 @@ public class User {
 
 	private void initValidation() {
 		final String EMAIL_VALID_REGEX = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
+		final String PASSWORD_VALID_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
 		if (this.email == null
 			|| regexNotMatched(this.email, EMAIL_VALID_REGEX)) {
 			throw new BadRequestException("Email 형식이 맞지 않습니다.");
+		}
+		if (this.password == null
+			|| regexNotMatched(this.password, PASSWORD_VALID_REGEX)) {
+			throw new BadRequestException("비밀번호 형식이 맞지 않습니다");
 		}
 	}
 
