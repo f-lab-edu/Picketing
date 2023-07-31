@@ -3,8 +3,7 @@ package com.picketing.www.application.advice;
 
 import com.picketing.www.application.exception.BadRequestException;
 import com.picketing.www.application.exception.ErrorCode;
-import com.picketing.www.application.exception.InvalidPasswordException;
-import com.picketing.www.application.exception.UserNotFoundException;
+import com.picketing.www.application.exception.NotFoundException;
 import com.picketing.www.presentation.dto.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,22 +23,15 @@ public class ControllerExceptionHandlerAdvice {
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorResponse> badRequestExceptionHandler(BadRequestException ex) {
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ErrorResponse.error(ex.getMessage()));
+                .status(ex.getErrorCode().getHttpStatus())
+                .body(ErrorResponse.error(ex.getErrorCode()));
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> userNotFoundExceptionHandler(UserNotFoundException ex) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> notFoundExceptionHandler(NotFoundException ex) {
         return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(ErrorResponse.error(ErrorCode.USER_NOT_FOUND));
-    }
-
-    @ExceptionHandler(InvalidPasswordException.class)
-    public ResponseEntity<ErrorResponse> invalidPasswordException(InvalidPasswordException ex) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ErrorResponse.error(ErrorCode.INVALID_PASSWORD));
+                .status(ex.getErrorCode().getHttpStatus())
+                .body(ErrorResponse.error(ex.getErrorCode()));
     }
 
 }

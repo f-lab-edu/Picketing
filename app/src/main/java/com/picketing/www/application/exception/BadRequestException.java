@@ -1,7 +1,12 @@
 package com.picketing.www.application.exception;
 
-public class BadRequestException extends CustomException {
-	public BadRequestException(String message) {
-		super(message);
+import lombok.Getter;
+
+@Getter
+public class BadRequestException extends RuntimeException {
+	private final ErrorCode errorCode;
+
+	public BadRequestException(ErrorCode errorCode) {
+		this.errorCode = errorCode;
 	}
 }
