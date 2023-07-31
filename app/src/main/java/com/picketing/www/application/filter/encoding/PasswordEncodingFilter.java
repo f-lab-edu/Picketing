@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.picketing.www.application.exception.ErrorCode;
+import com.picketing.www.presentation.dto.response.ErrorResponse;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,21 +34,30 @@ import lombok.RequiredArgsConstructor;
 public class PasswordEncodingFilter implements Filter {
 
 	private final PasswordEncoder passwordEncoder;
+	private final ObjectMapper objectMapper;
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 		throws IOException, ServletException {
 		HttpRequestWrapper requestWrapper = new HttpRequestWrapper((HttpServletRequest)request);
 		String body = requestWrapper.getBody();
-
-		String resolveJson = changePassword(body);
-
-		requestWrapper.setBody(resolveJson);
+		try {
+			String resolveJson = changePassword(body);
+			requestWrapper.setBody(resolveJson);
+		} catch (BadRequestException ex) {
+			HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+			objectMapper.configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
+			httpServletResponse.setStatus(ErrorCode.INVALID_PASSWORD_FORMAT.getHttpStatus().value());
+			httpServletResponse.getWriter()
+					.write(objectMapper.writeValueAsString(ErrorResponse.error(ErrorCode.INVALID_PASSWORD_FORMAT)));
+			httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
+			return;
+		}
 
 		chain.doFilter(requestWrapper, response);
 	}
 
-	private String changePassword(String json) throws JsonProcessingException {
+	private String changePassword(String json) throws JsonProcessingException, BadRequestException {
 		final String FIELD_NAME = "password";
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode rootNode = objectMapper.readTree(json);
@@ -61,9 +75,9 @@ public class PasswordEncodingFilter implements Filter {
 		return objectMapper.writeValueAsString(rootNode);
 	}
 
-	private void validPassword(String plainTextPassword) {
+	private void validPassword(String plainTextPassword) throws BadRequestException {
 		if (plainTextPassword == null || isValidPasswordPattern(plainTextPassword)) {
-			throw new BadRequestException("비밀번호 형식이 맞지 않습니다");
+			throw new BadRequestException(ErrorCode.INVALID_PASSWORD_FORMAT);
 		}
 	}
 
