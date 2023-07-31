@@ -1,8 +1,6 @@
 package com.picketing.www.business.domain;
 
 import com.picketing.www.application.exception.BadRequestException;
-import lombok.Builder;
-
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
