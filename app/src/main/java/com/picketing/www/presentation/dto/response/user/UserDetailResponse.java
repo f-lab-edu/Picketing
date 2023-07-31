@@ -4,6 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record UserDetailResponse(
-    String email,
-    String name
-) { }
+	String email,
+	String name
+) {
+}

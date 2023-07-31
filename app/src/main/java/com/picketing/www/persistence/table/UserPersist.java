@@ -6,10 +6,11 @@ import java.time.LocalDateTime;
 
 @Builder
 public record UserPersist(
-    String email,
-    String password,
-    String name,
-    String phoneNumber,
-    LocalDateTime createdAt,
-    LocalDateTime modifiedAt
-) { }
+	String email,
+	String password,
+	String name,
+	String phoneNumber,
+	LocalDateTime createdAt,
+	LocalDateTime modifiedAt
+) {
+}
