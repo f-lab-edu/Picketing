@@ -62,12 +62,12 @@ public class PasswordEncodingFilter implements Filter {
 	}
 
 	private void validPassword(String plainTextPassword) {
-		if (plainTextPassword == null || regexNotMatched(plainTextPassword)) {
+		if (plainTextPassword == null || isValidPasswordPattern(plainTextPassword)) {
 			throw new BadRequestException("비밀번호 형식이 맞지 않습니다");
 		}
 	}
 
-	private boolean regexNotMatched(String value) {
+	private boolean isValidPasswordPattern(String value) {
 		final String PASSWORD_VALID_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
 		Pattern pattern = Pattern.compile(PASSWORD_VALID_REGEX);
 		Matcher matcher = pattern.matcher(value);
