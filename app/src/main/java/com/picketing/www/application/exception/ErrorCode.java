@@ -1,8 +1,9 @@
 package com.picketing.www.application.exception;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
-
+@Getter
 @AllArgsConstructor
 public enum ErrorCode {
     DUPLICATED_EMAIL(10000, "중복된 이메일입니다.", HttpStatus.BAD_REQUEST),
@@ -15,14 +16,4 @@ public enum ErrorCode {
     private final int code;
     private final String message;
     private final HttpStatus httpStatus;
-    public int getCode() {
-        return code;
-    }
-    public String getMessage() {
-        return this.message;
-    }
-
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
 }
