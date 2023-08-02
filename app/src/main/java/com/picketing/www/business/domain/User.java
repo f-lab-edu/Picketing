@@ -10,24 +10,24 @@ import com.picketing.www.application.exception.ErrorCode;
 import lombok.Builder;
 
 public class User {
-	final String email;
-	final String name;
-	final String phoneNumber;
-	final LocalDateTime createdAt;
-	final LocalDateTime modifiedAt;
-	String password;
+    final String email;
+    final String name;
+    final String phoneNumber;
+    final LocalDateTime createdAt;
+    final LocalDateTime modifiedAt;
+    String password;
 
-	@Builder
-	User(String email, String password, String name, String phoneNumber, LocalDateTime createdAt,
-		LocalDateTime modifiedAt) {
-		this.email = email;
-		this.password = password;
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.createdAt = createdAt;
-		this.modifiedAt = modifiedAt;
-		initValidation();
-	}
+    @Builder
+    User(String email, String password, String name, String phoneNumber, LocalDateTime createdAt,
+        LocalDateTime modifiedAt) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        initValidation();
+    }
 
 	private void initValidation() {
 		if (this.email == null || isValidEmailPattern(this.email)) {
