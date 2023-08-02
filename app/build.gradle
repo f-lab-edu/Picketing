@@ -1,7 +1,11 @@
 plugins {
     id 'application'
     id 'org.springframework.boot' version '3.1.0'
+    id 'checkstyle'
 }
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
@@ -30,6 +34,12 @@ dependencies {
 
 application {
     mainClass = 'com.picketing.www.App'
+}
+
+checkstyle {
+    maxWarnings = 0 // 규칙이 어긋나는 코드가 하나라도 있을 경우 빌드 fail
+    configFile = file("${rootDir}/style/naver-checkstyle-rules.xml") // code check config file location
+    configProperties = ["suppressionFile": "style/naver-checkstyle-suppressions.xml"]
 }
 
 tasks.named('test') {
