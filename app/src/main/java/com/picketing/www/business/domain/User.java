@@ -1,6 +1,6 @@
 package com.picketing.www.business.domain;
 
-import com.picketing.www.application.exception.BadRequestException;
+import com.picketing.www.application.exception.CustomException;
 import com.picketing.www.application.exception.ErrorCode;
 import lombok.Builder;
 
@@ -30,7 +30,7 @@ public class User {
 
     private void initValidation() {
         if (this.email == null || isValidEmailPattern(this.email)) {
-            throw new BadRequestException(ErrorCode.INVALID_EMAIL_FORMAT);
+            throw new CustomException(ErrorCode.INVALID_EMAIL_FORMAT);
         }
     }
 

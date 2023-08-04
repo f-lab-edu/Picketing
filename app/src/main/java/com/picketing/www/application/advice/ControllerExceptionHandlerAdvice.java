@@ -1,9 +1,7 @@
 package com.picketing.www.application.advice;
 
-
-import com.picketing.www.application.exception.BadRequestException;
+import com.picketing.www.application.exception.CustomException;
 import com.picketing.www.application.exception.ErrorCode;
-import com.picketing.www.application.exception.NotFoundException;
 import com.picketing.www.presentation.dto.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,15 +18,8 @@ public class ControllerExceptionHandlerAdvice {
                 .body(ErrorResponse.error(ErrorCode.INTERNAL_UNKNOWN_ERROR));
     }
 
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ErrorResponse> badRequestExceptionHandler(BadRequestException ex) {
-        return ResponseEntity
-                .status(ex.getErrorCode().getHttpStatus())
-                .body(ErrorResponse.error(ex.getErrorCode()));
-    }
-
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponse> notFoundExceptionHandler(NotFoundException ex) {
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ErrorResponse> customExceptionHandler(CustomException ex) {
         return ResponseEntity
                 .status(ex.getErrorCode().getHttpStatus())
                 .body(ErrorResponse.error(ex.getErrorCode()));

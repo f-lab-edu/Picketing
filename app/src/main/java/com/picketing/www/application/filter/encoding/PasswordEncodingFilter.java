@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.picketing.www.application.exception.CustomException;
 import com.picketing.www.application.exception.ErrorCode;
 import com.picketing.www.presentation.dto.response.ErrorResponse;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,7 +16,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.picketing.www.application.exception.BadRequestException;
 import com.picketing.www.application.filter.encoding.password.HttpRequestWrapper;
 import com.picketing.www.application.filter.encoding.password.PasswordEncoder;
 
@@ -44,7 +44,7 @@ public class PasswordEncodingFilter implements Filter {
 		try {
 			String resolveJson = changePassword(body);
 			requestWrapper.setBody(resolveJson);
-		} catch (BadRequestException ex) {
+		} catch (CustomException ex) {
 			HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 			objectMapper.configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
 			httpServletResponse.setStatus(ErrorCode.INVALID_PASSWORD_FORMAT.getHttpStatus().value());
@@ -57,7 +57,7 @@ public class PasswordEncodingFilter implements Filter {
 		chain.doFilter(requestWrapper, response);
 	}
 
-	private String changePassword(String json) throws JsonProcessingException, BadRequestException {
+	private String changePassword(String json) throws JsonProcessingException, CustomException {
 		final String FIELD_NAME = "password";
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode rootNode = objectMapper.readTree(json);
@@ -75,9 +75,9 @@ public class PasswordEncodingFilter implements Filter {
 		return objectMapper.writeValueAsString(rootNode);
 	}
 
-	private void validPassword(String plainTextPassword) throws BadRequestException {
+	private void validPassword(String plainTextPassword) throws CustomException {
 		if (plainTextPassword == null || isValidPasswordPattern(plainTextPassword)) {
-			throw new BadRequestException(ErrorCode.INVALID_PASSWORD_FORMAT);
+			throw new CustomException(ErrorCode.INVALID_PASSWORD_FORMAT);
 		}
 	}
 
