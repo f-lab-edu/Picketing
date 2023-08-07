@@ -1,6 +1,7 @@
 package com.picketing.www.business.domain;
 
-import com.picketing.www.application.exception.BadRequestException;
+import com.picketing.www.application.exception.CustomException;
+import com.picketing.www.application.exception.ErrorCode;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -9,11 +10,11 @@ import java.util.regex.Pattern;
 
 public class User {
     final String email;
+    String password;
     final String name;
     final String phoneNumber;
     final LocalDateTime createdAt;
     final LocalDateTime modifiedAt;
-    String password;
 
 
     @Builder
@@ -29,7 +30,7 @@ public class User {
 
     private void initValidation() {
         if (this.email == null || isValidEmailPattern(this.email)) {
-            throw new BadRequestException("Email 형식이 맞지 않습니다.");
+            throw new CustomException(ErrorCode.INVALID_EMAIL_FORMAT);
         }
     }
 

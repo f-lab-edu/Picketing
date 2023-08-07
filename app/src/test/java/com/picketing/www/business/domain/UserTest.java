@@ -1,6 +1,6 @@
 package com.picketing.www.business.domain;
 
-import com.picketing.www.application.exception.BadRequestException;
+import com.picketing.www.application.exception.CustomException;
 import com.picketing.www.presentation.dto.request.user.UserSignUpRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -38,7 +38,7 @@ public class UserTest {
                     "email",
                     "password123!"
             );
-            assertThrows(BadRequestException.class,
+            assertThrows(CustomException.class,
                     () -> userFactory.create(userSignUpRequest));
         }
 
@@ -49,7 +49,7 @@ public class UserTest {
                     null,
                     "password123!"
             );
-            assertThrows(BadRequestException.class,
+            assertThrows(CustomException.class,
                     () -> userFactory.create(userSignUpRequest));
         }
 
@@ -60,7 +60,7 @@ public class UserTest {
                     "email@ruu.kr",
                     "password123"
             );
-            assertThrows(BadRequestException.class,
+            assertThrows(CustomException.class,
                     () -> userFactory.create(userSignUpRequest));
         }
 
@@ -71,7 +71,7 @@ public class UserTest {
                     "email@ruu.kr",
                     null
             );
-            assertThrows(BadRequestException.class,
+            assertThrows(CustomException.class,
                     () -> userFactory.create(userSignUpRequest));
         }
 
