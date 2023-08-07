@@ -39,3 +39,27 @@ jobs:
 
       - name: Check Source Code format
         uses: ./gradlew checkstyleMain
+
+  # test code check
+  check_test_code:
+    needs: set-up
+    runs-on: ubuntu-latest
+    steps:
+      - name: Grant execute permission for Gradle
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean build -x checkstyleTest -x checkstyleMain
+
+      - name: Create Test Result for PR comment
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: 'build/test-result/test/TEST-*.xml'
+
+      - name: Create PR comment for test failure
+        uses: mikepenz/action-junit-report@v3
+        if: always()
+        with:
+          report_paths: 'build/test-results/test/TEST-*.xml'
+          token: ${{ secrets.TOKEN }}
