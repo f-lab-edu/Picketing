@@ -9,34 +9,61 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.picketing.www.application.filter.encoding.password.PasswordEncoder;
 import com.picketing.www.persistence.repository.UserRepository;
 import com.picketing.www.persistence.table.UserPersist;
 import com.picketing.www.presentation.dto.request.user.UserSignInRequest;
 import com.picketing.www.presentation.dto.request.user.UserSignUpRequest;
 
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-@TestPropertySource(properties = {"PASSWORD_SALT=1234qwer"})
 class UserControllerTest {
 
     private static final String BASE_PATH = "/api/users";
 
     @Autowired
     MockMvc mockMvc;
-
     @Autowired
     ObjectMapper objectMapper;
+
+    @MockBean
+    PasswordEncoder passwordEncoder;
+    @MockBean
+    UserRepository userRepository;
+
+    @BeforeEach
+    void setUpPasswordEncoder() {
+        this.passwordEncoder = new PasswordEncoder("testsalt1234!@#$");
+    }
+
+    @BeforeEach
+    void setUpTestUser() {
+        Mockito.when(userRepository.findByEmail(Mockito.any()))
+            .thenReturn(
+                Optional.of(new UserPersist(
+                        "test@email.com",
+                        "test1234!",
+                        "testUser",
+                        "01012345678",
+                        LocalDateTime.now(),
+                        LocalDateTime.now()
+                    )
+                )
+            );
+    }
 
     @Nested
     @DisplayName("User 단일 조회")
@@ -184,28 +211,12 @@ class UserControllerTest {
     @DisplayName("User 로그인")
     public class SignInUser {
 
-        @MockBean
-        UserRepository userRepository;
-
-        @BeforeEach
-        void setUpTestUser() {
-            Mockito.when(userRepository.findByEmail(Mockito.any()))
-                .thenReturn(Optional.of(new UserPersist(
-                    "test@email.com",
-                    "test1234!",
-                    "testUser",
-                    "01012345678",
-                    LocalDateTime.now(),
-                    LocalDateTime.now()
-                )));
-        }
-
         @Test
         @DisplayName("200:로그인 성공")
         void success() throws Exception {
             UserSignInRequest userSignInRequest = new UserSignInRequest(
                 "test@email.com",
-                "test1234!"
+                "testABC1@"
             );
             mockMvc.perform(MockMvcRequestBuilders
                     .post(BASE_PATH + "/signin")

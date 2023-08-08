@@ -15,13 +15,13 @@ public class PasswordEncoder {
 
 	private final Long iteration;
 
-	public PasswordEncoder() {
-		this.salt = System.getenv(SALT_ENV_KEY);
-		this.iteration = Long.valueOf(salt.length());
-		if (this.salt == null) {
-			throw new IllegalArgumentException(SALT_ENV_KEY + " environment variable is not set");
-		}
-	}
+    public PasswordEncoder(String salt) {
+        this.salt = salt;
+        this.iteration = Long.valueOf(salt.length());
+        if (this.salt == null) {
+            throw new IllegalArgumentException(SALT_ENV_KEY + " environment variable is not set");
+        }
+    }
 
 	/**
 	 * Kerckhoffs's principle 에 근거하여 암호화 알고리즘 및 iteration 은 공개 대상이 됩니다.

@@ -54,8 +54,8 @@ public class PasswordEncodingFilter implements Filter {
 			return;
 		}
 
-		chain.doFilter(requestWrapper, response);
-	}
+        chain.doFilter(requestWrapper, response);
+    }
 
 	private String changePassword(String json) throws JsonProcessingException, CustomException {
 		final String FIELD_NAME = "password";
@@ -66,25 +66,25 @@ public class PasswordEncodingFilter implements Filter {
 			if (objectNode.has(FIELD_NAME)) {
 				String plainTextPassword = String.valueOf(objectNode.get("password"));
 
-				validPassword(plainTextPassword);
+                validPassword(plainTextPassword);
 
-				String encodedPassword = passwordEncoder.encode(plainTextPassword);
-				objectNode.put(FIELD_NAME, encodedPassword);
-			}
-		}
-		return objectMapper.writeValueAsString(rootNode);
-	}
+                String encodedPassword = passwordEncoder.encode(plainTextPassword);
+                objectNode.put(FIELD_NAME, encodedPassword);
+            }
+        }
+        return objectMapper.writeValueAsString(rootNode);
+    }
 
 	private void validPassword(String plainTextPassword) throws CustomException {
-		if (plainTextPassword == null || isValidPasswordPattern(plainTextPassword)) {
+		if (plainTextPassword == null || isPasswordInsecure(plainTextPassword)) {
 			throw new CustomException(ErrorCode.INVALID_PASSWORD_FORMAT);
 		}
 	}
 
-	private boolean isValidPasswordPattern(String value) {
-		final String PASSWORD_VALID_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
-		Pattern pattern = Pattern.compile(PASSWORD_VALID_REGEX);
-		Matcher matcher = pattern.matcher(value);
-		return !matcher.matches();
-	}
+    boolean isPasswordInsecure(String value) {
+        final String PASSWORD_VALID_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
+        Pattern pattern = Pattern.compile(PASSWORD_VALID_REGEX);
+        Matcher matcher = pattern.matcher(value);
+        return !matcher.matches();
+    }
 }
