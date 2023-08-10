@@ -29,7 +29,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Component
-@WebFilter(urlPatterns = {"/api/users"})
+@WebFilter(urlPatterns = {"/api/users", "/api/users/signin"})
 @RequiredArgsConstructor
 public class PasswordEncodingFilter implements Filter {
 
@@ -57,14 +57,14 @@ public class PasswordEncodingFilter implements Filter {
         chain.doFilter(requestWrapper, response);
     }
 
-	private String changePassword(String json) throws JsonProcessingException, CustomException {
-		final String FIELD_NAME = "password";
-		ObjectMapper objectMapper = new ObjectMapper();
-		JsonNode rootNode = objectMapper.readTree(json);
-		if (rootNode.isObject()) {
-			ObjectNode objectNode = (ObjectNode)rootNode;
-			if (objectNode.has(FIELD_NAME)) {
-				String plainTextPassword = String.valueOf(objectNode.get("password"));
+    private String changePassword(String json) throws JsonProcessingException, CustomException {
+        final String FIELD_NAME = "password";
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(json);
+        if (rootNode.isObject()) {
+            ObjectNode objectNode = (ObjectNode)rootNode;
+            if (objectNode.has(FIELD_NAME)) {
+                String plainTextPassword = String.valueOf(objectNode.get("password").asText());
 
                 validPassword(plainTextPassword);
 

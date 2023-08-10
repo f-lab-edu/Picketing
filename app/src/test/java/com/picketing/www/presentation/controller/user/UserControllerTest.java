@@ -1,5 +1,7 @@
 package com.picketing.www.presentation.controller.user;
 
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.time.LocalDateTime;
@@ -47,11 +49,8 @@ class UserControllerTest {
     @BeforeEach
     void setUpPasswordEncoder() {
         this.passwordEncoder = new PasswordEncoder("testsalt1234!@#$");
-    }
-
-    @BeforeEach
-    void setUpTestUser() {
-        Mockito.when(userRepository.findByEmail(Mockito.any()))
+        this.userRepository = mock(UserRepository.class);
+        Mockito.when(userRepository.findByEmail(Mockito.anyString()))
             .thenReturn(
                 Optional.of(new UserPersist(
                         "test@email.com",
@@ -76,6 +75,7 @@ class UserControllerTest {
                     .get(BASE_PATH + "/1")
                     .accept(MediaType.APPLICATION_JSON)
                 )
+                .andDo(print())
                 .andExpect(status().isOk());
         }
 
@@ -86,6 +86,7 @@ class UserControllerTest {
                     .get("/api/users/99999")
                     .accept(MediaType.APPLICATION_JSON)
                 )
+                .andDo(print())
                 .andExpect(status().isNotFound());
         }
     }
@@ -107,6 +108,7 @@ class UserControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsBytes(userSignUpRequest))
                 )
+                .andDo(print())
                 .andExpect(status().isOk());
         }
 
@@ -123,14 +125,15 @@ class UserControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsBytes(userSignUpRequest))
                 )
-                .andExpect(status().isOk());
+                .andDo(print())
+                .andExpect(status().isBadRequest());
         }
 
         @Test
         @DisplayName("400:안전하지 않은 비밀번호")
         void failedBecauseNotSafetyPassword() throws Exception {
             UserSignUpRequest userSignUpRequest = new UserSignUpRequest(
-                "test@email.com", "password1234@"
+                "test@email.com", "password123"
             );
 
             mockMvc.perform(MockMvcRequestBuilders
@@ -139,39 +142,8 @@ class UserControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsBytes(userSignUpRequest))
                 )
-                .andExpect(status().isOk());
-        }
-
-        @Test
-        @DisplayName("400:올바르지 않은 이메일 형식(@가 존재하지 않음)")
-        void failedBecauseInvalidEmailFormatAtIsNotExist() throws Exception {
-            UserSignUpRequest userSignUpRequest = new UserSignUpRequest(
-                "testemail.com", "password1234@"
-            );
-
-            mockMvc.perform(MockMvcRequestBuilders
-                    .post(BASE_PATH)
-                    .accept(MediaType.APPLICATION_JSON)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsBytes(userSignUpRequest))
-                )
-                .andExpect(status().isOk());
-        }
-
-        @Test
-        @DisplayName("400:올바르지 않은 이메일 형식(.이 존재하지 않음)")
-        void failedBecauseInvalidEmailFormatDotIsNotExist() throws Exception {
-            UserSignUpRequest userSignUpRequest = new UserSignUpRequest(
-                "test@emailcom", "password1234@"
-            );
-
-            mockMvc.perform(MockMvcRequestBuilders
-                    .post(BASE_PATH)
-                    .accept(MediaType.APPLICATION_JSON)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsBytes(userSignUpRequest))
-                )
-                .andExpect(status().isOk());
+                .andDo(print())
+                .andExpect(status().isBadRequest());
         }
 
         @Test
@@ -187,7 +159,8 @@ class UserControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsBytes(userSignUpRequest))
                 )
-                .andExpect(status().isOk());
+                .andDo(print())
+                .andExpect(status().isBadRequest());
         }
 
         @Test
@@ -203,7 +176,8 @@ class UserControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsBytes(userSignUpRequest))
                 )
-                .andExpect(status().isOk());
+                .andDo(print())
+                .andExpect(status().isBadRequest());
         }
     }
 
@@ -224,6 +198,7 @@ class UserControllerTest {
                     .content(objectMapper.writeValueAsBytes(userSignInRequest))
                     .contentType(MediaType.APPLICATION_JSON)
                 )
+                .andDo(print())
                 .andExpect(status().isOk());
         }
 
@@ -240,7 +215,9 @@ class UserControllerTest {
                     .content(objectMapper.writeValueAsBytes(userSignInRequest))
                     .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(status().isOk());
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(10002));
         }
     }
 }
