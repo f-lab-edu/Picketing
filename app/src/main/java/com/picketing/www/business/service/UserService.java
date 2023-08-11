@@ -37,9 +37,9 @@ public class UserService {
 		return userFactory.create(persist);
 	}
 
-    public User login(User user) {
-        UserPersist userPersist = userRepository.findByEmail(user.getEmail())
-            .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+	public User login(User user) {
+		UserPersist userPersist = userRepository.findByEmail(user.getEmail())
+			.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
 		User loginUser = userFactory.create(userPersist);
 
