@@ -6,14 +6,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import com.picketing.www.application.exception.BadRequestException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.picketing.www.application.exception.CustomException;
 import com.picketing.www.application.filter.encoding.password.PasswordEncoder;
 
 @DisplayName("Password 패턴 검증 테스트")
 class PasswordEncodingFilterTest {
 
+    ObjectMapper objectMapper = new ObjectMapper();
     PasswordEncoder passwordEncoder = new PasswordEncoder("testsalt1234");
-    PasswordEncodingFilter passwordEncodingFilter = new PasswordEncodingFilter(passwordEncoder);
+    PasswordEncodingFilter passwordEncodingFilter = new PasswordEncodingFilter(passwordEncoder, objectMapper);
 
     @Nested
     @DisplayName("isPasswordInsecure")
@@ -47,9 +49,8 @@ class PasswordEncodingFilterTest {
         @Test
         @DisplayName("안전하지 않은 비밀번호")
         void passwordInsecure() {
-            passwordEncodingFilter.validPassword("test");
             assertThrows(
-                BadRequestException.class,
+                CustomException.class,
                 () -> passwordEncodingFilter.validPassword("test")
             );
         }
