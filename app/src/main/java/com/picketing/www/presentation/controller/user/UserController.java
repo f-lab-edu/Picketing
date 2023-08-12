@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.picketing.www.business.domain.User;
 import com.picketing.www.business.domain.UserFactory;
-import com.picketing.www.business.service.UserService;
+import com.picketing.www.business.service.user.UserService;
 import com.picketing.www.presentation.dto.request.user.UserSignInRequest;
 import com.picketing.www.presentation.dto.request.user.UserSignUpRequest;
 import com.picketing.www.presentation.dto.response.IdentityResponse;
