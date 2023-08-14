@@ -4,6 +4,6 @@ import lombok.Builder;
 
 @Builder
 public record UserSignInResponse(
-        String email
+	String email
 ) {
 }
