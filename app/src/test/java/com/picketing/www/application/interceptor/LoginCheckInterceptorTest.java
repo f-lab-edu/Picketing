@@ -50,7 +50,14 @@ class LoginCheckInterceptorTest {
 	class Context_Login_User_Has_No_Session {
 		@Test
 		@DisplayName("세션이 존재할 때 Interceptor가 예외를 반환하는지 테스트")
-		void should_returns_exception_in_prehandle() {
+		void should_returns_exception_in_prehandle() throws Exception {
+			// given
+			session.setAttribute("login_user", "qwerty1234@gmail.com");
+			request.setSession(session);
+			Assertions.assertThat(loginCheckInterceptor.preHandle(request, response, null)).isTrue();
+
+			session.removeAttribute("login_user");
+
 			Assertions.assertThatThrownBy(() ->
 					loginCheckInterceptor.preHandle(request, response, null))
 				.isInstanceOf(CustomException.class);
