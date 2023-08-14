@@ -1,22 +1,22 @@
 package com.picketing.www.presentation.dto.response;
 
 import com.picketing.www.application.exception.ErrorCode;
+
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 @Getter
 public class ErrorResponse {
-    private int code;
+	private final int code;
 
-    private String message;
+	private final String message;
 
-    public ErrorResponse(ErrorCode code) {
-        this.code = code.getCode();
-        this.message = code.getMessage();
-    }
+	public ErrorResponse(ErrorCode code) {
+		this.code = code.getCode();
+		this.message = code.getMessage();
+	}
 
-    public static ErrorResponse error(ErrorCode code) {
-        return new ErrorResponse(code);
-    }
+	public static ErrorResponse error(ErrorCode code) {
+		return new ErrorResponse(code);
+	}
 
 }
