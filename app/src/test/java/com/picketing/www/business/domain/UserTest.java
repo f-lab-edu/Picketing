@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Objects;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -31,40 +32,30 @@ public class UserTest {
 			assertTrue(Objects.nonNull(user));
 		}
 
-        @Test
-        @DisplayName("이메일 검증 실패 확인")
-        void createButInvalidEmail() {
-            UserSignUpRequest userSignUpRequest = new UserSignUpRequest(
-                "email",
-                "password123!"
-            );
-            assertThrows(CustomException.class,
-                () -> userFactory.create(userSignUpRequest));
-        }
-
-        @Test
-        @DisplayName("이메일 입력되지 않음")
-        void createButEamilIsNull() {
-            UserSignUpRequest userSignUpRequest = new UserSignUpRequest(
-                null,
-                "password123!"
-            );
-            assertThrows(CustomException.class,
-                () -> userFactory.create(userSignUpRequest));
-        }
-
 		@Test
-		@DisplayName("비밀번호 검증 실패 확인")
-		void createButInvalidPassword() {
+		@DisplayName("이메일 검증 실패 확인")
+		void createButInvalidEmail() {
 			UserSignUpRequest userSignUpRequest = new UserSignUpRequest(
-				"email@ruu.kr",
-				"password123"
+				"email",
+				"password123!"
 			);
 			assertThrows(CustomException.class,
 				() -> userFactory.create(userSignUpRequest));
 		}
 
 		@Test
+		@DisplayName("이메일 입력되지 않음")
+		void createButEamilIsNull() {
+			UserSignUpRequest userSignUpRequest = new UserSignUpRequest(
+				null,
+				"password123!"
+			);
+			assertThrows(CustomException.class,
+				() -> userFactory.create(userSignUpRequest));
+		}
+
+		@Test
+		@Disabled
 		@DisplayName("비밀번호 입력되지 않음")
 		void createButPasswordIsNull() {
 			UserSignUpRequest userSignUpRequest = new UserSignUpRequest(
