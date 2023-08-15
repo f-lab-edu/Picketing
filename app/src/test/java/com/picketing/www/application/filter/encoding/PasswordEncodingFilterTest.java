@@ -1,5 +1,7 @@
 package com.picketing.www.application.filter.encoding;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -7,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.picketing.www.application.exception.CustomException;
 import com.picketing.www.application.filter.encoding.password.PasswordEncoder;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Password 패턴 검증 테스트")
 class PasswordEncodingFilterTest {

@@ -58,18 +58,18 @@ public class PasswordEncodingFilter implements Filter {
 	}
 
 	private String changePassword(String json) throws JsonProcessingException, CustomException {
-		final String FIELD_NAME = "password";
+		final String fieldName = "password";
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode rootNode = objectMapper.readTree(json);
 		if (rootNode.isObject()) {
 			ObjectNode objectNode = (ObjectNode)rootNode;
-			if (objectNode.has(FIELD_NAME)) {
+			if (objectNode.has(fieldName)) {
 				String plainTextPassword = String.valueOf(objectNode.get("password").asText());
 
 				validPassword(plainTextPassword);
 
 				String encodedPassword = passwordEncoder.encode(plainTextPassword);
-				objectNode.put(FIELD_NAME, encodedPassword);
+				objectNode.put(fieldName, encodedPassword);
 			}
 		}
 		return objectMapper.writeValueAsString(rootNode);
@@ -82,8 +82,8 @@ public class PasswordEncodingFilter implements Filter {
 	}
 
 	boolean isPasswordInsecure(String value) {
-		final String PASSWORD_VALID_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
-		Pattern pattern = Pattern.compile(PASSWORD_VALID_REGEX);
+		final String passwordValidRegex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
+		Pattern pattern = Pattern.compile(passwordValidRegex);
 		Matcher matcher = pattern.matcher(value);
 		return !matcher.matches();
 	}

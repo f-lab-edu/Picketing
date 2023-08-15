@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PasswordEncodeConfig {
 
-	private final String SALT_ENV_KEY = "PASSWORD_SALT";
+	private final String saltEnvKey = "PASSWORD_SALT";
 
 	@Bean
 	public String salt() {
-		return System.getenv(SALT_ENV_KEY);
+		return System.getenv(saltEnvKey);
 	}
 }
