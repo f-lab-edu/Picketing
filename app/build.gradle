@@ -25,6 +25,7 @@ dependencies {
 
     // Test framework
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.1.0'
 
     // Utils
     implementation 'com.google.guava:guava:31.0.1-jre'

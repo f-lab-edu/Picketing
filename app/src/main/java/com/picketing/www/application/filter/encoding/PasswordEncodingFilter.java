@@ -29,7 +29,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Component
-@WebFilter(urlPatterns = {"/api/users"})
+@WebFilter(urlPatterns = {"/api/users", "/api/users/signin"})
 @RequiredArgsConstructor
 public class PasswordEncodingFilter implements Filter {
 
@@ -64,7 +64,7 @@ public class PasswordEncodingFilter implements Filter {
 		if (rootNode.isObject()) {
 			ObjectNode objectNode = (ObjectNode)rootNode;
 			if (objectNode.has(FIELD_NAME)) {
-				String plainTextPassword = String.valueOf(objectNode.get("password"));
+				String plainTextPassword = String.valueOf(objectNode.get("password").asText());
 
 				validPassword(plainTextPassword);
 
@@ -75,13 +75,13 @@ public class PasswordEncodingFilter implements Filter {
 		return objectMapper.writeValueAsString(rootNode);
 	}
 
-	private void validPassword(String plainTextPassword) throws CustomException {
-		if (plainTextPassword == null || isValidPasswordPattern(plainTextPassword)) {
+	void validPassword(String plainTextPassword) throws CustomException {
+		if (plainTextPassword == null || isPasswordInsecure(plainTextPassword)) {
 			throw new CustomException(ErrorCode.INVALID_PASSWORD_FORMAT);
 		}
 	}
 
-	private boolean isValidPasswordPattern(String value) {
+	boolean isPasswordInsecure(String value) {
 		final String PASSWORD_VALID_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
 		Pattern pattern = Pattern.compile(PASSWORD_VALID_REGEX);
 		Matcher matcher = pattern.matcher(value);

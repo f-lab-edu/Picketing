@@ -15,8 +15,8 @@ public class PasswordEncoder {
 
 	private final Long iteration;
 
-	public PasswordEncoder() {
-		this.salt = System.getenv(SALT_ENV_KEY);
+	public PasswordEncoder(String salt) {
+		this.salt = salt;
 		this.iteration = Long.valueOf(salt.length());
 		if (this.salt == null) {
 			throw new IllegalArgumentException(SALT_ENV_KEY + " environment variable is not set");
