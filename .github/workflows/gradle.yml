@@ -54,15 +54,15 @@ jobs:
         shell: bash
 
       - name: Grant execute permission for Gradle
-        run: chmod +x gradlew
+        run: chmod +x /home/runner/work/Picketing/Picketing/gradlew
         shell: bash
 
       - name: Gradle version
-        run: ~/gradlew -version
+        run: /home/runner/work/Picketing/Picketing/gradlew -version
         shell: bash
 
       - name: Check Source Code format
-        run: ~/gradlew checkstyleMain
+        run: /home/runner/work/Picketing/Picketing/gradlew checkstyleMain
         shell: bash
 
 
@@ -86,11 +86,11 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Grant execute permission for Gradle
-        run: chmod +x gradlew
+        run: chmod +x /home/runner/work/Picketing/Picketing/gradlew
         shell: bash
 
       - name: Build with Gradle
-        run: /Users/yegenieee/IdeaProjects/Picketing/gradlew clean build -x checkstyleTest -x checkstyleMain
+        run: /home/runner/work/Picketing/Picketing/gradlew clean build -x checkstyleTest -x checkstyleMain
         shell: bash
 
       - name: Create Test Result for PR comment
