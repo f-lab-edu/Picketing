@@ -70,7 +70,7 @@ jobs:
         if: ${{ always() }}
         with:
           junit_files: app/build/test-results/**/*.xml
-          token: ${{ secrets.TOKEN }}
+          github_token: ${{ secrets.TOKEN }}
 
       - name: Create PR comment for test failure
         uses: mikepenz/action-junit-report@v3
