@@ -14,7 +14,7 @@ on:
     branches: [ '*' ]
 
 permissions:
-  contents: write
+  contents: sdfsdf
 
 jobs:
   # naver code style check
@@ -63,15 +63,16 @@ jobs:
       - name: Test with Gradle
         run: ./gradlew test
 
-      - name: Create Test Result for PR comment
+      - name: Publish Test Result for PR comment
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: ${{ always() }}
         with:
-          files: 'build/test-results/**/*.xml'
+          files: app/build/test-results/**/*.xml
+          token: ${{ secrets.TOKEN }}
 
       - name: Create PR comment for test failure
         uses: mikepenz/action-junit-report@v3
         if: ${{ always() }}
         with:
-          report_paths: 'build/test-results/**/*.xml'
+          report_paths: app/build/test-results/**/*.xml
           token: ${{ secrets.TOKEN }}
