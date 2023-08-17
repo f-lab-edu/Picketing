@@ -20,45 +20,41 @@ jobs:
   set_up:
     runs-on: ubuntu-20.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'adopt'
+          distribution: 'temurin'
 
   # naver code style check
   check_code_style:
-    needs: set_up
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
         with:
           path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ~/.gradle/caches/modules-2/files-2.1
+            /home/runner/work/Picketing/Picketing/gradle/caches
+            /home/runner/work/Picketing/Picketing/gradle/wrapper
+            /home/runner/work/Picketing/Picketing/gradle/caches/modules-2/files-2.1
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Get Current Directory
-        run: pwd
-        shell: bash
-
-      - name: Get Current Directory List
-        run: ls -al
-        shell: bash
-
       - name: Grant execute permission for Gradle
         run: chmod +x /home/runner/work/Picketing/Picketing/gradlew
-        shell: bash
-
-      - name: Gradle version
-        run: /home/runner/work/Picketing/Picketing/gradlew -version
         shell: bash
 
       - name: Check Source Code format
@@ -68,19 +64,24 @@ jobs:
 
   # test code check
   check_test_code:
-    needs: set_up
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
         with:
           path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ~/.gradle/caches/modules-2/files-2.1
+            /home/runner/work/Picketing/Picketing/gradle/caches
+            /home/runner/work/Picketing/Picketing/gradle/wrapper
+            /home/runner/work/Picketing/Picketing/gradle/caches/modules-2/files-2.1
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
@@ -97,11 +98,11 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: 'build/test-result/test/TEST-*.xml'
+          files: '/home/runner/work/Picketing/Picketing/app/build/test-result/test/TEST-*.xml'
 
       - name: Create PR comment for test failure
         uses: mikepenz/action-junit-report@v3
         if: always()
         with:
-          report_paths: 'build/test-results/test/TEST-*.xml'
+          report_paths: '/home/runner/work/Picketing/Picketing/app/build/test-results/test/TEST-*.xml'
           token: ${{ secrets.TOKEN }}
