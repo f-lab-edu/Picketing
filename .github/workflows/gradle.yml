@@ -14,7 +14,9 @@ on:
     branches: [ '*' ]
 
 permissions:
-  contents: write
+  id-token: write
+  contents: read
+  checks: write
 
 jobs:
   # naver code style check
@@ -64,10 +66,10 @@ jobs:
         run: ./gradlew test
 
       - name: Publish Test Result for PR comment
-        uses: EnricoMi/publish-unit-test-result-action@v1
+        uses: EnricoMi/publish-unit-test-result-action@v2
         if: ${{ always() }}
         with:
-          files: app/build/test-results/**/*.xml
+          junit_files: app/build/test-results/**/*.xml
           token: ${{ secrets.TOKEN }}
 
       - name: Create PR comment for test failure
