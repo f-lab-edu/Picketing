@@ -65,12 +65,6 @@ jobs:
       - name: Test with Gradle
         run: ./gradlew test
 
-      - name: Publish Test Result for PR comment
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: ${{ always() }}
-        with:
-          junit_files: app/build/test-results/**/*.xml
-
       - name: Create PR comment for test failure
         uses: mikepenz/action-junit-report@v3
         if: ${{ always() }}
