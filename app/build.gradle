@@ -1,6 +1,7 @@
 plugins {
     id 'application'
     id 'org.springframework.boot' version '3.1.0'
+    id 'java'
     id 'checkstyle'
 }
 
@@ -40,8 +41,8 @@ application {
 checkstyle {
     maxWarnings = 0 // 규칙이 어긋나는 코드가 하나라도 있을 경우 빌드 fail
     configFile = file("${rootDir}/style/naver-checkstyle-rules.xml") // code check config file location
-    configProperties = ["suppressionFile": "${rootDir}/naver-checkstyle-suppressions.xml"]
-    toolVersion = "8.24"
+    configProperties = ["suppressionFile": "${rootDir}/style/naver-checkstyle-suppressions.xml"]
+    toolVersion = '10.12.1'
 }
 
 tasks.named('test') {
@@ -49,5 +50,5 @@ tasks.named('test') {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '8.2.1'
+    gradleVersion = '7.5.1'
 }

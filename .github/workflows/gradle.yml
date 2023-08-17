@@ -17,18 +17,6 @@ permissions:
   contents: write
 
 jobs:
-  set_up:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
   # naver code style check
   check_code_style:
     runs-on: ubuntu-20.04
@@ -42,23 +30,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            /home/runner/work/Picketing/Picketing/gradle/caches
-            /home/runner/work/Picketing/Picketing/gradle/wrapper
-            /home/runner/work/Picketing/Picketing/gradle/caches/modules-2/files-2.1
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       - name: Grant execute permission for Gradle
-        run: chmod +x /home/runner/work/Picketing/Picketing/gradlew
+        run: chmod +x ./gradlew
         shell: bash
 
       - name: Check Source Code format
-        run: /home/runner/work/Picketing/Picketing/gradlew checkstyleMain
+        run: ./gradlew checkstyleMain
         shell: bash
 
 
@@ -75,34 +52,26 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            /home/runner/work/Picketing/Picketing/gradle/caches
-            /home/runner/work/Picketing/Picketing/gradle/wrapper
-            /home/runner/work/Picketing/Picketing/gradle/caches/modules-2/files-2.1
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       - name: Grant execute permission for Gradle
-        run: chmod +x /home/runner/work/Picketing/Picketing/gradlew
+        run: chmod +x ./gradlew
         shell: bash
 
       - name: Build with Gradle
-        run: /home/runner/work/Picketing/Picketing/gradlew clean build -x checkstyleTest -x checkstyleMain
+        run: ./gradlew clean build -x checkstyleTest -x checkstyleMain
         shell: bash
+
+      - name: Test with Gradle
+        run: ./gradlew test
 
       - name: Create Test Result for PR comment
         uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
+        if: ${{ always() }}
         with:
-          files: '/home/runner/work/Picketing/Picketing/app/build/test-result/test/TEST-*.xml'
+          files: 'build/test-results/**/*.xml'
 
       - name: Create PR comment for test failure
         uses: mikepenz/action-junit-report@v3
-        if: always()
+        if: ${{ always() }}
         with:
-          report_paths: '/home/runner/work/Picketing/Picketing/app/build/test-results/test/TEST-*.xml'
+          report_paths: 'build/test-results/**/*.xml'
           token: ${{ secrets.TOKEN }}
