@@ -13,10 +13,7 @@ on:
   pull_request:
     branches: [ '*' ]
 
-permissions:
-  id-token: write
-  contents: read
-  checks: write
+permissions: write-all
 
 jobs:
   # naver code style check
