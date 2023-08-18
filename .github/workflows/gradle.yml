@@ -13,53 +13,64 @@ on:
   pull_request:
     branches: [ '*' ]
 
-permissions:
-  contents: read
+permissions: write-all
 
 jobs:
-  set-up:
-    runs-on: ubuntu-latest
+  # naver code style check
+  check_code_style:
+    runs-on: ubuntu-20.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Checkout
-        uses: actions/checkout@v3
-
-  # naver code style check
-  check_code_style:
-    needs: set-up
-    runs-on: ubuntu-latest
-    steps:
       - name: Grant execute permission for Gradle
-        run: chmod +x gradlew
+        run: chmod +x ./gradlew
+        shell: bash
 
       - name: Check Source Code format
-        uses: ./gradlew checkstyleMain
+        run: ./gradlew checkstyleMain
+        shell: bash
+
 
   # test code check
   check_test_code:
-    needs: set-up
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
       - name: Grant execute permission for Gradle
-        run: chmod +x gradlew
+        run: chmod +x ./gradlew
+        shell: bash
 
       - name: Build with Gradle
         run: ./gradlew clean build -x checkstyleTest -x checkstyleMain
+        shell: bash
 
-      - name: Create Test Result for PR comment
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
+      - name: Test with Gradle
+        run: ./gradlew test
+
+      - name: Publish Test Result for PR comment
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: ${{ always() }}
         with:
-          files: 'build/test-result/test/TEST-*.xml'
+          junit_files: app/build/test-results/**/*.xml
 
       - name: Create PR comment for test failure
         uses: mikepenz/action-junit-report@v3
-        if: always()
+        if: ${{ always() }}
         with:
-          report_paths: 'build/test-results/test/TEST-*.xml'
+          report_paths: app/build/test-results/**/*.xml
           token: ${{ secrets.TOKEN }}

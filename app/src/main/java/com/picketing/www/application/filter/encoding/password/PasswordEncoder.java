@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class PasswordEncoder {
 
 	private final String salt;
-	private final String SALT_ENV_KEY = "PASSWORD_SALT";
-	private final String ALGORITHM = "SHA-512";
+	private final String saltEnvKey = "PASSWORD_SALT";
+	private final String algorithm = "SHA-512";
 
 	private final Long iteration;
 
@@ -19,7 +19,7 @@ public class PasswordEncoder {
 		this.salt = salt;
 		this.iteration = Long.valueOf(salt.length());
 		if (this.salt == null) {
-			throw new IllegalArgumentException(SALT_ENV_KEY + " environment variable is not set");
+			throw new IllegalArgumentException(saltEnvKey + " environment variable is not set");
 		}
 	}
 
@@ -31,7 +31,7 @@ public class PasswordEncoder {
 	 */
 	public String encode(String plainTextPassword) {
 		try {
-			MessageDigest messageDigest = MessageDigest.getInstance(this.ALGORITHM);
+			MessageDigest messageDigest = MessageDigest.getInstance(this.algorithm);
 			String saltedPassword = plainTextPassword + this.salt;
 			byte[] hashedBytes = messageDigest.digest(saltedPassword.getBytes(StandardCharsets.UTF_8));
 			for (long i = 0; i < this.iteration; i++) {

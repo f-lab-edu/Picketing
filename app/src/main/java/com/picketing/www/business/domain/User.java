@@ -36,8 +36,8 @@ public class User {
 	}
 
 	private boolean isValidEmailPattern(String value) {
-		final String EMAIL_VALID_REGEX = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
-		Pattern pattern = Pattern.compile(EMAIL_VALID_REGEX);
+		final String emailValidRegex = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
+		Pattern pattern = Pattern.compile(emailValidRegex);
 		Matcher matcher = pattern.matcher(value);
 		return !matcher.matches();
 	}
