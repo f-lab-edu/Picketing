@@ -1,27 +1,31 @@
 package com.picketing.www.presentation.controller.schedule;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.picketing.www.business.domain.UserFactory;
-import com.picketing.www.business.service.user.UserService;
-import com.picketing.www.presentation.dto.response.user.UserDetailResponse;
+import com.picketing.www.business.domain.ScheduleFactory;
+import com.picketing.www.business.service.schedule.ScheduleService;
+import com.picketing.www.presentation.dto.request.schedule.ScheduleSearchRequest;
+import com.picketing.www.presentation.dto.response.schedule.ScheduleResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/shows")
 @RequiredArgsConstructor
 public class ScheduleController {
 
-    private static final String LOGIN_USER = "login_user";
-    private final UserFactory userFactory;
-    private final UserService userService;
+	private final ScheduleService scheduleService;
+	private final ScheduleFactory scheduleFactory;
 
-    @GetMapping("/{userId}")
-    public UserDetailResponse get(@PathVariable Long userId) {
-        return userFactory.findResponse(userService.get(userId));
-    }
+	@GetMapping("/{showId}/schedules")
+	public ScheduleResponseDto get(
+		@PathVariable Long showId,
+		@ModelAttribute ScheduleSearchRequest scheduleSearchRequest
+	) {
+		return scheduleFactory.findResponse(scheduleService.getSchedules(showId, scheduleSearchRequest.yearAndMonth()));
+	}
 }
