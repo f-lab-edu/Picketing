@@ -26,10 +26,9 @@ class LoginCheckInterceptorTest {
 
 	@DisplayName("exclude URL로 접근 시, interceptor를 거치지 않는지 테스트")
 	@Test
-	void should_not_intercept_when_request_to_exclued_url() throws Exception {
+	void should_not_intercept_when_request_to_excluded_url() throws Exception {
 		// given
-		MockHttpServletRequest request = new MockHttpServletRequest("GET", "/api/users");
-		System.out.println("request = " + request.getRequestURI());
+		MockHttpServletRequest request = new MockHttpServletRequest("POST", "/api/users");
 
 		HandlerExecutionChain chain = mapping.getHandler(request);
 
@@ -38,10 +37,27 @@ class LoginCheckInterceptorTest {
 			.stream()
 			.filter(LoginCheckInterceptor.class::isInstance)
 			.findFirst();
-		System.out.println("interceptor = " + interceptor);
 
 		// then
 		Assertions.assertThat(interceptor).isEmpty();
+	}
+
+	@DisplayName("include URL로 접근 시, interceptor를 거치는지 테스트")
+	@Test
+	void should_intercept_when_request_to_included_url() throws Exception {
+		// given
+		MockHttpServletRequest request = new MockHttpServletRequest("GET", "/api/users/1");
+
+		HandlerExecutionChain chain = mapping.getHandler(request);
+
+		assert chain != null;
+		Optional<HandlerInterceptor> interceptor = chain.getInterceptorList()
+			.stream()
+			.filter(LoginCheckInterceptor.class::isInstance)
+			.findFirst();
+
+		// then
+		Assertions.assertThat(interceptor).isNotEmpty();
 	}
 
 	@Nested

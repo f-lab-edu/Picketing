@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: Picketing
+server:
+  port: 8080
+PASSWORD_SALT: testsalt1234
+
+
