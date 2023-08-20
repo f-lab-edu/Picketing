@@ -1,8 +1,8 @@
 spring:
   application:
     name: Picketing
-  profiles:
-    include: secret
-    active: dev
 server:
   port: 8080
+PASSWORD_SALT: testsalt1234
+
+
