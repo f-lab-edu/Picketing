@@ -51,10 +51,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: list for repository
-        run: pwd && ls -al
-        shell: bash
-
       - name: Copy Secrets
         env:
           OCCUPY_SECRET: ${{ secrets.OCCUPY_SECRET }}
@@ -67,12 +63,12 @@ jobs:
         run: chmod +x ./gradlew
         shell: bash
 
+      - name: Test with Gradle
+        run: ./gradlew test
+
       - name: Build with Gradle
         run: ./gradlew clean build -x checkstyleTest -x checkstyleMain
         shell: bash
-
-      - name: Test with Gradle
-        run: ./gradlew test
 
       - name: Publish Test Result for PR comment
         uses: EnricoMi/publish-unit-test-result-action@v2

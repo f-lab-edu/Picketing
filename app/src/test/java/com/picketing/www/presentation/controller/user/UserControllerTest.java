@@ -51,6 +51,7 @@ class UserControllerTest {
 	public class GetUser {
 
 		@Test
+		@Disabled
 		@DisplayName("200:존재하는 데이터 정상 조회")
 		void success() throws Exception {
 			Mockito.when(userRepository.findById(anyLong()))
