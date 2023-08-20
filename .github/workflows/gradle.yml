@@ -51,6 +51,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Copy Secrets
+        env:
+          OCCUPY_SECRET: ${{ secrets.OCCUPY_SECRET }}
+          OCCUPY_SECRET_DIR: src/main/resources
+          OCCUPY_SECRET_DIR_FILE_NAME: application-secret.yml
+        run: echo $OCCUPY_SECRET | base64 --decode > $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
+
       - name: Grant execute permission for Gradle
         run: chmod +x ./gradlew
         shell: bash
