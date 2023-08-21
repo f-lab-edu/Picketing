@@ -29,5 +29,4 @@ app/.idea/
 
 # Ignore Gradle build output directory
 build
-
 app/src/main/resources/application-secret.yml
