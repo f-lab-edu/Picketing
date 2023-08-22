@@ -21,10 +21,16 @@ public class ShowService {
 
 	private final ShowFactory showFactory;
 
-	public List<Show> getShowList(Pageable pageable) {
-		List<ShowPersist> showPersistList = showRepository.findShowListWithPagination(pageable);
+	public List<Show> getShowList(String genre, String subGenre, Pageable pageable) {
+		createShow();
+		
+		List<ShowPersist> showPersistList = showRepository.findShowListWithPagination(genre, subGenre, pageable);
 		return showPersistList.stream()
 			.map(showFactory::convertToEntity)
 			.collect(Collectors.toList());
+	}
+
+	public void createShow() {
+		showRepository.save();
 	}
 }

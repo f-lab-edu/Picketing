@@ -19,8 +19,10 @@ public class ShowFactory {
 			.venue(showPersist.venue())
 			.runningTime(showPersist.runningTime())
 			.intermission(showPersist.intermission())
+			.ageGroup(showPersist.ageGroup())
 			.details(showPersist.details())
 			.isBookable(showPersist.isBookable())
+			.ownerId(showPersist.ownerId())
 			.build();
 	}
 
@@ -34,7 +36,7 @@ public class ShowFactory {
 			.endDate(show.endDate)
 			.venue(show.venue)
 			.ageGroup(show.ageGroup.getDetails())
-			.isBookable(show.isBookable ? "Y" : "N")
+			.isBookable("Y")
 			.build();
 	}
 }

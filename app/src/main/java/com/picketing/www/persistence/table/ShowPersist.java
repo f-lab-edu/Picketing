@@ -3,6 +3,7 @@ package com.picketing.www.persistence.table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.picketing.www.business.type.AgeGroup;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
 
@@ -19,8 +20,11 @@ public record ShowPersist(
 	String venue,
 	Long runningTime,
 	Long intermission,
+
+	AgeGroup ageGroup,
 	String details,
 	boolean isBookable,
+	Long ownerId,
 	LocalDateTime createdAt,
 	LocalDateTime modifiedAt
 

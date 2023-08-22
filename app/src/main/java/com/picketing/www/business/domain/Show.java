@@ -7,7 +7,10 @@ import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
 
 import lombok.Builder;
+import lombok.ToString;
 
+@ToString(of = {"id", "title", "genre", "subGenre", "startDate", "endDate", "venue", "runningTime", "intermission",
+	"ageGroup", "details", "isBookable", "ownerId"})
 public class Show {
 
 	final Long id;
@@ -19,15 +22,16 @@ public class Show {
 	final String venue;
 	final Long runningTime;
 	final Long intermission;
-
 	final AgeGroup ageGroup;
 	final String details;
 
 	boolean isBookable;
 
+	final Long ownerId;
+
 	@Builder
 	Show(Long id, String title, Genre genre, SubGenre subGenre, LocalDate startDate, LocalDate endDate, String venue,
-		Long runningTime, Long intermission, AgeGroup ageGroup, String details, boolean isBookable) {
+		Long runningTime, Long intermission, AgeGroup ageGroup, String details, boolean isBookable, Long ownerId) {
 		this.id = id;
 		this.title = title;
 		this.genre = genre;
@@ -40,6 +44,7 @@ public class Show {
 		this.ageGroup = ageGroup;
 		this.details = details;
 		this.isBookable = isBookable;
+		this.ownerId = ownerId;
 	}
 
 	public void changeBookable(boolean flag) {

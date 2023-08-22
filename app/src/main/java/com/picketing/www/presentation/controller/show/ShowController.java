@@ -3,6 +3,8 @@ package com.picketing.www.presentation.controller.show;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -26,25 +28,17 @@ public class ShowController {
 	private final ShowFactory showFactory;
 
 	private final ShowService showService;
-	
+
 	@GetMapping
-	public List<ShowMainResponse> getShowListWithPagination(
+	public Page<ShowMainResponse> getShowListWithPagination(
 		@RequestParam(value = "genre", required = false, defaultValue = "ALL") String genre,
 		@RequestParam(value = "subGenre", required = false, defaultValue = "ALL") String subGenre,
 		@PageableDefault(size = 10, page = 0, sort = "startDate", direction = Sort.Direction.DESC) Pageable pageable) {
-		System.out.println("genre = " + genre);
-		System.out.println("subGenre = " + subGenre);
-		System.out.println("pageable = " + pageable);
-		List<Show> showList = showService.getShowList(pageable);
-		return showList.stream()
+		List<Show> showList = showService.getShowList(genre, subGenre, pageable);
+		List<ShowMainResponse> response = showList.stream()
 			.map(showFactory::findResponse)
 			.collect(Collectors.toList());
-	}
+		return new PageImpl<>(response, pageable, response.size());
 
-	// @GetMapping("/{showId}")
-	// public Page<ShowMainResponse> getShowDetails(@PathVariable Long showId) {
-	// 	return showFactory.showMainResponse(
-	//
-	// 	);
-	// }
+	}
 }
