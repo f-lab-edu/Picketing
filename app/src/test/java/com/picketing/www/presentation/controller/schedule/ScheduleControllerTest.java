@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.picketing.www.persistence.repository.schedule.DateScheduleRepository;
+import com.picketing.www.persistence.repository.schedule.ScheduleRepository;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -28,7 +28,7 @@ class ScheduleControllerTest {
 	MockMvc mockMvc;
 
 	@MockBean
-	DateScheduleRepository dateScheduleRepository;
+	ScheduleRepository scheduleRepository;
 
 	@Nested
 	@DisplayName("Schedule 조회")

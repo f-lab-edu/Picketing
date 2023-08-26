@@ -1,37 +1,41 @@
-package com.picketing.www.business.domain;
+package com.picketing.www.business.domain.schedule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import com.picketing.www.persistence.table.schedule.DateSchedulePersist;
-import com.picketing.www.persistence.table.schedule.TimeSchedulePersist;
+import com.picketing.www.persistence.table.schedule.DateScheduleView;
 import com.picketing.www.presentation.dto.response.schedule.ScheduleResponseDto;
 import com.picketing.www.presentation.dto.response.schedule.ScheduleResponseDto.DateScheduleResponseDto;
 import com.picketing.www.presentation.dto.response.schedule.ScheduleResponseDto.DateScheduleResponseDto.TimeScheduleResponseDto;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class ScheduleFactory {
-	public DateSchedule create(DateSchedulePersist dateSchedulePersist) {
-		return DateSchedule.builder()
-			.id(dateSchedulePersist.id())
-			.name(dateSchedulePersist.name())
-			.showId(dateSchedulePersist.showId())
-			.startDate(dateSchedulePersist.startDate())
-			.endDate(dateSchedulePersist.endDate())
+
+	private final DateScheduleFactory dateScheduleFactory;
+	private final TimeScheduleFactory timeScheduleFactory;
+
+	public Schedule create(List<DateScheduleView> dateScheduleViews) {
+		List<DateSchedule> dateSchedules = new ArrayList<>(15);
+		for (DateScheduleView dateScheduleView : dateScheduleViews) {
+			DateSchedulePersist dateSchedulePersist = dateScheduleView.dateSchedulePersist();
+			DateSchedule dateSchedule = dateScheduleFactory.create(dateSchedulePersist);
+			List<TimeSchedule> timeSchedules = timeScheduleFactory.create(dateScheduleView.timeSchedulePersists());
+			dateSchedule.setTimeSchedules(timeSchedules);
+			dateSchedules.add(dateSchedule);
+		}
+		return Schedule.builder()
+			.dateSchedules(dateSchedules)
 			.build();
 	}
 
-	public TimeSchedule create(TimeSchedulePersist timeSchedulePersist) {
-		return TimeSchedule.builder()
-			.id(timeSchedulePersist.id())
-			.startTime(timeSchedulePersist.startTime())
-			.endTime(timeSchedulePersist.endTime())
-			.build();
-	}
-
-	public ScheduleResponseDto findResponse(List<DateSchedule> dateSchedules) {
-		return new ScheduleResponseDto(this.findDateResponses(dateSchedules));
+	public ScheduleResponseDto findResponse(Schedule schedule) {
+		return new ScheduleResponseDto(this.findDateResponses(schedule.dateSchedules));
 	}
 
 	private List<DateScheduleResponseDto> findDateResponses(List<DateSchedule> dateSchedules) {

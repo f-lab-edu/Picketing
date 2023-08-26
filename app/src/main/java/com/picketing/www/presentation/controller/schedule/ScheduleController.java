@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.picketing.www.business.domain.ScheduleFactory;
+import com.picketing.www.business.domain.schedule.ScheduleFactory;
 import com.picketing.www.business.service.schedule.ScheduleService;
 import com.picketing.www.presentation.dto.request.schedule.ScheduleSearchRequest;
 import com.picketing.www.presentation.dto.response.schedule.ScheduleResponseDto;
