@@ -9,4 +9,8 @@ public record DateSchedulePersist(
 	LocalDate startDate,
 	LocalDate endDate
 ) {
+	public DateSchedulePersist(Long id, DateSchedulePersist dateSchedulePersist) {
+		this(id, dateSchedulePersist.showId(), dateSchedulePersist.name, dateSchedulePersist.startDate,
+			dateSchedulePersist.endDate);
+	}
 }

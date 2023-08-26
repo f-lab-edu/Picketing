@@ -8,4 +8,7 @@ public record TimeSchedulePersist(
 	LocalTime startTime,
 	LocalTime endTime
 ) {
+	public TimeSchedulePersist(Long id, TimeSchedulePersist timeSchedulePersist) {
+		this(id, timeSchedulePersist.dateScheduleId, timeSchedulePersist.startTime, timeSchedulePersist.endTime);
+	}
 }
