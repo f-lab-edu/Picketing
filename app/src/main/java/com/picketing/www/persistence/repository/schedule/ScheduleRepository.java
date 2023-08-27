@@ -57,9 +57,9 @@ public class ScheduleRepository {
 	private DateSchedulePersist save(DateSchedulePersist dateSchedulePersist) {
 		long id = dateSequence.incrementAndGet();
 		DateSchedulePersist persistTarget = new DateSchedulePersist(id, dateSchedulePersist);
-		DateSchedulePersist persistedObject = dateStore.put(id, persistTarget);
-		indexing(persistedObject);
-		return persistedObject;
+		dateStore.put(id, persistTarget);
+		indexing(persistTarget);
+		return persistTarget;
 	}
 
 	private void indexing(DateSchedulePersist dateSchedulePersist) {
@@ -89,7 +89,7 @@ public class ScheduleRepository {
 
 	private void indexing(DateSchedulePersist dateSchedulePersist,
 		List<TimeSchedulePersist> timeSchedulePersists) {
-		List<TimeSchedulePersist> index = dateAndTimeScheduleIndex.get(dateSchedulePersist);
+		List<TimeSchedulePersist> index = dateAndTimeScheduleIndex.getOrDefault(dateSchedulePersist, new ArrayList<>());
 		index.addAll(timeSchedulePersists);
 	}
 }
