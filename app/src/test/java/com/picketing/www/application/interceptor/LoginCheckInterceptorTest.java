@@ -61,7 +61,7 @@ class LoginCheckInterceptorTest {
 	}
 
 	@Nested
-	class Context_Login_User_Has_Session {
+	class ContextLoginUserHasSession {
 		@Test
 		@DisplayName("세션이 존재할 때 Interceptor가 true를 반환하는지 테스트")
 		void should_returns_true_in_prehandle() throws Exception {
@@ -83,7 +83,7 @@ class LoginCheckInterceptorTest {
 	}
 
 	@Nested
-	class Context_Login_User_Has_No_Session {
+	class ContextLoginUserHasNoSession {
 		@Test
 		@DisplayName("세션이 존재할 때 Interceptor가 예외를 반환하는지 테스트")
 		void should_returns_exception_in_prehandle() throws Exception {
