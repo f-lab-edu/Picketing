@@ -68,6 +68,27 @@ class ScheduleControllerTest {
 		@Test
 		@DisplayName("정상 조회")
 		void success() throws Exception {
+			List<DateScheduleView> testSchedule = new ArrayList<>();
+			testSchedule.add(new DateScheduleView(
+				new DateSchedulePersist(
+					1L, 1L, "One day show", LocalDate.of(2023, 01, 01), LocalDate.of(2023, 01, 01)
+				),
+				List.of(
+					new TimeSchedulePersist(1L, 1L, LocalTime.of(05, 00), LocalTime.of(07, 30))
+				)
+			));
+			testSchedule.add(new DateScheduleView(
+				new DateSchedulePersist(
+					2L, 1L, "One day show", LocalDate.of(2023, 01, 02), LocalDate.of(2023, 01, 02)
+				),
+				List.of(
+					new TimeSchedulePersist(2L, 2L, LocalTime.of(05, 00), LocalTime.of(07, 30))
+				)
+			));
+			scheduleRepository.save(testSchedule);
+
+			System.out.println("=============== 데이터 입력 종료 ===================");
+
 			MockHttpSession session = new MockHttpSession();
 			session.setAttribute("login_user", "test@email.com");
 			mockMvc.perform(
@@ -75,7 +96,7 @@ class ScheduleControllerTest {
 						.get("/api/shows/1/schedules")
 						.session(session)
 						.accept(MediaType.APPLICATION_JSON)
-						.queryParam("yearAndMonth", "2023.01")
+						.queryParam("yearMonth", "2023-01")
 				).andDo(print())
 				.andExpect(status().isOk());
 		}

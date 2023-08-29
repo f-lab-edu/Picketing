@@ -21,15 +21,15 @@ public class ScheduleRepository {
 
 	private final Map<Long, DateSchedulePersist> dateStore = new ConcurrentHashMap<>();
 	private final Map<Long, TimeSchedulePersist> timeStore = new ConcurrentHashMap<>();
-	private final AtomicLong dateSequence = new AtomicLong(1);
-	private final AtomicLong timeSequence = new AtomicLong(1);
+	private final AtomicLong dateSequence = new AtomicLong(0);
+	private final AtomicLong timeSequence = new AtomicLong(0);
 
 	private final Map<YearAndMonthForShow, List<DateSchedulePersist>> yearAndMonthIndex = new ConcurrentHashMap<>();
 	private final Map<DateSchedulePersist, List<TimeSchedulePersist>> dateAndTimeScheduleIndex = new ConcurrentHashMap<>();
 
-	public List<DateScheduleView> getSchedules(Long showId, final LocalDate searchTargetDate) {
+	public List<DateScheduleView> getSchedules(Long showId, final YearMonth searchTargetYearMonth) {
 		YearAndMonthForShow yearAndMonthForShow = new YearAndMonthForShow(
-			YearMonth.of(searchTargetDate.getYear(), searchTargetDate.getMonth()), showId);
+			searchTargetYearMonth, showId);
 		List<DateScheduleView> dateScheduleViews = yearAndMonthIndex.get(yearAndMonthForShow)
 			.stream()
 			.map(DateScheduleView::new)
@@ -66,11 +66,12 @@ public class ScheduleRepository {
 		LocalDate startDate = dateSchedulePersist.startDate();
 		long periodDay = ChronoUnit.DAYS.between(dateSchedulePersist.startDate(), dateSchedulePersist.endDate());
 		do {
-			startDate = startDate.plusDays(1);
 			YearMonth yearMonth = YearMonth.of(startDate.getYear(), startDate.getMonthValue());
 			YearAndMonthForShow yearAndMonthForShow = new YearAndMonthForShow(yearMonth, dateSchedulePersist.showId());
 			List<DateSchedulePersist> index = yearAndMonthIndex.getOrDefault(yearAndMonthForShow, new ArrayList<>());
 			index.add(dateSchedulePersist);
+			yearAndMonthIndex.put(yearAndMonthForShow, index);
+			startDate = startDate.plusDays(1);
 		} while (0 < periodDay--);
 	}
 
@@ -91,5 +92,6 @@ public class ScheduleRepository {
 		List<TimeSchedulePersist> timeSchedulePersists) {
 		List<TimeSchedulePersist> index = dateAndTimeScheduleIndex.getOrDefault(dateSchedulePersist, new ArrayList<>());
 		index.addAll(timeSchedulePersists);
+		dateAndTimeScheduleIndex.put(dateSchedulePersist, index);
 	}
 }

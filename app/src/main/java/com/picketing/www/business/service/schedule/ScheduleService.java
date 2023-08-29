@@ -1,6 +1,6 @@
 package com.picketing.www.business.service.schedule;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -20,8 +20,8 @@ public class ScheduleService {
 
 	private final ScheduleRepository scheduleRepository;
 
-	public Schedule getSchedules(Long showId, LocalDate yearAndMonth) {
-		List<DateScheduleView> dateScheduleViews = scheduleRepository.getSchedules(showId, yearAndMonth);
+	public Schedule getSchedules(Long showId, YearMonth yearMonth) {
+		List<DateScheduleView> dateScheduleViews = scheduleRepository.getSchedules(showId, yearMonth);
 		return scheduleFactory.create(dateScheduleViews);
 	}
 }
