@@ -23,16 +23,17 @@ public class UserRepository {
 
 	public Long save(UserPersist userPersist) {
 		long id = sequence.get();
+		userPersist.createUserPersist(id);
 		store.put(id, userPersist);
 		sequence.set(id + 1);
-		userEmailIndex.put(userPersist.email(), userPersist);
+		userEmailIndex.put(userPersist.getEmail(), userPersist);
 
 		return id;
 	}
 
 	public Boolean existByEmail(String email) {
 		for (Map.Entry<Long, UserPersist> userPersistEntry : store.entrySet()) {
-			if (email.equals(userPersistEntry.getValue().email())) {
+			if (email.equals(userPersistEntry.getValue().getEmail())) {
 				return true;
 			}
 		}

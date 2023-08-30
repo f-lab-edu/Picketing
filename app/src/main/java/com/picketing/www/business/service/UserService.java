@@ -47,7 +47,7 @@ public class UserService {
 			throw new CustomException(ErrorCode.INVALID_PASSWORD);
 		}
 
-		httpSession.setAttribute(SESSION_LOGIN_USER, loginUser.getEmail());
+		httpSession.setAttribute(SESSION_LOGIN_USER, loginUser.getId());
 
 		return loginUser;
 	}
