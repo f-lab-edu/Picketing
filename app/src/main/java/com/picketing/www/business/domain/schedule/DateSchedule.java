@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 public class DateSchedule {
 	@Getter
 	final Long id;
@@ -17,15 +18,4 @@ public class DateSchedule {
 
 	@Setter
 	List<TimeSchedule> timeSchedules;
-
-	@Builder
-	public DateSchedule(Long id, Long showId, String name, LocalDate startDate, LocalDate endDate,
-		List<TimeSchedule> timeSchedules) {
-		this.id = id;
-		this.showId = showId;
-		this.name = name;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.timeSchedules = timeSchedules;
-	}
 }
