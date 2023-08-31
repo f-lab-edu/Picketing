@@ -16,9 +16,9 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws
 		Exception {
 		HttpSession session = request.getSession();
-		String userEmail = (String)session.getAttribute("login_user");
+		Long userId = (Long)session.getAttribute("login_user");
 
-		if (userEmail == null || userEmail.isEmpty()) {
+		if (userId == null || userId == 0L) {
 			throw new CustomException(ErrorCode.UNAUTHORIZED);
 		}
 		return true;

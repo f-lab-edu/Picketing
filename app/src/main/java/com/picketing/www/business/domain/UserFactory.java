@@ -12,14 +12,16 @@ import com.picketing.www.presentation.dto.response.user.UserSignInResponse;
 
 @Component
 public class UserFactory {
+
 	public User create(UserPersist userPersist) {
 		return User.builder()
-			.email(userPersist.email())
-			.password(userPersist.password())
-			.name(userPersist.name())
-			.phoneNumber(userPersist.phoneNumber())
-			.createdAt(userPersist.createdAt())
-			.modifiedAt(userPersist.modifiedAt())
+			.id(userPersist.getId())
+			.email(userPersist.getEmail())
+			.password(userPersist.getPassword())
+			.name(userPersist.getName())
+			.phoneNumber(userPersist.getPhoneNumber())
+			.createdAt(userPersist.getCreatedAt())
+			.modifiedAt(userPersist.getModifiedAt())
 			.build();
 	}
 

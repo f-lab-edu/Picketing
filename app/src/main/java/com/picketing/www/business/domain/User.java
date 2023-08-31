@@ -10,6 +10,8 @@ import com.picketing.www.application.exception.ErrorCode;
 import lombok.Builder;
 
 public class User {
+
+	final Long id;
 	final String email;
 	final String name;
 	final String phoneNumber;
@@ -18,8 +20,9 @@ public class User {
 	String password;
 
 	@Builder
-	User(String email, String password, String name, String phoneNumber, LocalDateTime createdAt,
+	User(Long id, String email, String password, String name, String phoneNumber, LocalDateTime createdAt,
 		LocalDateTime modifiedAt) {
+		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.name = name;
@@ -48,5 +51,9 @@ public class User {
 
 	public boolean match(User loginUser) {
 		return loginUser.password.equals(this.password);
+	}
+
+	public Long getId() {
+		return this.id;
 	}
 }

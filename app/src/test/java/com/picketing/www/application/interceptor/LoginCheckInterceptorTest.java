@@ -71,7 +71,7 @@ class LoginCheckInterceptorTest {
 			LoginCheckInterceptor interceptor = new LoginCheckInterceptor();
 
 			// given
-			session.setAttribute("login_user", "qwerty1234@gmail.com");
+			session.setAttribute("login_user", 1L);
 			request.setSession(session);
 
 			// when
@@ -92,7 +92,7 @@ class LoginCheckInterceptorTest {
 			MockHttpSession session = new MockHttpSession();
 			LoginCheckInterceptor interceptor = new LoginCheckInterceptor();
 			// given
-			session.setAttribute("login_user", "qwerty1234@gmail.com");
+			session.setAttribute("login_user", 1L);
 			request.setSession(session);
 			Assertions.assertThat(interceptor.preHandle(request, response, null)).isTrue();
 

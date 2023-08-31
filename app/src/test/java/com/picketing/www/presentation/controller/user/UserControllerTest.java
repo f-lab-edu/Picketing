@@ -55,14 +55,15 @@ class UserControllerTest {
 		@DisplayName("200:존재하는 데이터 정상 조회")
 		void success() throws Exception {
 			Mockito.when(userRepository.findById(anyLong()))
-				.thenReturn(new UserPersist(
-						"test@email.com",
-						"1234567890",
-						"testUser",
-						"01012345678",
-						LocalDateTime.now(),
-						LocalDateTime.now()
-					)
+				.thenReturn(UserPersist.builder()
+					.id(1L)
+					.email("test@email.com")
+					.password("1234567890")
+					.name("testUser")
+					.phoneNumber("01012345678")
+					.createdAt(LocalDateTime.now())
+					.modifiedAt(LocalDateTime.now())
+					.build()
 				);
 			mockMvc.perform(MockMvcRequestBuilders
 					.get(BASE_PATH + "/1")
@@ -190,14 +191,15 @@ class UserControllerTest {
 				.thenReturn("1234567890");
 			Mockito.when(userRepository.findByEmail(Mockito.anyString()))
 				.thenReturn(
-					Optional.of(new UserPersist(
-							"test@email.com",
-							"1234567890",
-							"testUser",
-							"01012345678",
-							LocalDateTime.now(),
-							LocalDateTime.now()
-						)
+					Optional.of(UserPersist.builder()
+						.id(1L)
+						.email("test@email.com")
+						.password("1234567890")
+						.name("testUser")
+						.phoneNumber("01012345678")
+						.createdAt(LocalDateTime.now())
+						.modifiedAt(LocalDateTime.now())
+						.build()
 					)
 				);
 			UserSignInRequest userSignInRequest = new UserSignInRequest(
@@ -221,14 +223,15 @@ class UserControllerTest {
 				.thenReturn("not_equals_text");
 			Mockito.when(userRepository.findByEmail(Mockito.anyString()))
 				.thenReturn(
-					Optional.of(new UserPersist(
-							"test@email.com",
-							"1234567890",
-							"testUser",
-							"01012345678",
-							LocalDateTime.now(),
-							LocalDateTime.now()
-						)
+					Optional.of(UserPersist.builder()
+						.id(1L)
+						.email("test@email.com")
+						.password("1234567890")
+						.name("testUser")
+						.phoneNumber("01012345678")
+						.createdAt(LocalDateTime.now())
+						.modifiedAt(LocalDateTime.now())
+						.build()
 					)
 				);
 			UserSignInRequest userSignInRequest = new UserSignInRequest(
