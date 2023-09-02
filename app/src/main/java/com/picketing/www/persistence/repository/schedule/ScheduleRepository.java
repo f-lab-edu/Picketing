@@ -25,7 +25,8 @@ public class ScheduleRepository {
 	private final AtomicLong timeSequence = new AtomicLong(0);
 
 	private final Map<YearAndMonthForShow, List<DateSchedulePersist>> yearAndMonthIndex = new ConcurrentHashMap<>();
-	private final Map<DateSchedulePersist, List<TimeSchedulePersist>> dateAndTimeScheduleIndex = new ConcurrentHashMap<>();
+	private final Map<DateSchedulePersist, List<TimeSchedulePersist>> dateAndTimeScheduleIndex
+		= new ConcurrentHashMap<>();
 
 	public List<DateScheduleView> getSchedules(Long showId, final YearMonth searchTargetYearMonth) {
 		YearAndMonthForShow yearAndMonthForShow = new YearAndMonthForShow(
