@@ -1,4 +1,4 @@
-package com.picketing.www.business.domain;
+package com.picketing.www.business.domain.show;
 
 import java.time.LocalDate;
 
@@ -22,10 +22,8 @@ public class Show {
 	final Long intermission;
 	final AgeGroup ageGroup;
 	final String details;
-
-	boolean isBookable;
-
 	final Long ownerId;
+	boolean isBookable;
 
 	public void changeBookable(boolean flag) {
 		this.isBookable = flag;

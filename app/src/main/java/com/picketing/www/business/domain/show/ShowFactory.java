@@ -1,4 +1,4 @@
-package com.picketing.www.business.domain;
+package com.picketing.www.business.domain.show;
 
 import java.time.LocalDateTime;
 

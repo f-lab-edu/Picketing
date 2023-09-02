@@ -14,6 +14,7 @@ public enum ErrorCode {
 	USER_NOT_FOUND(10003, "가입되지 않은 이메일입니다.", HttpStatus.NOT_FOUND),
 	INVALID_PASSWORD(10004, "잘못된 비밀번호입니다.", HttpStatus.BAD_REQUEST),
 	UNAUTHORIZED(10005, "로그인 한 사용자 정보를 찾을 수 없습니다 다시 로그인 해주세요", HttpStatus.UNAUTHORIZED),
+	SHOW_NOT_FOUND(10006, "", HttpStatus.NOT_FOUND),
 	INTERNAL_UNKNOWN_ERROR(50000, "Unknown Error", HttpStatus.INTERNAL_SERVER_ERROR);
 
 	private final int code;
