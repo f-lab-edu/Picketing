@@ -21,7 +21,7 @@ public class ScheduleFactory {
 	private final TimeScheduleFactory timeScheduleFactory;
 
 	public Schedule create(List<DateScheduleView> dateScheduleViews) {
-		List<DateSchedule> dateSchedules = new ArrayList<>(15);
+		List<DateSchedule> dateSchedules = new ArrayList<>(dateScheduleViews.size());
 		for (DateScheduleView dateScheduleView : dateScheduleViews) {
 			DateSchedulePersist dateSchedulePersist = dateScheduleView.dateSchedulePersist();
 			DateSchedule dateSchedule = dateScheduleFactory.create(dateSchedulePersist);
