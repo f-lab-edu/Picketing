@@ -64,7 +64,7 @@ class ScheduleControllerTest {
 			scheduleRepository.save(testSchedule);
 
 			MockHttpSession session = new MockHttpSession();
-			session.setAttribute("login_user", "test@email.com");
+			session.setAttribute("login_user", 1L);
 			mockMvc.perform(
 					MockMvcRequestBuilders
 						.get("/api/shows/1/schedules")
