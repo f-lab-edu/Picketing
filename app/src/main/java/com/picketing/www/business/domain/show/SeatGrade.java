@@ -11,4 +11,5 @@ public class SeatGrade {
 	private Show show; // mapped show id
 	private String name;
 	private BigDecimal price;
+	private Long remainingSeatCount;
 }
