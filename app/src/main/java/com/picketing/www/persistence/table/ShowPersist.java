@@ -1,37 +1,48 @@
 package com.picketing.www.persistence.table;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import com.picketing.www.business.type.AgeGroup;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Getter
-public class ShowPersist {
-	Long id;
-	String title;
-	Genre genre;
-	SubGenre subGenre;
-	LocalDate startDate;
-	LocalDate endDate;
-	String venue;
-	Long runningTime;
-	Long intermission;
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+public class ShowPersist extends BaseEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	AgeGroup ageGroup;
-	String details;
-	boolean isBookable;
-	Long ownerId;
-	LocalDateTime createdAt;
-	LocalDateTime modifiedAt;
+	private String title;
 
-	public ShowPersist createShowPersist(Long id) {
-		this.id = id;
-		return this;
-	}
+	@Enumerated(EnumType.STRING)
+	private Genre genre;
+
+	@Enumerated(EnumType.STRING)
+	private SubGenre subGenre;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private String venue;
+	private Long runningTime;
+	private Long intermission;
+
+	@Enumerated(EnumType.STRING)
+	private AgeGroup ageGroup;
+	private String details;
+	private boolean isBookable;
+	private Long ownerId;
 }
