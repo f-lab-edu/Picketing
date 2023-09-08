@@ -4,7 +4,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Disabled;
@@ -55,15 +54,13 @@ class UserControllerTest {
 		@DisplayName("200:존재하는 데이터 정상 조회")
 		void success() throws Exception {
 			Mockito.when(userRepository.findById(anyLong()))
-				.thenReturn(UserPersist.builder()
+				.thenReturn(Optional.of(UserPersist.builder()
 					.id(1L)
 					.email("test@email.com")
 					.password("1234567890")
 					.name("testUser")
 					.phoneNumber("01012345678")
-					.createdAt(LocalDateTime.now())
-					.modifiedAt(LocalDateTime.now())
-					.build()
+					.build())
 				);
 			mockMvc.perform(MockMvcRequestBuilders
 					.get(BASE_PATH + "/1")
@@ -112,7 +109,7 @@ class UserControllerTest {
 		@Test
 		@DisplayName("400:이메일 중복")
 		void failedBecauseDuplicateEmail() throws Exception {
-			Mockito.when(userRepository.existByEmail(anyString()))
+			Mockito.when(userRepository.existsByEmail(anyString()))
 				.thenReturn(true);
 			UserSignUpRequest userSignUpRequest = new UserSignUpRequest(
 				"test@email.com", "password1234@"
@@ -197,8 +194,6 @@ class UserControllerTest {
 						.password("1234567890")
 						.name("testUser")
 						.phoneNumber("01012345678")
-						.createdAt(LocalDateTime.now())
-						.modifiedAt(LocalDateTime.now())
 						.build()
 					)
 				);
@@ -229,8 +224,6 @@ class UserControllerTest {
 						.password("1234567890")
 						.name("testUser")
 						.phoneNumber("01012345678")
-						.createdAt(LocalDateTime.now())
-						.modifiedAt(LocalDateTime.now())
 						.build()
 					)
 				);
