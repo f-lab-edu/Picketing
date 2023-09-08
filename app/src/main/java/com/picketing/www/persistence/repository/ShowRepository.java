@@ -11,5 +11,5 @@ import com.picketing.www.persistence.table.ShowPersist;
 @Repository
 public interface ShowRepository extends JpaRepository<ShowPersist, Long> {
 
-	List<ShowPersist> findShowPersistsByGenreAndsAndSubGenre(String genre, String subGenre, Pageable pageable);
+	List<ShowPersist> findShowPersistsByGenreAndSubGenre(String genre, String subGenre, Pageable pageable);
 }

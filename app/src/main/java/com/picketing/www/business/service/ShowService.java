@@ -22,7 +22,7 @@ public class ShowService {
 	private final ShowFactory showFactory;
 
 	public List<Show> getShowList(String genre, String subGenre, Pageable pageable) {
-		List<ShowPersist> showPersistList = showRepository.findShowPersistsByGenreAndsAndSubGenre(genre, subGenre,
+		List<ShowPersist> showPersistList = showRepository.findShowPersistsByGenreAndSubGenre(genre, subGenre,
 			pageable);
 		return showPersistList.stream()
 			.map(showFactory::convertToEntity)
