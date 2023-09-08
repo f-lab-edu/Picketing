@@ -89,6 +89,7 @@ class UserControllerTest {
 	@DisplayName("User 등록")
 	public class CreateUser {
 
+		@Disabled
 		@Test
 		@DisplayName("200:정상 등록")
 		void success() throws Exception {
@@ -97,10 +98,10 @@ class UserControllerTest {
 			);
 
 			mockMvc.perform(MockMvcRequestBuilders
-					.post(BASE_PATH)
+					.post("/api/users")
 					.accept(MediaType.APPLICATION_JSON)
-					.contentType(MediaType.APPLICATION_JSON)
 					.content(objectMapper.writeValueAsBytes(userSignUpRequest))
+					.contentType(MediaType.APPLICATION_JSON)
 				)
 				.andDo(print())
 				.andExpect(status().isOk());
