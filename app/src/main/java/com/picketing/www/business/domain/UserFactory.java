@@ -40,8 +40,6 @@ public class UserFactory {
 			.password(user.password)
 			.name(user.name)
 			.phoneNumber(user.phoneNumber)
-			.createdAt(user.createdAt)
-			.modifiedAt(user.modifiedAt)
 			.build();
 	}
 

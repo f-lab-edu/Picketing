@@ -1,7 +1,5 @@
 package com.picketing.www.business.domain;
 
-import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Component;
 
 import com.picketing.www.persistence.table.ShowPersist;
@@ -25,8 +23,6 @@ public class ShowFactory {
 			.details(show.details)
 			.isBookable(show.isBookable)
 			.ownerId(show.ownerId)
-			.createdAt(LocalDateTime.now())
-			.modifiedAt(null)
 			.build();
 	}
 
