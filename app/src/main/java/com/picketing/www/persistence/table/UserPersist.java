@@ -1,24 +1,30 @@
 package com.picketing.www.persistence.table;
 
-import java.time.LocalDateTime;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @Getter
-public class UserPersist {
-	Long id;
-	String email;
-	String password;
-	String name;
-	String phoneNumber;
-	LocalDateTime createdAt;
-	LocalDateTime modifiedAt;
+@Entity
+@Table(name = "USER")
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserPersist extends BaseEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	// FIXME JPA 전환 완료 시, 아래 함수 삭제 및 UserPersist 다시 record로 변경
-	public UserPersist createUserPersist(Long id) {
-		this.id = id;
-		return this;
-	}
+	private String email;
+	private String password;
+	private String name;
+	private String phoneNumber;
 }

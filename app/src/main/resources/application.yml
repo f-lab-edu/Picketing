@@ -3,6 +3,6 @@ spring:
     name: Picketing
   profiles:
     include: secret
-    active: dev
+    active: local
 server:
   port: 8080

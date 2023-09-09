@@ -1,50 +1,18 @@
 package com.picketing.www.persistence.repository;
 
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.picketing.www.persistence.table.UserPersist;
 
-import lombok.RequiredArgsConstructor;
-
 @Repository
-@RequiredArgsConstructor
-public class UserRepository {
+public interface UserRepository extends JpaRepository<UserPersist, Long> {
 
-	private final Map<Long, UserPersist> store = new ConcurrentHashMap<>();
-	private final AtomicLong sequence = new AtomicLong(1);
+	Optional<UserPersist> findById(Long id);
 
-	// 사용자 이메일 조회 성능 향상을 위한 인덱스
-	private final Map<String, UserPersist> userEmailIndex = new ConcurrentHashMap<>();
+	Optional<UserPersist> findByEmail(String eamil);
 
-	public Long save(UserPersist userPersist) {
-		long id = sequence.get();
-		userPersist.createUserPersist(id);
-		store.put(id, userPersist);
-		sequence.set(id + 1);
-		userEmailIndex.put(userPersist.getEmail(), userPersist);
-
-		return id;
-	}
-
-	public Boolean existByEmail(String email) {
-		for (Map.Entry<Long, UserPersist> userPersistEntry : store.entrySet()) {
-			if (email.equals(userPersistEntry.getValue().getEmail())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public UserPersist findById(Long userId) {
-		return store.get(userId);
-	}
-
-	public Optional<UserPersist> findByEmail(String email) {
-		return Optional.of(userEmailIndex.get(email));
-	}
+	boolean existsByEmail(String email);
 }

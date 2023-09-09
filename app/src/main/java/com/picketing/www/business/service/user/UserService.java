@@ -25,15 +25,16 @@ public class UserService {
 
 	public Long create(User user) {
 		String email = user.getEmail();
-		if (userRepository.existByEmail(email)) {
+		if (userRepository.existsByEmail(email)) {
 			throw new CustomException(ErrorCode.DUPLICATED_EMAIL);
 		}
 		UserPersist persist = userFactory.persist(user);
-		return userRepository.save(persist);
+		return userRepository.save(persist).getId();
 	}
 
 	public User get(Long userId) {
-		UserPersist persist = userRepository.findById(userId);
+		UserPersist persist = userRepository.findById(userId)
+			.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 		return userFactory.create(persist);
 	}
 
