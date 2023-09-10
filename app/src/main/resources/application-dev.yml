@@ -1,0 +1,21 @@
+spring:
+  # 아래 DB 설정은 있어도, 없어도 된다 (docker-compose에 설정된 내용이 우선시 되기 때문)
+  datasource:
+    url: jdbc:mysql://127.0.0.1:13306/picketing?characterEncoding=UTF-8
+    username: picketing
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 12picketing!@
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+#  flyway:
+#    user: picketing
+#    baseline-on-migrate: true
+#    password: 12picketing!@
+#    enabled: true
+#    url: jdbc:mysql://127.0.0.1:13306/picketing?characterEncoding=UTF-8
+logging:
+  level:
+    org.hibernate.type: trace

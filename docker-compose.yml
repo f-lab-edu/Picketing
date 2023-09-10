@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  db:
+    container_name: picketing_database
+    image: mysql:8.0.28
+    restart: always
+    environment:
+      MYSQL_DATABASE: picketing
+      MYSQL_ROOT_PASWORD: 12picketingadmin!@
+      MYSQL_USER: picketing_admin
+      MYSQL_PASSWORD: 12picketing!@
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "13306:3306"
+    volumes:
+      - ./db/data:/var/lib/mysql
+    command:
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"

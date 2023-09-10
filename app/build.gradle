@@ -34,12 +34,11 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
-    // spring-data-commons for Pageable
-//    implementation 'org.springframework.data:spring-data-commons:3.1.2'
-
     // db
-//    implementation 'mysql:mysql-connector-java'
-    runtimeOnly 'com.h2database:h2:2.2.222'
+    implementation 'mysql:mysql-connector-java'
+
+    // flyway
+//    implementation 'org.flywaydb:flyway-mysql:8.5.13'
 
     // https://mvnrepository.com/artifact/com.h2database/h2
     testImplementation group: 'com.h2database', name: 'h2', version: '2.2.222'
