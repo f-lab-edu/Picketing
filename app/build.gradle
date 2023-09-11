@@ -35,15 +35,13 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
     // db
-    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.mysql:mysql-connector-j'
 
     // flyway
 //    implementation 'org.flywaydb:flyway-mysql:8.5.13'
 
     // https://mvnrepository.com/artifact/com.h2database/h2
     testImplementation group: 'com.h2database', name: 'h2', version: '2.2.222'
-    testImplementation "org.testcontainers:junit-jupiter:1.17.4"
-    testImplementation "org.testcontainers:mysql:1.17.4"
 
 }
 
