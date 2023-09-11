@@ -1,6 +1,8 @@
 package com.picketing.www.presentation.dto.response.seatGrade;
 
-public record SeatGradeCountsResponse(
+import java.util.List;
 
+public record SeatGradeCountsResponse(
+	List<SeatGradeCountResponse> seatGrades
 ) {
 }

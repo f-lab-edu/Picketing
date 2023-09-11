@@ -2,16 +2,14 @@ package com.picketing.www.business.domain.show;
 
 import org.springframework.stereotype.Component;
 
-import com.picketing.www.persistence.table.SeatGradePersist;
+import com.picketing.www.persistence.table.ShowSeatGradePersist;
 
 @Component
 public class SeatGradeFactory {
-	public SeatGrade create(SeatGradePersist seatGradePersist) {
-		return SeatGrade.builder()
+	public ShowSeatGrade create(ShowSeatGradePersist seatGradePersist) {
+		return ShowSeatGrade.builder()
 			.id(seatGradePersist.id())
 			.name(seatGradePersist.name())
-			.price(seatGradePersist.price())
-			.showId(seatGradePersist.showId())
 			.build();
 	}
 }

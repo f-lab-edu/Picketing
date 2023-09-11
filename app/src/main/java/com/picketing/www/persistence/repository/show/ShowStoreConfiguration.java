@@ -7,15 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.picketing.www.persistence.table.SeatGradePersist;
 import com.picketing.www.persistence.table.SeatPersist;
+import com.picketing.www.persistence.table.ShowSeatGradePersist;
 
 @Configuration
 public class ShowStoreConfiguration {
 
 	@Profile({"!test"})
 	@Bean
-	public Map<Long, SeatGradePersist> seatGradeStore() {
+	public Map<Long, ShowSeatGradePersist> seatGradeStore() {
 		return new ConcurrentHashMap<>();
 	}
 

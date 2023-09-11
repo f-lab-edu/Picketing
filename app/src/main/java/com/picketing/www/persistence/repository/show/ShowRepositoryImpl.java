@@ -11,32 +11,32 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.picketing.www.persistence.table.SeatGradePersist;
 import com.picketing.www.persistence.table.ShowPersist;
+import com.picketing.www.persistence.table.ShowSeatGradePersist;
 
 @Repository
-public class ShowRepositoryImpl implements ShowRepository, SeatGradeRepository {
+public class ShowRepositoryImpl {
 
 	private static final String GENRE_ALL = "ALL";
 
 	private final Map<Long, ShowPersist> showDB = new ConcurrentHashMap<>();
-	private final Map<Long, SeatGradePersist> seatGradeStore;
+	private final Map<Long, ShowSeatGradePersist> seatGradeStore;
 
 	private final AtomicLong sequence = new AtomicLong(0L);
 
-	private final Map<Long, List<SeatGradePersist>> showIdIndex;
+	private final Map<Long, List<ShowSeatGradePersist>> showIdIndex;
 
-	public ShowRepositoryImpl(Map<Long, SeatGradePersist> seatGradeStore) {
+	public ShowRepositoryImpl(Map<Long, ShowSeatGradePersist> seatGradeStore) {
 		this.seatGradeStore = seatGradeStore;
 		this.showIdIndex = new ConcurrentHashMap<>();
 		seatGradeStore.forEach((seatGradeId, seatGradePersist) -> {
-			List<SeatGradePersist> indexRecode = showIdIndex.getOrDefault(seatGradePersist.showId(), new ArrayList<>());
+			List<ShowSeatGradePersist> indexRecode = showIdIndex.getOrDefault(seatGradePersist.showId(),
+				new ArrayList<>());
 			indexRecode.add(seatGradePersist);
 			showIdIndex.put(seatGradePersist.showId(), indexRecode);
 		});
 	}
 
-	@Override
 	public List<ShowPersist> findShowListWithPagination(String genre, String subGenre, Pageable pageable) {
 		if (GENRE_ALL.equals(genre)) {
 			return new ArrayList<>(showDB.values());
@@ -53,20 +53,17 @@ public class ShowRepositoryImpl implements ShowRepository, SeatGradeRepository {
 		}
 	}
 
-	@Override
 	public ShowPersist save(ShowPersist showPersist) {
 		showPersist.createShowPersist(sequence.incrementAndGet());
 		showDB.putIfAbsent(showPersist.getId(), showPersist);
 		return showPersist;
 	}
 
-	@Override
 	public boolean notExistShow(Long showId) {
 		return Objects.isNull(showDB.get(showId));
 	}
 
-	@Override
-	public List<SeatGradePersist> findSeatGradeByShowIdAndTime(Long showId, Long scheduleId) {
+	public List<ShowSeatGradePersist> findSeatGradeByShowIdAndTime(Long showId, Long scheduleId) {
 		return showIdIndex.get(showId);
 	}
 }

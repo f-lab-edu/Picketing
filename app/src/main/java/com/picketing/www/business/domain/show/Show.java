@@ -8,6 +8,7 @@ import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
 
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
 public class Show {
@@ -24,7 +25,9 @@ public class Show {
 	final AgeGroup ageGroup;
 	final String details;
 	final Long ownerId;
-	final List<SeatGrade> seatGrades;
+
+	@Getter
+	final List<ShowSeatGrade> seatGrades;
 	boolean isBookable;
 
 	public void changeBookable(boolean flag) {

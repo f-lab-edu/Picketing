@@ -1,6 +1,6 @@
 package com.picketing.www.business.domain;
 
-public class Seat {
+public class PhysicalSeat {
 
 	private Long id;
 }

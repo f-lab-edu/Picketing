@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.picketing.www.business.domain.show.SeatGrade;
 import com.picketing.www.business.domain.show.Show;
 import com.picketing.www.business.domain.show.ShowFactory;
+import com.picketing.www.business.domain.show.ShowSeatGrade;
 import com.picketing.www.business.service.show.ShowService;
 import com.picketing.www.presentation.dto.response.seatGrade.SeatGradeCountsResponse;
 import com.picketing.www.presentation.dto.response.show.ShowMainResponse;
@@ -50,7 +50,7 @@ public class ShowController {
 		@PathVariable Long showId,
 		@PathVariable Long scheduleId
 	) {
-		List<SeatGrade> remainingSeats = showService.getRemainingSeatsByShowAndSchedule(showId, scheduleId);
+		List<ShowSeatGrade> remainingSeats = showService.getRemainingSeatsByShowAndSchedule(showId, scheduleId);
 		return null;
 	}
 }
