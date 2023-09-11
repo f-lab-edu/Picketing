@@ -35,7 +35,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
     // db
-    implementation 'mysql:mysql-connector-java'
+    runtimeOnly 'mysql:mysql-connector-java'
 
     // flyway
 //    implementation 'org.flywaydb:flyway-mysql:8.5.13'
