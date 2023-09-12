@@ -6,10 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.picketing.www.persistence.table.ShowPersist;
+import com.picketing.www.business.domain.Show;
 
 @Repository
-public interface ShowRepository extends JpaRepository<ShowPersist, Long> {
+public interface ShowRepository extends JpaRepository<Show, Long> {
 
-	List<ShowPersist> findShowPersistsByGenreAndSubGenre(String genre, String subGenre, Pageable pageable);
+	List<Show> findShowPersistsByGenreAndSubGenre(String genre, String subGenre, Pageable pageable);
 }
