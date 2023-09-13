@@ -1,13 +1,12 @@
-package com.picketing.www.business.service;
+package com.picketing.www.business.service.show;
 
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.picketing.www.business.domain.Show;
-import com.picketing.www.business.domain.ShowFactory;
-import com.picketing.www.persistence.repository.ShowRepository;
+import com.picketing.www.business.domain.show.Show;
+import com.picketing.www.persistence.repository.show.ShowRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,10 +16,7 @@ public class ShowService {
 
 	private final ShowRepository showRepository;
 
-	private final ShowFactory showFactory;
-
 	public List<Show> getShowList(String genre, String subGenre, Pageable pageable) {
-		return showRepository.findShowPersistsByGenreAndSubGenre(genre, subGenre,
-			pageable);
+		return showRepository.findShowsByGenreAndSubGenre(genre, subGenre, pageable);
 	}
 }

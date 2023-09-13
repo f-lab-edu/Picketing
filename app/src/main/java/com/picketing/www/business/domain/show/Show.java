@@ -1,4 +1,4 @@
-package com.picketing.www.business.domain;
+package com.picketing.www.business.domain.show;
 
 import java.time.LocalDate;
 
@@ -50,7 +50,7 @@ public class Show extends BaseEntity {
 	private String details;
 	private boolean isBookable;
 	private Long ownerId;
-	
+
 	public void changeBookable(boolean flag) {
 		this.isBookable = flag;
 	}

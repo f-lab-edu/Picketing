@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.picketing.www.business.domain.Show;
-import com.picketing.www.business.domain.ShowFactory;
-import com.picketing.www.business.service.ShowService;
+import com.picketing.www.business.domain.show.Show;
+import com.picketing.www.business.domain.show.ShowFactory;
+import com.picketing.www.business.service.show.ShowService;
 import com.picketing.www.presentation.dto.response.show.ShowMainResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +39,5 @@ public class ShowController {
 			.map(showFactory::findResponse)
 			.collect(Collectors.toList());
 		return new PageImpl<>(response, pageable, response.size());
-
 	}
 }
