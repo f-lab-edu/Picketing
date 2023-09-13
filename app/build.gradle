@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.1.0'
     id 'java'
     id 'checkstyle'
+    id 'io.spring.dependency-management' version '1.1.0'
 }
 
 compileJava.options.encoding = 'UTF-8'
@@ -38,11 +39,10 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     // flyway
-    implementation 'org.flywaydb:flyway-core:8.0.34'
-    implementation 'org.flywaydb:flyway-mysql:8.0.34'
+    // https://mvnrepository.com/artifact/org.flywaydb/flyway-mysql
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-mysql'
 
-    // https://mvnrepository.com/artifact/com.h2database/h2
-    testImplementation group: 'com.h2database', name: 'h2', version: '2.2.222'
 
 }
 
