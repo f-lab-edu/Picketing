@@ -50,8 +50,4 @@ public class Show extends BaseEntity {
 	private String details;
 	private boolean isBookable;
 	private Long ownerId;
-
-	public void changeBookable(boolean flag) {
-		this.isBookable = flag;
-	}
 }
