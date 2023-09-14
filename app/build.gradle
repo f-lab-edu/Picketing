@@ -40,10 +40,10 @@ dependencies {
 
     // flyway
     // https://mvnrepository.com/artifact/org.flywaydb/flyway-mysql
-    implementation 'org.flywaydb:flyway-core'
     implementation 'org.flywaydb:flyway-mysql'
-
-
+    // https://mvnrepository.com/artifact/org.flywaydb/flyway-gradle-plugin
+    runtimeOnly 'org.flywaydb:flyway-gradle-plugin'
+    
 }
 
 application {
