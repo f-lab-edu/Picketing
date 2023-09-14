@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 @Entity
-@Table(name = "USER")
+@Table(name = "USERS")
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserPersist extends BaseEntity {
