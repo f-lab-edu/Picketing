@@ -49,14 +49,31 @@ dependencies {
     testImplementation group: 'com.h2database', name: 'h2', version: '2.2.222'
 
     // QueryDSL
-    implementation 'com.querydsl:querydsl-jpa:5.0.0'
-    implementation 'com.querydsl:querydsl-apt'
-    annotationProcessor 'com.querydsl:querydsl-apt:4.4.0:jpa'
-    annotationProcessor 'org.hibernate:hibernate-jpamodelgen'
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+    annotationProcessor 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+    annotationProcessor 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 }
 
 application {
     mainClass = 'com.picketing.www.App'
+}
+
+/**
+ * QueryDSL Configuration
+ */
+def querydslDir = "$buildDir/generated/querydsl"
+
+sourceSets {
+    main.java.srcDir querydslDir
+}
+
+tasks.withType(JavaCompile) {
+    options.generatedSourceOutputDirectory = file(querydslDir)
+}
+
+clean {
+    delete file(querydslDir)
 }
 
 checkstyle {
