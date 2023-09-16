@@ -1,6 +1,14 @@
 spring:
   application:
     name: Picketing
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    driver-class-name: org.h2.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
 server:
   port: 8080
 PASSWORD_SALT: testsalt1234
