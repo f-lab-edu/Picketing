@@ -1,10 +1,11 @@
-package com.picketing.www.persistence.table;
+package com.picketing.www.business.domain.show;
 
 import java.time.LocalDate;
 
 import com.picketing.www.business.type.AgeGroup;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
+import com.picketing.www.persistence.table.BaseEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,18 +14,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Builder
-@Getter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "SHOW")
-@NoArgsConstructor
-@AllArgsConstructor
-public class ShowPersist extends BaseEntity {
+@Getter(AccessLevel.PROTECTED)
+@Builder(access = AccessLevel.PROTECTED)
+public class Show extends BaseEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
