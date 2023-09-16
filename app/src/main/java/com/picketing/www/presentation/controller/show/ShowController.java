@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.picketing.www.business.domain.Show;
-import com.picketing.www.business.domain.ShowFactory;
-import com.picketing.www.business.service.ShowService;
+import com.picketing.www.business.domain.show.Show;
+import com.picketing.www.business.domain.show.ShowFactory;
+import com.picketing.www.business.service.show.ShowService;
+import com.picketing.www.business.type.Genre;
+import com.picketing.www.business.type.SubGenre;
 import com.picketing.www.presentation.dto.response.show.ShowMainResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -31,14 +33,13 @@ public class ShowController {
 
 	@GetMapping
 	public Page<ShowMainResponse> getShowListWithPagination(
-		@RequestParam(value = "genre", required = false, defaultValue = "ALL") String genre,
-		@RequestParam(value = "subGenre", required = false, defaultValue = "ALL") String subGenre,
+		@RequestParam(value = "genre", required = false, defaultValue = "CONCERT") Genre genre,
+		@RequestParam(value = "subGenre", required = false, defaultValue = "FESTIVAL") SubGenre subGenre,
 		@PageableDefault(size = 10, page = 0, sort = "startDate", direction = Sort.Direction.DESC) Pageable pageable) {
 		List<Show> showList = showService.getShowList(genre, subGenre, pageable);
 		List<ShowMainResponse> response = showList.stream()
 			.map(showFactory::findResponse)
 			.collect(Collectors.toList());
 		return new PageImpl<>(response, pageable, response.size());
-
 	}
 }
