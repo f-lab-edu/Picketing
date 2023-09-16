@@ -47,8 +47,12 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.h2database/h2
     testImplementation group: 'com.h2database', name: 'h2', version: '2.2.222'
- 
 
+    // QueryDSL
+    implementation 'com.querydsl:querydsl-jpa:5.0.0'
+    implementation 'com.querydsl:querydsl-apt'
+    annotationProcessor 'com.querydsl:querydsl-apt:4.4.0:jpa'
+    annotationProcessor 'org.hibernate:hibernate-jpamodelgen'
 }
 
 application {
