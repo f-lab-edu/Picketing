@@ -24,7 +24,7 @@
             <emptyLine/>
             <package name="com.naver" withSubpackages="true" static="false"/>
             <emptyLine/>
-            <package name="generated" withSubpackages="false" static="false"/>
+            <package name="generated" withSubpackages="true" static="false"/>
             <emptyLine/>
         </value>
     </option>
