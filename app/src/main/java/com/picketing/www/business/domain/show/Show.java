@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.picketing.www.business.domain.schedule.DateSchedule;
 import com.picketing.www.business.domain.show.seatgrade.Seat;
 import com.picketing.www.business.type.AgeGroup;
 import com.picketing.www.business.type.Genre;
@@ -55,4 +56,7 @@ public class Show extends BaseEntity {
 
 	@OneToMany(mappedBy = "show")
 	private List<Seat> seatList = new ArrayList<>();
+
+	@OneToMany(mappedBy = "show")
+	private List<DateSchedule> dateSchedules = new ArrayList<>();
 }
