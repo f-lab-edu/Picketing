@@ -46,13 +46,15 @@ public class ShowController {
 	}
 
 	@GetMapping("/{showId}/basic-price")
-	public ShowSeatPriceResponse getShowSeatBasicPriceList(
+	public ShowSeatPriceResponse getShowSeatGradePriceList(
 		@PathVariable Long showId
 	) {
-		// List<ShowSeatPriceResponse> seatBasicPriceList = showService.getShowSeatBasicPriceList(showId)
-		// 	.stream()
-		// 	.map(new ShowSeatPriceResponse(showId, "VIP", new BigDecimal(165000)))
-		// 	.collect(Collectors.toList());
+		List<ShowSeatPriceResponse> seatBasicPriceList = showService.getShowSeatGradePriceList(showId)
+			.stream()
+			.map(s -> ShowSeatPriceResponse.ShowSeatBasicPriceResponseDto.builder()
+				.showId(s)
+				.build())
+			.collect(Collectors.toList());
 
 		return ShowSeatPriceResponse.builder().build();
 	}

@@ -14,6 +14,7 @@ public record ShowSeatPriceResponse(
 	List<ShowSeatBasicPriceResponseDto> basicPriceList
 ) {
 
+	@Builder
 	public record ShowSeatBasicPriceResponseDto(
 		@JsonProperty("show_id")
 		Long showId,
