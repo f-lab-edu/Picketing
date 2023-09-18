@@ -289,7 +289,7 @@ The following rules in the Naver coding convention cannot be checked by this con
         <!-- [import-grouping] -->
         <module name="ImportOrder">
             <property name="groups"
-                      value="java., javax., org., net., /com\.(?!nhncorp|navercorp|naver)/, /(?!java\.|javax\.|com\.|org\.|net\.)/, com.nhncorp., com.navercorp., com.naver., generated"/>
+                      value="java., javax., org., net., /com\.(?!nhncorp|navercorp|naver)/, /(?!java\.|javax\.|com\.|org\.|net\.)/, com.nhncorp., com.navercorp., com.naver., generated."/>
             <property name="ordered" value="true"/>
             <property name="separated" value="true"/>
             <property name="option" value="top"/>
