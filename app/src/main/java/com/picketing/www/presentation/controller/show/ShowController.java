@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import com.picketing.www.business.service.show.ShowService;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
 import com.picketing.www.presentation.dto.response.show.ShowMainResponse;
+import com.picketing.www.presentation.dto.response.show.ShowSeatPriceResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,4 +44,17 @@ public class ShowController {
 			.collect(Collectors.toList());
 		return new PageImpl<>(response, pageable, response.size());
 	}
+
+	@GetMapping("/{showId}/basic-price")
+	public List<ShowSeatPriceResponse> getShowSeatBasicPriceList(
+		@PathVariable Long showId
+	) {
+		List<ShowSeatPriceResponse> seatBasicPriceList = showService.getShowSeatBasicPriceList(showId)
+			.stream()
+			.map()
+			.collect(Collectors.toList());
+
+		return seatBasicPriceList;
+	}
+
 }
