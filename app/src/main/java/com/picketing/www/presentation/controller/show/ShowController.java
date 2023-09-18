@@ -1,6 +1,5 @@
 package com.picketing.www.presentation.controller.show;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +46,7 @@ public class ShowController {
 	}
 
 	@GetMapping("/{showId}/basic-price")
-	public List<ShowSeatPriceResponse> getShowSeatBasicPriceList(
+	public ShowSeatPriceResponse getShowSeatBasicPriceList(
 		@PathVariable Long showId
 	) {
 		// List<ShowSeatPriceResponse> seatBasicPriceList = showService.getShowSeatBasicPriceList(showId)
@@ -55,7 +54,7 @@ public class ShowController {
 		// 	.map(new ShowSeatPriceResponse(showId, "VIP", new BigDecimal(165000)))
 		// 	.collect(Collectors.toList());
 
-		return new ArrayList<>();
+		return ShowSeatPriceResponse.builder().build();
 	}
 
 }
