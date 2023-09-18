@@ -36,4 +36,9 @@ public class TimeSchedule {
 	private LocalTime startTime;
 	private LocalTime endTime;
 
+	public TimeSchedule addShowDateSchedule(DateSchedule dateSchedule) {
+		this.dateSchedule = dateSchedule;
+		dateSchedule.getTimeSchedules().add(this);
+		return this;
+	}
 }

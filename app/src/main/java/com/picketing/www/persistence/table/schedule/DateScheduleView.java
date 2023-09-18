@@ -3,16 +3,19 @@ package com.picketing.www.persistence.table.schedule;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.picketing.www.business.domain.schedule.DateSchedule;
+import com.picketing.www.business.domain.schedule.TimeSchedule;
+
 public record DateScheduleView(
-	DateSchedulePersist dateSchedulePersist,
-	List<TimeSchedulePersist> timeSchedulePersists
+	DateSchedule dateSchedule,
+	List<TimeSchedule> timeSchedules
 ) {
-	public DateScheduleView(DateSchedulePersist dateSchedulePersist, List<TimeSchedulePersist> timeSchedulePersists) {
-		this.dateSchedulePersist = dateSchedulePersist;
-		this.timeSchedulePersists = timeSchedulePersists;
+	public DateScheduleView(DateSchedule dateSchedule, List<TimeSchedule> timeSchedules) {
+		this.dateSchedule = dateSchedule;
+		this.timeSchedules = timeSchedules;
 	}
 
-	public DateScheduleView(DateSchedulePersist dateSchedulePersist) {
-		this(dateSchedulePersist, new ArrayList<>());
+	public DateScheduleView(DateSchedule dateSchedule) {
+		this(dateSchedule, new ArrayList<>());
 	}
 }

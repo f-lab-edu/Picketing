@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.picketing.www.persistence.table.schedule.DateSchedulePersist;
 import com.picketing.www.persistence.table.schedule.DateScheduleView;
 import com.picketing.www.presentation.dto.response.schedule.ScheduleResponseDto;
 import com.picketing.www.presentation.dto.response.schedule.ScheduleResponseDto.DateScheduleResponseDto;
