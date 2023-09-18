@@ -1,5 +1,7 @@
 package com.picketing.www.business.domain.show.seatgrade;
 
+import java.math.BigDecimal;
+
 import com.picketing.www.business.domain.show.Show;
 
 import jakarta.persistence.Entity;
@@ -23,4 +25,5 @@ public class SeatGrade {
 	@ManyToOne
 	@JoinColumn(name = "SHOW_ID")
 	private Show show;
+	private BigDecimal price;
 }
