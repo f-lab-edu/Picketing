@@ -32,4 +32,8 @@ public class SeatGrade {
 	@JoinColumn(name = "SHOW_ID")
 	private Show show;
 	private BigDecimal price;
+
+	public static SeatGrade createSeatGrade(Long id, String name, Show show, BigDecimal price) {
+		return new SeatGrade(id, name, show, price);
+	}
 }

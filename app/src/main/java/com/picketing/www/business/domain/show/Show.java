@@ -51,4 +51,11 @@ public class Show extends BaseEntity {
 	private String details;
 	private boolean isBookable;
 	private Long ownerId;
+
+	public static Show createShow(Long id, String title, Genre genre, SubGenre subGenre, LocalDate startDate,
+		LocalDate endDate, String venue, Long runningTime, Long intermission, AgeGroup ageGroup, String details,
+		boolean isBookable, Long ownerId) {
+		return new Show(id, title, genre, subGenre, startDate, endDate, venue, runningTime, intermission, ageGroup,
+			details, isBookable, ownerId);
+	}
 }
