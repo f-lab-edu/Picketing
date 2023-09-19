@@ -10,6 +10,10 @@ public record ShowSeatPriceResponse(
 	List<ShowSeatBasicPriceResponseDto> basicPriceList
 ) {
 
+	public ShowSeatPriceResponse(List<ShowSeatBasicPriceResponseDto> basicPriceList) {
+		this.basicPriceList = basicPriceList;
+	}
+
 	@Builder
 	public record ShowSeatBasicPriceResponseDto(
 		Long showId,

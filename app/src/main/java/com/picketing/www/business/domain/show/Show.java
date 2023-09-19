@@ -30,6 +30,7 @@ public class Show extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Getter
 	private Long id;
 
 	private String title;

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.picketing.www.business.domain.show.Show;
 import com.picketing.www.business.domain.show.ShowFactory;
+import com.picketing.www.business.domain.show.seatgrade.SeatGradeFactory;
 import com.picketing.www.business.service.show.ShowService;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
@@ -33,6 +34,8 @@ public class ShowController {
 
 	private final ShowService showService;
 
+	private final SeatGradeFactory seatGradeFactory;
+
 	@GetMapping
 	public Page<ShowMainResponse> getShowListWithPagination(
 		@RequestParam(value = "genre", required = false, defaultValue = "CONCERT") Genre genre,
@@ -49,13 +52,9 @@ public class ShowController {
 	public ShowSeatPriceResponse getShowSeatGradePriceList(
 		@PathVariable Long showId
 	) {
-		List<ShowSeatPriceResponse> seatBasicPriceList = showService.getShowSeatGradePriceList(showId)
-			.stream()
-			.map(s -> ShowSeatPriceResponse.ShowSeatBasicPriceResponseDto.builder()
-				.showId(s)
-				.build())
-			.collect(Collectors.toList());
-		return ShowSeatPriceResponse.builder().build();
+		return seatGradeFactory.findResponse(
+			showService.getShowSeatGradePriceList(showId)
+		);
 	}
 
 }
