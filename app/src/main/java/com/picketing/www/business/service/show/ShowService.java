@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.picketing.www.business.domain.show.Show;
+import com.picketing.www.business.domain.show.seatgrade.SeatGrade;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
 import com.picketing.www.persistence.repository.show.ShowRepository;
@@ -23,7 +24,7 @@ public class ShowService {
 		return showRepository.findShowsByGenreAndSubGenre(genre, subGenre, pageable);
 	}
 
-	public List<?> getShowSeatBasicPriceList(Long showId) {
+	public List<SeatGrade> getShowSeatBasicPriceList(Long showId) {
 		return new ArrayList<>();
 	}
 }

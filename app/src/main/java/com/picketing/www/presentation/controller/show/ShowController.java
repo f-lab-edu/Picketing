@@ -49,11 +49,6 @@ public class ShowController {
 	public ShowSeatPriceResponse getShowSeatBasicPriceList(
 		@PathVariable Long showId
 	) {
-		// List<ShowSeatPriceResponse> seatBasicPriceList = showService.getShowSeatBasicPriceList(showId)
-		// 	.stream()
-		// 	.map(new ShowSeatPriceResponse(showId, "VIP", new BigDecimal(165000)))
-		// 	.collect(Collectors.toList());
-
 		return ShowSeatPriceResponse.builder().build();
 	}
 
