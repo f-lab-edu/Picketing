@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import com.picketing.www.business.domain.show.Show;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,7 +29,7 @@ public class SeatGrade {
 	private Long id;
 	private String name;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SHOW_ID")
 	private Show show;
 	private BigDecimal price;
