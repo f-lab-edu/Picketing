@@ -28,7 +28,7 @@ public class ScheduleController {
 		@PathVariable Long showId,
 		@RequestParam("yearMonth") @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
 	) {
-		return scheduleFactory.findResponse(
+		return scheduleFactory.convertScheduleIntoResponse(
 			scheduleService.getSchedules(showId, yearMonth)
 		);
 	}

@@ -15,51 +15,46 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class ScheduleFactory {
-
-	private final DateScheduleFactory dateScheduleFactory;
-	private final TimeScheduleFactory timeScheduleFactory;
-
 	public Schedule create(List<DateScheduleView> dateScheduleViews) {
 		List<DateSchedule> dateSchedules = new ArrayList<>(dateScheduleViews.size());
 		for (DateScheduleView dateScheduleView : dateScheduleViews) {
-			DateSchedulePersist dateSchedulePersist = dateScheduleView.dateSchedulePersist();
-			DateSchedule dateSchedule = dateScheduleFactory.create(dateSchedulePersist);
-			List<TimeSchedule> timeSchedules = timeScheduleFactory.create(dateScheduleView.timeSchedulePersists());
-			dateSchedule.setTimeSchedules(timeSchedules);
-			dateSchedules.add(dateSchedule);
+			DateSchedule dateSchedule = dateScheduleView.dateSchedule();
+			List<TimeSchedule> timeSchedules = dateScheduleView.timeSchedules();
+			// dateSchedule.setTimeSchedules(timeSchedules);
+			// dateSchedules.add(dateSchedule);
 		}
 		return Schedule.builder()
 			.dateSchedules(dateSchedules)
 			.build();
 	}
 
-	public ScheduleResponseDto findResponse(Schedule schedule) {
-		return new ScheduleResponseDto(this.findDateResponses(schedule.dateSchedules));
+	public ScheduleResponseDto convertScheduleIntoResponse(Schedule schedule) {
+		return new ScheduleResponseDto(this.convertDateSchedulesIntoResponse(schedule.dateSchedules));
 	}
 
-	private List<DateScheduleResponseDto> findDateResponses(List<DateSchedule> dateSchedules) {
-		return dateSchedules.stream().map(this::findDateResponse).toList();
+	private List<DateScheduleResponseDto> convertDateSchedulesIntoResponse(List<DateSchedule> dateSchedules) {
+		return dateSchedules.stream().map(this::convertDateScheduleIntoResponse).toList();
 	}
 
-	private DateScheduleResponseDto findDateResponse(DateSchedule dateSchedule) {
+	private DateScheduleResponseDto convertDateScheduleIntoResponse(DateSchedule dateSchedule) {
 		return new ScheduleResponseDto.DateScheduleResponseDto(
-			dateSchedule.name,
-			dateSchedule.startDate,
-			dateSchedule.endDate,
-			this.findTimeResponses(dateSchedule.timeSchedules)
+			dateSchedule.getName(),
+			dateSchedule.getStartDate(),
+			dateSchedule.getEndDate(),
+			this.convertTimeScheduleListIntoResponse(dateSchedule.getTimeSchedules())
 		);
 	}
 
-	private List<TimeScheduleResponseDto> findTimeResponses(List<TimeSchedule> timeSchedules) {
+	private List<TimeScheduleResponseDto> convertTimeScheduleListIntoResponse(List<TimeSchedule> timeSchedules) {
 		return timeSchedules.stream()
-			.map(this::findTimeResponse)
+			.map(this::convertTimeScheduleListIntoResponse)
 			.toList();
 	}
 
-	private TimeScheduleResponseDto findTimeResponse(TimeSchedule timeSchedule) {
+	private TimeScheduleResponseDto convertTimeScheduleListIntoResponse(TimeSchedule timeSchedule) {
 		return new TimeScheduleResponseDto(
-			timeSchedule.startTime,
-			timeSchedule.endTime
+			timeSchedule.getStartTime(),
+			timeSchedule.getEndTime()
 		);
 	}
 }
