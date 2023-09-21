@@ -21,7 +21,7 @@ import com.picketing.www.business.service.show.ShowService;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
 import com.picketing.www.presentation.dto.response.show.ShowMainResponse;
-import com.picketing.www.presentation.dto.response.show.ShowSeatPriceResponse;
+import com.picketing.www.presentation.dto.response.show.ShowSeatGradeResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -48,12 +48,12 @@ public class ShowController {
 		return new PageImpl<>(response, pageable, response.size());
 	}
 
-	@GetMapping("/{showId}/basic-price")
-	public ShowSeatPriceResponse getShowSeatGradePriceList(
+	@GetMapping("/{showId}/seatGrade")
+	public ShowSeatGradeResponse getShowSeatGradeList(
 		@PathVariable Long showId
 	) {
-		return seatGradeFactory.findResponse(
-			showService.getShowSeatGradePriceList(showId)
+		return seatGradeFactory.convertSeatGradeToResponse(
+			showService.getShowSeatGradeList(showId)
 		);
 	}
 

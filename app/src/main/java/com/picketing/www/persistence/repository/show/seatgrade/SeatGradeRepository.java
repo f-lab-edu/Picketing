@@ -7,12 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.picketing.www.business.domain.show.Show;
 import com.picketing.www.business.domain.show.seatgrade.SeatGrade;
 
 @Repository
 public interface SeatGradeRepository extends JpaRepository<SeatGrade, Long> {
 
-	@Query("select sg from SeatGrade sg where sg.show = :show")
-	List<SeatGrade> findAllByShow(@Param("show") Show show);
+	@Query("select sg from SeatGrade sg where sg.show.id = :showId")
+	List<SeatGrade> findAllByShow(@Param("showId") Long showId);
 }
