@@ -140,18 +140,18 @@ public class ShowControllerTest {
 				"임영웅 콘서트 투어", true, 1L);
 			showRepository.save(latestShow);
 
-			List<SeatGrade> seatGradeList = new ArrayList<>();
+			List<SeatGrade> seatGradeList = new ArrayList<>(10);
 			seatGradeList.add(createSeatGrade(
 				1L, "VIP", latestShow, new BigDecimal(165000)
 			));
 			seatGradeList.add(createSeatGrade(
-				1L, "SR", latestShow, new BigDecimal(154000)
+				2L, "SR", latestShow, new BigDecimal(154000)
 			));
 			seatGradeList.add(createSeatGrade(
-				1L, "R", latestShow, new BigDecimal(143000)
+				3L, "R", latestShow, new BigDecimal(143000)
 			));
 			seatGradeList.add(createSeatGrade(
-				1L, "S", latestShow, new BigDecimal(121000)
+				4L, "S", latestShow, new BigDecimal(121000)
 			));
 
 			seatGradeRepository.saveAll(seatGradeList);
@@ -160,13 +160,12 @@ public class ShowControllerTest {
 			session.setAttribute("login_user", 1L);
 			mockMvc.perform(
 					MockMvcRequestBuilders
-						.get("/api/shows/1/basic-price")
+						.get("/api/shows/1/seatGrade")
 						.session(session)
 						.accept(MediaType.APPLICATION_JSON)
 				).andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.basicPriceList.length()").value(4))
-			;
+				.andExpect(jsonPath("$.seatGradeList.length()").value(4));
 		}
 	}
 }
