@@ -49,7 +49,7 @@ public class ShowController {
 	}
 
 	@GetMapping("/{showId}/seatGrade")
-	public ShowSeatGradeResponse getShowSeatGradeList(
+	public ShowSeatPriceResponse getShowSeatGradeList(
 		@PathVariable Long showId
 	) {
 		return seatGradeFactory.convertSeatGradeToResponse(
