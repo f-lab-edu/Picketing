@@ -45,8 +45,8 @@ public class ShowController {
 		return new PageImpl<>(response, pageable, response.size());
 	}
 
-	@GetMapping("/{showId}/basic-price")
-	public ShowSeatPriceResponse getShowSeatBasicPriceList(
+	@GetMapping("/{showId}/seatGrade")
+	public ShowSeatPriceResponse getShowSeatGradeList(
 		@PathVariable Long showId
 	) {
 		return ShowSeatPriceResponse.builder().build();
