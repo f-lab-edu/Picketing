@@ -12,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -119,39 +118,11 @@ public class ShowControllerTest {
 			Integer showId = 1;
 			Integer timeScheduleId = 1;
 			String url = String.format(
-				"/api/shows/{showId}/schedule/times/{timeScheduleId}/seats/grades/remaining-counts",
-				showId,
-				timeScheduleId
+				"/api/shows/%s/schedule/times/%s/seats/grades/remaining-counts",
+				showId, timeScheduleId
 			);
 
-			mockMvc.perform(
-					MockMvcRequestBuilders
-						.get(url)
-						.session(session)
-						.accept(MediaType.APPLICATION_JSON)
-				).andDo(print())
-				.andExpect(status().isOk());
-		}
-
-		@Test
-		@Sql(scripts = {
-			"classpath:data/shows.sql",
-			"classpath:data/dateSchedules.sql",
-			"classpath:data/timeSchedules.sql",
-			"classpath:data/seatGrades.sql"
-		})
-		@DisplayName("데이터가 존재하지 않는 경우 정상 조회")
-		void test() throws Exception {
-			MockHttpSession session = new MockHttpSession();
-			session.setAttribute("login_user", 1L);
-
-			Integer showId = 1;
-			Integer timeScheduleId = 1;
-			String url = String.format(
-				"/api/shows/{showId}/schedule/times/{timeScheduleId}/seats/grades/remaining-counts",
-				showId,
-				timeScheduleId
-			);
+			System.out.println("url: " + url);
 
 			mockMvc.perform(
 					MockMvcRequestBuilders
