@@ -1,4 +1,4 @@
-package com.picketing.www.business.domain.show.seatgrade;
+package com.picketing.www.business.domain.show.seat.grade;
 
 import com.picketing.www.persistence.table.BaseEntity;
 
@@ -8,10 +8,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "SEATS")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Seat extends BaseEntity {
 	@Id
@@ -21,7 +23,4 @@ public class Seat extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "SEAT_GRADE_ID")
 	private SeatGrade seatGrade;
-
-	// TODO 23.09.13: Time schedule id mapping. @ManyToOne
-	private Long timeScheduleId;
 }

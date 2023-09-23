@@ -9,16 +9,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.picketing.www.business.domain.show.Show;
 import com.picketing.www.business.domain.show.ShowFactory;
+import com.picketing.www.business.domain.show.seat.grade.SeatGrade;
+import com.picketing.www.business.domain.show.seat.grade.SeatGradeFactory;
 import com.picketing.www.business.service.show.ShowService;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
 import com.picketing.www.presentation.dto.response.show.ShowMainResponse;
+import com.picketing.www.presentation.dto.response.show.seat.grade.RemainingSeatCountResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class ShowController {
 
 	private final ShowFactory showFactory;
+	private final SeatGradeFactory seatGradeFactory;
 
 	private final ShowService showService;
 
@@ -41,5 +46,13 @@ public class ShowController {
 			.map(showFactory::findResponse)
 			.collect(Collectors.toList());
 		return new PageImpl<>(response, pageable, response.size());
+	}
+
+	@GetMapping("/{showId}/schedule/times/{timeScheduleId}/seats/grades/remaining-counts")
+	public List<RemainingSeatCountResponse> getRemainingSeatCountsInShow(
+		@PathVariable Long showId, @PathVariable Long timeScheduleId
+	) {
+		List<SeatGrade> remainingSeatCounts = showService.getRemainingSeatCounts(showId, timeScheduleId);
+		return seatGradeFactory.toRemainingSeatCountResponses(remainingSeatCounts);
 	}
 }
