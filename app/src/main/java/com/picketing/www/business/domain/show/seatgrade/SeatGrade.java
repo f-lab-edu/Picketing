@@ -1,6 +1,6 @@
 package com.picketing.www.business.domain.show.seatgrade;
 
-import com.picketing.www.business.domain.show.Show;
+import java.math.BigDecimal;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,8 +19,9 @@ public class SeatGrade {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private BigDecimal price;
 
 	@ManyToOne
-	@JoinColumn(name = "SHOW_ID")
-	private Show show;
+	@JoinColumn(name = "SEAT_ID")
+	private Seat seat;
 }
