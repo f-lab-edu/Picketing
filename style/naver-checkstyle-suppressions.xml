@@ -5,4 +5,5 @@
 
 <suppressions>
     <suppress files="User.java" checks=".*"/>
+    <suppress files="generated.querydsl.*" checks=".*"/>
 </suppressions>

@@ -1,5 +1,6 @@
 package com.picketing.www.business.domain.show.seatgrade;
 
+import com.picketing.www.business.domain.show.Show;
 import com.picketing.www.persistence.table.BaseEntity;
 
 import jakarta.persistence.Entity;
@@ -18,10 +19,9 @@ public class Seat extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SEAT_GRADE_ID")
-	private SeatGrade seatGrade;
+  
+	@JoinColumn(name = "SHOW_ID")
+	private Show show;
 
 	// TODO 23.09.13: Time schedule id mapping. @ManyToOne
 	private Long timeScheduleId;

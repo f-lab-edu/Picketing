@@ -1,7 +1,10 @@
 package com.picketing.www.business.domain.show;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.picketing.www.business.domain.show.seatgrade.Seat;
 import com.picketing.www.business.type.AgeGroup;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
@@ -13,10 +16,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,7 +28,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "SHOW")
 @Getter(AccessLevel.PROTECTED)
-@Builder(access = AccessLevel.PROTECTED)
 public class Show extends BaseEntity {
 
 	@Id
@@ -51,6 +53,10 @@ public class Show extends BaseEntity {
 	private String details;
 	private boolean isBookable;
 	private Long ownerId;
+  
+  
+	@OneToMany(mappedBy = "show")
+	private List<Seat> seatList = new ArrayList<>();
 
 	public static Show createShow(Long id, String title, Genre genre, SubGenre subGenre, LocalDate startDate,
 		LocalDate endDate, String venue, Long runningTime, Long intermission, AgeGroup ageGroup, String details,
