@@ -2,10 +2,7 @@ package com.picketing.www.business.domain.show.seatgrade;
 
 import java.math.BigDecimal;
 
-import com.picketing.www.business.domain.show.Show;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,13 +25,14 @@ public class SeatGrade {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private BigDecimal price;
-  
+
 	@ManyToOne
 	@JoinColumn(name = "SEAT_ID")
 	private Seat seat;
-  
-	public static SeatGrade createSeatGrade(Long id, String name, Show show, BigDecimal price) {
-		return new SeatGrade(id, name, show, price);
+
+	private BigDecimal price;
+
+	public static SeatGrade createSeatGrade(Long id, String name, Seat seat, BigDecimal price) {
+		return new SeatGrade(id, name, seat, price);
 	}
 }
