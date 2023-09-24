@@ -10,12 +10,10 @@ import com.picketing.www.presentation.dto.response.show.seat.grade.RemainingSeat
 public class SeatGradeFactory {
 	public List<RemainingSeatCountResponse> toRemainingSeatCountResponses(List<SeatGrade> seatGrades) {
 		return seatGrades.stream()
-			.map(this::toRemainingSeatCountResponse)
+			.map(seatGrade -> {
+				return new RemainingSeatCountResponse(seatGrade.getId(), seatGrade.getName(),
+					seatGrade.getRemainingSeatCount());
+			})
 			.toList();
-	}
-
-	private RemainingSeatCountResponse toRemainingSeatCountResponse(SeatGrade seatGrade) {
-		return new RemainingSeatCountResponse(seatGrade.getId(), seatGrade.getName(),
-			seatGrade.getRemainingSeatCount());
 	}
 }
