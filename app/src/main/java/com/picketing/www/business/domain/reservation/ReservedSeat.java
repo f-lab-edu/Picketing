@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "RESERVATION_SEAT")
-public class ReservationSeat {
+public class ReservedSeat {
 
 	@Id
 	@GeneratedValue

@@ -34,6 +34,6 @@ public class Reservation extends BaseEntity {
 	// private User user;
 
 	@OneToMany(mappedBy = "reservation")
-	private List<ReservationSeat> reservationSeatList = new ArrayList<>();
+	private List<ReservedSeat> reservedSeatList = new ArrayList<>();
 
 }
