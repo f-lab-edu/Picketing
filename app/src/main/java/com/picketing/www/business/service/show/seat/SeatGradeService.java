@@ -16,12 +16,6 @@ public class SeatGradeService {
 	private final SeatGradeRepository seatGradeRepository;
 
 	public List<SeatGrade> getSeatGradeList(Long showId) {
-		System.out.println("SeatGradeService.getSeatGradeList , showId : " + showId);
-		List<SeatGrade> allByShow = seatGradeRepository.findAllByShow(showId);
-		for (SeatGrade seatGrade : allByShow) {
-			System.out.println("seatGrade.toString() = " + seatGrade.toString());
-		}
-
-		return allByShow;
+		return seatGradeRepository.findAllByShow(showId);
 	}
 }
