@@ -1,7 +1,6 @@
 package com.picketing.www.business.domain.show;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.picketing.www.business.domain.show.seat.Seat;
@@ -57,5 +56,5 @@ public class Show extends BaseEntity {
 	private Long ownerId;
 
 	@OneToMany(mappedBy = "show")
-	private List<Seat> seatList = new ArrayList<>();
+	private List<Seat> seatList;
 }
