@@ -1,4 +1,4 @@
-package com.picketing.www.business.domain.show.seatgrade;
+package com.picketing.www.business.domain.show.seat;
 
 import java.math.BigDecimal;
 
@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder(access = AccessLevel.PROTECTED)
 @Getter(AccessLevel.PROTECTED)
+@Table(name = "SEAT_GRADE")
 public class SeatGrade {
 
 	@Id
@@ -31,8 +33,4 @@ public class SeatGrade {
 	private Seat seat;
 
 	private BigDecimal price;
-
-	public static SeatGrade createSeatGrade(Long id, String name, Seat seat, BigDecimal price) {
-		return new SeatGrade(id, name, seat, price);
-	}
 }

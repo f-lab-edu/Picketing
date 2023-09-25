@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.picketing.www.application.exception.CustomException;
 import com.picketing.www.application.exception.ErrorCode;
 import com.picketing.www.business.domain.show.Show;
-import com.picketing.www.business.domain.show.seatgrade.SeatGrade;
-import com.picketing.www.business.service.show.seatgrade.SeatGradeService;
+import com.picketing.www.business.domain.show.seat.SeatGrade;
+import com.picketing.www.business.service.show.seat.SeatGradeService;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
 import com.picketing.www.persistence.repository.show.ShowRepository;
@@ -29,7 +29,7 @@ public class ShowService {
 	}
 
 	public List<SeatGrade> getShowSeatGradeList(Long showId) {
-		showRepository.findById(showId)
+		showRepository.findShowById(showId)
 			.orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
 		return seatGradeService.getSeatGradeList(showId);
 	}
