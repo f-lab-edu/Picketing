@@ -1,7 +1,5 @@
 package com.picketing.www.presentation.controller.show;
 
-import static com.picketing.www.business.domain.show.Show.*;
-import static com.picketing.www.business.domain.show.seatgrade.SeatGrade.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -24,12 +22,20 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.picketing.www.business.domain.show.Show;
-import com.picketing.www.business.domain.show.seatgrade.SeatGrade;
+import com.picketing.www.business.domain.show.ShowFactory;
+import com.picketing.www.business.domain.show.seat.Seat;
+import com.picketing.www.business.domain.show.seat.SeatFactory;
+import com.picketing.www.business.domain.show.seat.SeatGrade;
+import com.picketing.www.business.domain.show.seat.SeatGradeFactory;
 import com.picketing.www.business.type.AgeGroup;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
 import com.picketing.www.persistence.repository.show.ShowRepository;
-import com.picketing.www.persistence.repository.show.seatgrade.SeatGradeRepository;
+import com.picketing.www.persistence.repository.show.seat.SeatGradeRepository;
+import com.picketing.www.persistence.repository.show.seat.SeatRepository;
+import com.picketing.www.presentation.dto.request.seat.SaveSeatGradeRequest;
+import com.picketing.www.presentation.dto.request.seat.SaveSeatRequest;
+import com.picketing.www.presentation.dto.request.seat.SaveShowRequest;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -43,7 +49,19 @@ public class ShowControllerTest {
 	ShowRepository showRepository;
 
 	@Autowired
+	SeatRepository seatRepository;
+
+	@Autowired
 	SeatGradeRepository seatGradeRepository;
+
+	@Autowired
+	ShowFactory showFactory;
+
+	@Autowired
+	SeatFactory seatFactory;
+
+	@Autowired
+	SeatGradeFactory seatGradeFactory;
 
 	@Nested
 	@DisplayName("Show 조회")
@@ -133,27 +151,76 @@ public class ShowControllerTest {
 		@Test
 		@DisplayName("특정 공연의 좌석 가격 리스트 조회")
 		void has_seat_grade_price_list_when_search_show() throws
-
 			Exception {
-			Show latestShow = createShow(1L, "임영웅 콘서트 IM HERO TOUR 2023 - 서울", Genre.CONCERT, SubGenre.DOMESTIC,
-				LocalDate.of(2023, 10, 27), LocalDate.of(2023, 11, 5), "KSPO DOME(올림픽체조경기장)", 150L, 0L, AgeGroup.SEVEN,
-				"임영웅 콘서트 투어", true, 1L);
+
+			Show latestShow = showFactory.createShow(SaveShowRequest.builder()
+				.title("임영웅 콘서트 IM HERO TOUR 2023 - 서울")
+				.genre(Genre.CONCERT)
+				.subGenre(SubGenre.DOMESTIC)
+				.startDate(LocalDate.of(2023, 10, 27))
+				.endDate(LocalDate.of(2023, 11, 5))
+				.venue("KSPO DOME(올림픽체조경기장)")
+				.runningTime(150L)
+				.intermission(0L)
+				.ageGroup(AgeGroup.SEVEN)
+				.details("임영웅 전국 콘서트 투어")
+				.isBookable(true)
+				.ownerId(1L)
+				.build()
+			);
 			showRepository.save(latestShow);
 
-			List<SeatGrade> seatGradeList = new ArrayList<>(10);
-			seatGradeList.add(createSeatGrade(
-				1L, "VIP", latestShow, new BigDecimal(165000)
-			));
-			seatGradeList.add(createSeatGrade(
-				2L, "SR", latestShow, new BigDecimal(154000)
-			));
-			seatGradeList.add(createSeatGrade(
-				3L, "R", latestShow, new BigDecimal(143000)
-			));
-			seatGradeList.add(createSeatGrade(
-				4L, "S", latestShow, new BigDecimal(121000)
-			));
+			List<Seat> seatList = new ArrayList<>(10);
+			for (int i = 0; i < 50; i++) {
+				seatList.add(seatFactory.createSeat(
+					SaveSeatRequest.builder()
+						.show(latestShow)
+						.timeScheduleId(1L)
+						.build())
+				);
+			}
+			seatRepository.saveAll(seatList);
 
+			List<SeatGrade> seatGradeList = new ArrayList<>(10);
+			for (int i = 0; i < 15; i++) {
+				seatGradeList.add(seatGradeFactory.createSeatGrade(
+					SaveSeatGradeRequest.builder()
+						.name("VIP")
+						.seat(seatList.get(i))
+						.price(new BigDecimal(165000))
+						.build()
+				));
+			}
+
+			for (int i = 15; i < 25; i++) {
+				seatGradeList.add(seatGradeFactory.createSeatGrade(
+					SaveSeatGradeRequest.builder()
+						.name("SR")
+						.seat(seatList.get(i))
+						.price(new BigDecimal(154000))
+						.build()
+				));
+			}
+
+			for (int i = 25; i < 37; i++) {
+				seatGradeList.add(seatGradeFactory.createSeatGrade(
+					SaveSeatGradeRequest.builder()
+						.name("R")
+						.seat(seatList.get(i))
+						.price(new BigDecimal(143000))
+						.build()
+				));
+			}
+
+			for (int i = 37; i < 50; i++) {
+				seatGradeList.add(seatGradeFactory.createSeatGrade(
+					SaveSeatGradeRequest.builder()
+						.name("S")
+						.seat(seatList.get(i))
+						.price(new BigDecimal(121000))
+						.build()
+				));
+			}
 			seatGradeRepository.saveAll(seatGradeList);
 
 			MockHttpSession session = new MockHttpSession();
@@ -165,7 +232,7 @@ public class ShowControllerTest {
 						.accept(MediaType.APPLICATION_JSON)
 				).andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.seatGradeList.length()").value(4));
+				.andExpect(jsonPath("$.seatGradeList.length()").value(50));
 		}
 	}
 }
