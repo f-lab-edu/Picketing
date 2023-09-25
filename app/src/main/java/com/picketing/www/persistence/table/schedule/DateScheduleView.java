@@ -6,6 +6,9 @@ import java.util.List;
 import com.picketing.www.business.domain.schedule.DateSchedule;
 import com.picketing.www.business.domain.schedule.TimeSchedule;
 
+import lombok.Builder;
+
+@Builder
 public record DateScheduleView(
 	DateSchedule dateSchedule,
 	List<TimeSchedule> timeSchedules
