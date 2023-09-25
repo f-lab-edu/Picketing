@@ -4,6 +4,7 @@ import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,9 +30,10 @@ public class TimeSchedule {
 	@Column(name = "TIME_SCHEDULE_ID")
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "DATE_SCHEDULE_ID")
 	private DateSchedule dateSchedule;
+	
 	private String name;
 	private LocalTime startTime;
 	private LocalTime endTime;
