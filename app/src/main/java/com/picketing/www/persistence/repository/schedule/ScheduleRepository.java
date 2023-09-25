@@ -1,7 +1,9 @@
 package com.picketing.www.persistence.repository.schedule;
 
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -16,14 +18,13 @@ public class ScheduleRepository {
 	private TimeScheduleRepository timeScheduleRepository;
 
 	// TODO 특정 공연에 대해서 DateSchedule 및 TimeSchedule까지 조회
-	// public List<DateScheduleView> getSchedules(Long showId, final YearMonth searchTargetYearMonth) {
-	//
-	// }
+	public List<DateScheduleView> getSchedules(Long showId, final YearMonth searchTargetYearMonth) {
+		Optional<DateSchedule> dateSchedule = dateScheduleRepository.findById(showId);
+	}
 
 	// 특정 공연에 대해 DateSchedule 및 TimeSchedule 저장
 	public List<DateScheduleView> save(List<DateScheduleView> dateScheduleViews) {
 		List<DateScheduleView> dateScheduleViewList = new ArrayList<>();
-
 		for (DateScheduleView dateScheduleView : dateScheduleViews) {
 			DateSchedule savedDateSchedule = save(dateScheduleView.dateSchedule());
 			List<TimeSchedule> savedTimeSchedules = save(savedDateSchedule, dateScheduleView.timeSchedules());
