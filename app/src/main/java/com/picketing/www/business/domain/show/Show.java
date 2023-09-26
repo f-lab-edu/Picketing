@@ -1,10 +1,9 @@
 package com.picketing.www.business.domain.show;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.picketing.www.business.domain.show.seatgrade.Seat;
+import com.picketing.www.business.domain.show.seat.Seat;
 import com.picketing.www.business.type.AgeGroup;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
@@ -20,18 +19,21 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "SHOW")
+@Builder(access = AccessLevel.PROTECTED)
+@Table(name = "SHOWS")
 @Getter(AccessLevel.PROTECTED)
 public class Show extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Getter
 	private Long id;
 
 	private String title;
@@ -54,5 +56,5 @@ public class Show extends BaseEntity {
 	private Long ownerId;
 
 	@OneToMany(mappedBy = "show")
-	private List<Seat> seatList = new ArrayList<>();
+	private List<Seat> seatList;
 }
