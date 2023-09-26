@@ -11,10 +11,7 @@ import lombok.Setter;
 public class DateSchedule {
 	@Getter
 	final Long id;
-	final Long showId;
-	final String name;
-	final LocalDate startDate;
-	final LocalDate endDate;
+	final LocalDate showDate; //2023-09-26
 
 	@Setter
 	List<TimeSchedule> timeSchedules;

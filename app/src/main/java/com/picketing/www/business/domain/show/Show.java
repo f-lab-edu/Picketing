@@ -55,6 +55,4 @@ public class Show extends BaseEntity {
 	private boolean isBookable;
 	private Long ownerId;
 
-	@OneToMany(mappedBy = "show")
-	private List<Seat> seatList;
 }

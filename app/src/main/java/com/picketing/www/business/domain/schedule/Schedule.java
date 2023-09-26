@@ -5,6 +5,8 @@ import java.util.List;
 import lombok.Builder;
 
 public class Schedule {
+	long showId;
+	long theaterId;
 	List<DateSchedule> dateSchedules;
 
 	@Builder
