@@ -46,7 +46,9 @@ class LoginCheckInterceptorTest {
 	@Test
 	void should_intercept_when_request_to_included_url() throws Exception {
 		// given
-		MockHttpServletRequest request = new MockHttpServletRequest("GET", "/api/users/1");
+		MockHttpServletRequest request = new MockHttpServletRequest("POST", "/api/reservation/1");
+
+		System.out.println("request.getRequestURL() = " + request.getRequestURL());
 
 		HandlerExecutionChain chain = mapping.getHandler(request);
 
