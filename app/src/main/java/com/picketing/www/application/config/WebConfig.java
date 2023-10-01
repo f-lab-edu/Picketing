@@ -12,11 +12,11 @@ import com.picketing.www.application.interceptor.LoginCheckInterceptor;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-	private static final List<String> excludeInterceptorURLs = Arrays.asList("/api/users", "/api/users/signin");
+	private static final List<String> addInterceptorURLs = Arrays.asList("/api/reservation/**");
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LoginCheckInterceptor())
-			.excludePathPatterns(excludeInterceptorURLs);
+			.addPathPatterns(addInterceptorURLs);
 	}
 }

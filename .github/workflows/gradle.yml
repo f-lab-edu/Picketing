@@ -33,6 +33,10 @@ jobs:
         run: chmod +x ./gradlew
         shell: bash
 
+      - name: Delete the build directory if exists
+        run: ./gradlew clean
+        shell: bash
+
       - name: Check Source Code format
         run: ./gradlew checkstyleMain
         shell: bash
@@ -61,6 +65,10 @@ jobs:
 
       - name: Grant execute permission for Gradle
         run: chmod +x ./gradlew
+        shell: bash
+
+      - name: Delete the build directory if exists
+        run: ./gradlew clean
         shell: bash
 
       - name: Test with Gradle
