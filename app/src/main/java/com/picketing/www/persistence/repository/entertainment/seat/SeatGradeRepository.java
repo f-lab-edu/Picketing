@@ -1,4 +1,4 @@
-package com.picketing.www.persistence.repository.show.seat;
+package com.picketing.www.persistence.repository.entertainment.seat;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.picketing.www.business.domain.show.seat.SeatGrade;
+import com.picketing.www.business.domain.entertainment.seat.SeatGrade;
 
 @Repository
 public interface SeatGradeRepository extends JpaRepository<SeatGrade, Long> {

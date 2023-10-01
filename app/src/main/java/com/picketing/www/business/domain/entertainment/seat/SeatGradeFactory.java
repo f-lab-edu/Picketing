@@ -1,6 +1,6 @@
-package com.picketing.www.business.domain.show.seat;
+package com.picketing.www.business.domain.entertainment.seat;
 
-import static com.picketing.www.presentation.dto.response.show.ShowSeatGradeResponse.*;
+import static com.picketing.www.presentation.dto.response.entertainment.EntertainmentSeatGradeResponse.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,13 +8,13 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import com.picketing.www.presentation.dto.request.seat.SaveSeatGradeRequest;
-import com.picketing.www.presentation.dto.response.show.ShowSeatGradeResponse;
+import com.picketing.www.presentation.dto.response.entertainment.EntertainmentSeatGradeResponse;
 
 @Component
 public class SeatGradeFactory {
 
-	public ShowSeatGradeResponse convertSeatGradeToResponse(List<SeatGrade> seatGrade) {
-		return new ShowSeatGradeResponse(
+	public EntertainmentSeatGradeResponse convertSeatGradeToResponse(List<SeatGrade> seatGrade) {
+		return new EntertainmentSeatGradeResponse(
 			seatGrade.stream()
 				.map(this::convertSeatGradeToDto)
 				.collect(Collectors.toList())

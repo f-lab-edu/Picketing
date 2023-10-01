@@ -1,4 +1,4 @@
-package com.picketing.www.presentation.dto.response.show;
+package com.picketing.www.presentation.dto.response.entertainment;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -6,11 +6,11 @@ import java.util.List;
 import lombok.Builder;
 
 @Builder
-public record ShowSeatGradeResponse(
+public record EntertainmentSeatGradeResponse(
 	List<ShowSeatGradeResponseDto> seatGradeList
 ) {
 
-	public ShowSeatGradeResponse(List<ShowSeatGradeResponseDto> seatGradeList) {
+	public EntertainmentSeatGradeResponse(List<ShowSeatGradeResponseDto> seatGradeList) {
 		this.seatGradeList = seatGradeList;
 	}
 

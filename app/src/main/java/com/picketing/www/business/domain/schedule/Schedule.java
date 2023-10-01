@@ -2,7 +2,7 @@ package com.picketing.www.business.domain.schedule;
 
 import java.util.List;
 
-import com.picketing.www.business.domain.show.seat.SeatGrade;
+import com.picketing.www.business.domain.entertainment.seat.SeatGrade;
 
 import lombok.Builder;
 

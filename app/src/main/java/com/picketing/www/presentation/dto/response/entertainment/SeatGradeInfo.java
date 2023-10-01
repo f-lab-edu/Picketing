@@ -1,4 +1,4 @@
-package com.picketing.www.presentation.dto.response.show;
+package com.picketing.www.presentation.dto.response.entertainment;
 
 import java.math.BigDecimal;
 

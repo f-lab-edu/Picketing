@@ -1,6 +1,6 @@
-package com.picketing.www.business.domain.show.reservation;
+package com.picketing.www.business.domain.entertainment.reservation;
 
-import com.picketing.www.business.domain.show.Show;
+import com.picketing.www.business.domain.entertainment.Entertainment;
 import com.picketing.www.persistence.table.BaseEntity;
 
 import jakarta.persistence.Entity;
@@ -22,7 +22,7 @@ public class Reservation extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "show_id")
-	private Show show;
+	private Entertainment entertainment;
 
 	// private SeatGrade seatGrade;
 }
