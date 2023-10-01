@@ -29,6 +29,7 @@ public class TimeSchedule extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "date_schedule_id")
-	private DateSchedule DateSchedule;
+	private DateSchedule dateSchedule;
+
 	private LocalTime startTime;
 }
