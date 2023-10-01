@@ -34,7 +34,7 @@ public class DateSchedule extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "schedule_id")
-	private Schedule schedule;
+	private Schedule showSchedule;
 
 	@OneToMany(mappedBy = "dateSchedule")
 	private List<TimeSchedule> timeSchedules = new ArrayList<>();

@@ -34,6 +34,6 @@ public class Schedule extends BaseEntity {
 	@OneToMany(mappedBy = "schedule")
 	private List<ScheduleSeatGrade> scheduleSeatGradeList = new ArrayList<>(); // 공연장 정보
 
-	@OneToMany(mappedBy = "schedule")
+	@OneToMany(mappedBy = "showSchedule")
 	private List<DateSchedule> dateSchedules; // 날짜 스케줄
 }
