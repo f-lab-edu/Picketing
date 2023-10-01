@@ -1,11 +1,11 @@
-package com.picketing.www.presentation.dto.response.entertainment;
+package com.picketing.www.presentation.dto.response.show;
 
 import java.time.LocalDate;
 
 import lombok.Builder;
 
 @Builder
-public record EntertainmentMainResponse(
+public record ShowMainResponse(
 	Long id,
 	String title,
 	String genre,

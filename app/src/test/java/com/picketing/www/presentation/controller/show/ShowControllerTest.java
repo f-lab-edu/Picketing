@@ -1,4 +1,4 @@
-package com.picketing.www.presentation.controller.entertainment;
+package com.picketing.www.presentation.controller.show;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -21,18 +21,18 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.picketing.www.business.domain.entertainment.Entertainment;
-import com.picketing.www.business.domain.entertainment.ShowFactory;
-import com.picketing.www.business.domain.entertainment.seat.Seat;
-import com.picketing.www.business.domain.entertainment.seat.SeatFactory;
-import com.picketing.www.business.domain.entertainment.seat.SeatGrade;
-import com.picketing.www.business.domain.entertainment.seat.SeatGradeFactory;
+import com.picketing.www.business.domain.show.Show;
+import com.picketing.www.business.domain.show.ShowFactory;
+import com.picketing.www.business.domain.show.seat.Seat;
+import com.picketing.www.business.domain.show.seat.SeatFactory;
+import com.picketing.www.business.domain.show.seat.SeatGrade;
+import com.picketing.www.business.domain.show.seat.SeatGradeFactory;
 import com.picketing.www.business.type.AgeGroup;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
-import com.picketing.www.persistence.repository.entertainment.EntertainmentRepository;
-import com.picketing.www.persistence.repository.entertainment.seat.SeatGradeRepository;
-import com.picketing.www.persistence.repository.entertainment.seat.SeatRepository;
+import com.picketing.www.persistence.repository.show.ShowRepository;
+import com.picketing.www.persistence.repository.show.seat.SeatGradeRepository;
+import com.picketing.www.persistence.repository.show.seat.SeatRepository;
 import com.picketing.www.presentation.dto.request.seat.SaveSeatGradeRequest;
 import com.picketing.www.presentation.dto.request.seat.SaveSeatRequest;
 import com.picketing.www.presentation.dto.request.seat.SaveShowRequest;
@@ -40,13 +40,13 @@ import com.picketing.www.presentation.dto.request.seat.SaveShowRequest;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-public class EntertainmentControllerTest {
+public class ShowControllerTest {
 
 	@Autowired
 	MockMvc mockMvc;
 
 	@Autowired
-	EntertainmentRepository entertainmentRepository;
+	ShowRepository showRepository;
 
 	@Autowired
 	SeatRepository seatRepository;
@@ -153,7 +153,7 @@ public class EntertainmentControllerTest {
 		void has_seat_grade_price_list_when_search_show() throws
 			Exception {
 
-			Entertainment latestEntertainment = showFactory.createShow(SaveShowRequest.builder()
+			Show latestShow = showFactory.createShow(SaveShowRequest.builder()
 				.title("임영웅 콘서트 IM HERO TOUR 2023 - 서울")
 				.genre(Genre.CONCERT)
 				.subGenre(SubGenre.DOMESTIC)
@@ -168,13 +168,13 @@ public class EntertainmentControllerTest {
 				.ownerId(1L)
 				.build()
 			);
-			entertainmentRepository.save(latestEntertainment);
+			showRepository.save(latestShow);
 
 			List<Seat> seatList = new ArrayList<>(10);
 			for (int i = 0; i < 50; i++) {
 				seatList.add(seatFactory.createSeat(
 					SaveSeatRequest.builder()
-						.show(latestEntertainment)
+						.show(latestShow)
 						.timeScheduleId(1L)
 						.build())
 				);

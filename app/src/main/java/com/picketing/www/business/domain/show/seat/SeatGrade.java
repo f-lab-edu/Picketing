@@ -1,4 +1,4 @@
-package com.picketing.www.business.domain.entertainment.seat;
+package com.picketing.www.business.domain.show.seat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

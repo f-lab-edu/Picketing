@@ -1,4 +1,4 @@
-package com.picketing.www.business.domain.entertainment;
+package com.picketing.www.business.domain.show;
 
 import java.time.LocalDate;
 
@@ -24,9 +24,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder(access = AccessLevel.PROTECTED)
-@Table(name = "ENTERTAINMENT")
+@Table(name = "SHOWS")
 @Getter(AccessLevel.PROTECTED)
-public class Entertainment extends BaseEntity {
+public class Show extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,9 +42,7 @@ public class Entertainment extends BaseEntity {
 	private SubGenre subGenre;
 	private LocalDate startDate;
 	private LocalDate endDate;
-
 	private String venue;
-
 	private Long runningTime;
 	private Long intermission;
 
