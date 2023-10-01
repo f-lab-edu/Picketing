@@ -24,7 +24,7 @@ public class Schedule extends BaseEntity {
 
 	private Show show;
 
-	private Hall hall;
+	private Theater theater;
 
 	@OneToMany(mappedBy = "schedule")
 	private List<DateSchedule> dateSchedules;
