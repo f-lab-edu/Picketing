@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum SeatGradeEnum {
+public enum SeatGrade {
 
 	VIP("VIP", 165000L),
-	S("S", 165000),
-	R("R", 165000),
-	A("A", 165000);
+	S("S", 154000L),
+	R("R", 143000L),
+	A("A", 121000L);
 
 	private final String name;
 
