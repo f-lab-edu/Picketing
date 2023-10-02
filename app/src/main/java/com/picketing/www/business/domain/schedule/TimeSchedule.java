@@ -32,8 +32,4 @@ public class TimeSchedule extends BaseEntity {
 	private DateSchedule dateSchedule;
 
 	private LocalTime startTime;
-
-	// 매핑 테이블 필요
-	private List<SeatGrade> seatGradeEnumList = new ArrayList<>();
-
 }

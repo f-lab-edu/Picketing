@@ -1,9 +1,7 @@
 package com.picketing.www.business.domain.show;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import com.picketing.www.business.domain.show.seat.Seat;
 import com.picketing.www.business.type.AgeGroup;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
@@ -15,7 +13,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -54,7 +51,4 @@ public class Show extends BaseEntity {
 	private String details;
 	private boolean isBookable;
 	private Long ownerId;
-
-	@OneToMany(mappedBy = "show")
-	private List<Seat> seatList;
 }
