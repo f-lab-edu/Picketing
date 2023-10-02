@@ -7,11 +7,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SeatGrade {
 
-	VIP("VIP", 165000L, 2000),
-	SR("SR", 154000L, 1000),
-	R("R", 143000L, 700),
-	S("S", 121000L, 800),
-	A("A", 100000L, 300);
+	VIP("VIP석", 165000L, 2000),
+	SR("SR석", 154000L, 1000),
+	R("R석", 143000L, 800),
+	S("S석", 121000L, 500),
+	A("A석", 100000L, 300);
 
 	private final String name; // 공연장의 좌석 명칭
 

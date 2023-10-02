@@ -24,5 +24,5 @@ public class Reservation extends BaseEntity {
 	@JoinColumn(name = "show_id")
 	private Show show;
 
-	// private SeatGrade seatGrade;
+	private
 }
