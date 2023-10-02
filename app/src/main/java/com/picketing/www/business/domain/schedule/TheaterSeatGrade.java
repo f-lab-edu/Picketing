@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "SCHEDULE_SEAT_GRADE")
-public class ScheduleSeatGrade {
+public class TheaterSeatGrade {
 
 	@Id
 	@GeneratedValue
@@ -22,7 +22,7 @@ public class ScheduleSeatGrade {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "schedule_id")
-	private Schedule schedule;
+	private Schedule theaterSchedule;
 
 	@Enumerated(EnumType.STRING)
 	private SeatGrade seatGrade;

@@ -30,15 +30,10 @@ public class Schedule extends BaseEntity {
 	@JoinColumn(name = "show_id")
 	private Show show;
 
-	// // private Theater theater;
-	// // TODO 매핑 테이블로 빼야함
-	// private List<SeatGrade> seatGradeList; // 공연장 정보
-
-	// FIXME 다시 점검
-	// TODO 공연장 정보
-	@OneToMany(mappedBy = "schedule")
-	private List<ScheduleSeatGrade> scheduleSeatGradeList = new ArrayList<>(); // 공연장 정보
+	// 공연장 정보
+	@OneToMany(mappedBy = "theaterSchedule")
+	private List<TheaterSeatGrade> theaterSeatGrades = new ArrayList<>(); // 공연장 정보
 
 	@OneToMany(mappedBy = "showSchedule")
-	private List<DateSchedule> dateSchedules; // 날짜 스케줄
+	private List<DateSchedule> dateSchedules = new ArrayList<>(); // 날짜 스케줄
 }
