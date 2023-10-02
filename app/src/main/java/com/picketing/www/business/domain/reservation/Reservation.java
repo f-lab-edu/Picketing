@@ -42,6 +42,7 @@ public class Reservation extends BaseEntity {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@Builder.Default
 	@OneToMany(mappedBy = "reservation")
 	private List<ReservedSeat> reservedSeatList = new ArrayList<>();
 
