@@ -30,10 +30,7 @@ public class ShowControllerTest {
 
 	@Autowired
 	ShowRepository showRepository;
-
-	@Autowired
-	SeatGradeRepository seatGradeRepository;
-
+	
 	@Autowired
 	ShowFactory showFactory;
 
