@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.picketing.www.business.domain.show.Show;
 import com.picketing.www.business.domain.show.ShowFactory;
-import com.picketing.www.business.domain.show.seat.SeatGradeFactory;
 import com.picketing.www.business.service.show.ShowService;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
@@ -48,7 +47,7 @@ public class ShowController {
 		return new PageImpl<>(response, pageable, response.size());
 	}
 
-	@GetMapping("/{showId}/seatGrade")
+	@GetMapping("/{showId}/seatGrades")
 	public ShowSeatGradeResponse getShowSeatGradeList(
 		@PathVariable Long showId
 	) {
