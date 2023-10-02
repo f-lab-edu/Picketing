@@ -1,34 +1,43 @@
 package com.picketing.www.business.domain;
 
-import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.picketing.www.application.exception.CustomException;
 import com.picketing.www.application.exception.ErrorCode;
+import com.picketing.www.persistence.table.BaseEntity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-public class User {
+@Entity
+@Table(name = "USERS")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter(AccessLevel.PROTECTED)
+public class User extends BaseEntity {
 
-	final Long id;
-	final String email;
-	final String name;
-	final String phoneNumber;
-	final LocalDateTime createdAt;
-	final LocalDateTime modifiedAt;
-	String password;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String email;
+	private String name;
+	private String phoneNumber;
+	private String password;
 
 	@Builder
-	User(Long id, String email, String password, String name, String phoneNumber, LocalDateTime createdAt,
-		LocalDateTime modifiedAt) {
+	User(Long id, String email, String password, String name, String phoneNumber) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.phoneNumber = phoneNumber;
-		this.createdAt = createdAt;
-		this.modifiedAt = modifiedAt;
 		initValidation();
 	}
 

@@ -23,6 +23,4 @@ public class Reservation extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "show_id")
 	private Show show;
-
-	private
 }

@@ -6,9 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.picketing.www.application.exception.CustomException;
 import com.picketing.www.application.exception.ErrorCode;
 import com.picketing.www.business.domain.User;
-import com.picketing.www.business.domain.UserFactory;
 import com.picketing.www.persistence.repository.UserRepository;
-import com.picketing.www.persistence.table.UserPersist;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
 	private static final String SESSION_LOGIN_USER = "login_user";
-	private final UserFactory userFactory;
 	private final UserRepository userRepository;
 	private final HttpSession httpSession;
 
@@ -28,21 +25,17 @@ public class UserService {
 		if (userRepository.existsByEmail(email)) {
 			throw new CustomException(ErrorCode.DUPLICATED_EMAIL);
 		}
-		UserPersist persist = userFactory.persist(user);
-		return userRepository.save(persist).getId();
+		return userRepository.save(user).getId();
 	}
 
 	public User get(Long userId) {
-		UserPersist persist = userRepository.findById(userId)
+		return userRepository.findById(userId)
 			.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-		return userFactory.create(persist);
 	}
 
 	public User login(User user) {
-		UserPersist userPersist = userRepository.findByEmail(user.getEmail())
+		User loginUser = userRepository.findByEmail(user.getEmail())
 			.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-
-		User loginUser = userFactory.create(userPersist);
 
 		if (!user.match(loginUser)) {
 			throw new CustomException(ErrorCode.INVALID_PASSWORD);
