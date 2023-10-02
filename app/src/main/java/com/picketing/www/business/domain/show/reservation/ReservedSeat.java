@@ -1,10 +1,5 @@
 package com.picketing.www.business.domain.show.reservation;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.picketing.www.business.domain.User;
-import com.picketing.www.business.domain.show.Show;
 import com.picketing.www.persistence.table.BaseEntity;
 
 import jakarta.persistence.Entity;
@@ -14,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,26 +17,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "RESERVATION")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder(access = AccessLevel.PROTECTED)
+@Table(name = "RESERVED_SEAT")
 @Getter(AccessLevel.PROTECTED)
-public class Reservation extends BaseEntity {
+public class ReservedSeat extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "show_id")
-	private Show show;
+	@JoinColumn(name = "reservation_id")
+	private Reservation reservation;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
-
-	@OneToMany(mappedBy = "reservation")
-	private List<ReservedSeat> reservedSeatList = new ArrayList<>();
-
+	// private TimeScheduleSeatGrade timeScheduleSeatGrade;
 }
