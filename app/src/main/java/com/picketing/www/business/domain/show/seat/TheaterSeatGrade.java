@@ -1,6 +1,7 @@
-package com.picketing.www.business.domain.schedule;
+package com.picketing.www.business.domain.show.seat;
 
-import com.picketing.www.business.domain.show.seat.SeatGrade;
+import com.picketing.www.business.domain.schedule.Schedule;
+import com.picketing.www.persistence.table.BaseEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,8 +14,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "SCHEDULE_SEAT_GRADE")
-public class TheaterSeatGrade {
+@Table(name = "THEATER_SEAT_GRADE")
+public class TheaterSeatGrade extends BaseEntity {
 
 	@Id
 	@GeneratedValue

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.picketing.www.business.domain.show.Show;
+import com.picketing.www.business.domain.show.seat.TheaterSeatGrade;
 import com.picketing.www.persistence.table.BaseEntity;
 
 import jakarta.persistence.Entity;
@@ -15,11 +16,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Entity
 @Table(name = "SCHEDULE")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Schedule extends BaseEntity {
 
 	@Id
@@ -30,9 +36,9 @@ public class Schedule extends BaseEntity {
 	@JoinColumn(name = "show_id")
 	private Show show;
 
-	// 공연장 정보
+	// 특정 공연장에 대한 좌석 가격 목록 (공연장이 하나이므로 항상 똑같은 목록을 가진다)
 	@OneToMany(mappedBy = "theaterSchedule")
-	private List<TheaterSeatGrade> theaterSeatGrades = new ArrayList<>(); // 공연장 정보
+	private List<TheaterSeatGrade> theaterSeatGrades = new ArrayList<>(); // 공연장 (단 하나만 존재한다고 가정) + 좌석 정보
 
 	@OneToMany(mappedBy = "showSchedule")
 	private List<DateSchedule> dateSchedules = new ArrayList<>(); // 날짜 스케줄
