@@ -12,9 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.stereotype.Repository;
 
 import com.picketing.www.business.domain.schedule.YearAndMonthForShow;
-import com.picketing.www.persistence.table.schedule.DateSchedulePersist;
 import com.picketing.www.persistence.table.schedule.DateScheduleView;
-import com.picketing.www.persistence.table.schedule.TimeSchedulePersist;
 
 @Repository
 public class ScheduleRepository {

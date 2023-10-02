@@ -8,14 +8,11 @@ public record ScheduleResponseDto(
 	List<DateScheduleResponseDto> schedules
 ) {
 	public record DateScheduleResponseDto(
-		String name,
-		LocalDate startDate,
-		LocalDate endDate,
+		LocalDate showDate,
 		List<TimeScheduleResponseDto> timeSchedules
 	) {
 		public record TimeScheduleResponseDto(
-			LocalTime startTime,
-			LocalTime endTime
+			LocalTime startTime
 		) {
 		}
 	}
