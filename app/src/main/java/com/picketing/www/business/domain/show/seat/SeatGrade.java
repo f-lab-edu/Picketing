@@ -1,36 +1,21 @@
 package com.picketing.www.business.domain.show.seat;
 
-import java.math.BigDecimal;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder(access = AccessLevel.PROTECTED)
-@Getter(AccessLevel.PROTECTED)
-@Table(name = "SEAT_GRADE")
-public class SeatGrade {
+@Getter
+@AllArgsConstructor
+public enum SeatGrade {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String name;
+	VIP("VIP석", 165000L, 2000),
+	SR("SR석", 154000L, 1000),
+	R("R석", 143000L, 800),
+	S("S석", 121000L, 500),
+	A("A석", 100000L, 300);
 
-	@ManyToOne
-	@JoinColumn(name = "SEAT_ID")
-	private Seat seat;
+	private final String name; // 공연장의 좌석 명칭
 
-	private BigDecimal price;
+	private final Long price; // 공연장의 좌석 가격 (원래는 공연마다 가격이 달라지므로, 이 엔티티 필드가 아니지만, 현재는 공연 좌석이 고정되어 있으므로 price를 공연 좌석에 둡니다)
+
+	private final int count; // 공연장의 좌석 개수
 }

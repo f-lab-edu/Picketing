@@ -30,3 +30,10 @@ app/.idea/
 # Ignore Gradle build output directory
 build
 app/src/main/resources/application-secret.yml
+
+# Ignore QFiles
+app/src/main/generated/
+app/out/
+
+# Ignore MySQL bin Log
+data/

@@ -5,14 +5,14 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.picketing.www.persistence.table.UserPersist;
+import com.picketing.www.business.domain.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserPersist, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-	Optional<UserPersist> findById(Long id);
+	Optional<User> findById(Long id);
 
-	Optional<UserPersist> findByEmail(String eamil);
+	Optional<User> findByEmail(String eamil);
 
 	boolean existsByEmail(String email);
 }

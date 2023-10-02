@@ -23,8 +23,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.picketing.www.application.filter.encoding.password.PasswordEncoder;
+import com.picketing.www.business.domain.User;
 import com.picketing.www.persistence.repository.UserRepository;
-import com.picketing.www.persistence.table.UserPersist;
 import com.picketing.www.presentation.dto.request.user.UserSignInRequest;
 import com.picketing.www.presentation.dto.request.user.UserSignUpRequest;
 
@@ -54,7 +54,7 @@ class UserControllerTest {
 		@DisplayName("200:존재하는 데이터 정상 조회")
 		void success() throws Exception {
 			Mockito.when(userRepository.findById(anyLong()))
-				.thenReturn(Optional.of(UserPersist.builder()
+				.thenReturn(Optional.of(User.builder()
 					.id(1L)
 					.email("test@email.com")
 					.password("1234567890")
@@ -189,7 +189,7 @@ class UserControllerTest {
 				.thenReturn("1234567890");
 			Mockito.when(userRepository.findByEmail(Mockito.anyString()))
 				.thenReturn(
-					Optional.of(UserPersist.builder()
+					Optional.of(User.builder()
 						.id(1L)
 						.email("test@email.com")
 						.password("1234567890")
@@ -219,7 +219,7 @@ class UserControllerTest {
 				.thenReturn("not_equals_text");
 			Mockito.when(userRepository.findByEmail(Mockito.anyString()))
 				.thenReturn(
-					Optional.of(UserPersist.builder()
+					Optional.of(User.builder()
 						.id(1L)
 						.email("test@email.com")
 						.password("1234567890")
