@@ -29,12 +29,13 @@ public class UserService {
 	}
 
 	public User get(Long userId) {
-		return userRepository.findById(userId)
+		return userRepository.findUserById(userId)
 			.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 	}
 
 	public User login(User user) {
-		User loginUser = userRepository.findByEmail(user.getEmail())
+		System.out.println("user.getEmail() = " + user.getEmail());
+		User loginUser = userRepository.findUserByEmail(user.getEmail())
 			.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
 		if (!user.match(loginUser)) {
