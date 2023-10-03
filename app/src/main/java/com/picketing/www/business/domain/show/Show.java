@@ -37,7 +37,6 @@ public class Show extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	private Genre genre;
-
 	@Enumerated(EnumType.STRING)
 	private SubGenre subGenre;
 	private LocalDate startDate;
