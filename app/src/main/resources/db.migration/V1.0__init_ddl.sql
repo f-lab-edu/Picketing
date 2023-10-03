@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS `RESERVED_SEAT`;
 
 # CREATE TABLE `SHOWS`
 # (
-#     `id`           BIGINT       NOT NULL,
+#     `id`           BIGINT       NOT NULL AUTO_INCREMENT,
 #     `title`        VARCHAR(255) NOT NULL COMMENT '공연 제목',
 #     `genre`        VARCHAR(255) NOT NULL COMMENT '공연 장르',
 #     `sub_genre`    VARCHAR(255) NULL COMMENT '세부 장르',
@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `RESERVED_SEAT`;
 #
 # CREATE TABLE `SCHEDULE`
 # (
-#     `id`          BIGINT       NOT NULL,
+#     `id`          BIGINT       NOT NULL AUTO_INCREMENT,
 #     `show_id`     BIGINT       NOT NULL,
 #     `created_at`  VARCHAR(255) NOT NULL DEFAULT NOW(),
 #     `modified_at` DATETIME     NULL     DEFAULT NULL
@@ -40,7 +40,7 @@ DROP TABLE IF EXISTS `RESERVED_SEAT`;
 #
 # CREATE TABLE `DATE_SCHEDULE`
 # (
-#     `id`          BIGINT   NOT NULL,
+#     `id`          BIGINT   NOT NULL AUTO_INCREMENT,
 #     `schedule_id` BIGINT   NOT NULL,
 #     `show_date`   DATE     NOT NULL COMMENT '공연 일자',
 #     `created_at`  DATETIME NOT NULL DEFAULT NOW(),
@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS `RESERVED_SEAT`;
 #
 # CREATE TABLE `TIME_SCHEDULE`
 # (
-#     `id`               BIGINT   NOT NULL,
+#     `id`               BIGINT   NOT NULL AUTO_INCREMENT,
 #     `date_schedule_id` BIGINT   NOT NULL,
 #     `start_time`       DATETIME NOT NULL COMMENT '공연 시작 시각',
 #     `created_at`       DATETIME NOT NULL DEFAULT NOW(),
@@ -60,7 +60,7 @@ DROP TABLE IF EXISTS `RESERVED_SEAT`;
 #
 # CREATE TABLE `USERS`
 # (
-#     `id`           BIGINT       NOT NULL,
+#     `id`           BIGINT       NOT NULL AUTO_INCREMENT,
 #     `email`        VARCHAR(255) NOT NULL COMMENT '사용자 이메일 주소',
 #     `password`     VARCHAR(255) NOT NULL COMMENT '사용자 계정 비밀번호',
 #     `name`         VARCHAR(50)  NOT NULL COMMENT '사용자 이름',
@@ -73,7 +73,7 @@ DROP TABLE IF EXISTS `RESERVED_SEAT`;
 #
 # CREATE TABLE `THEATER_SEAT_GRADE`
 # (
-#     `id`          BIGINT       NOT NULL,
+#     `id`          BIGINT       NOT NULL AUTO_INCREMENT,
 #     `schedule_id` BIGINT       NOT NULL,
 #     `seat_grade`  VARCHAR(255) NOT NULL COMMENT '공연장의 좌석 등급',
 #     `created_at`  DATETIME     NOT NULL DEFAULT NOW(),
@@ -83,7 +83,7 @@ DROP TABLE IF EXISTS `RESERVED_SEAT`;
 #
 # CREATE TABLE `TIME_SCHEDULE_SEAT_GRADE`
 # (
-#     `id`               BIGINT       NOT NULL,
+#     `id`               BIGINT       NOT NULL AUTO_INCREMENT,
 #     `time_schedule_id` BIGINT       NOT NULL,
 #     `seat_grade`       VARCHAR(255) NOT NULL COMMENT '특정 시간대의 좌석 등급',
 #     `created_at`       DATETIME     NOT NULL DEFAULT NOW(),
@@ -93,7 +93,7 @@ DROP TABLE IF EXISTS `RESERVED_SEAT`;
 #
 # CREATE TABLE `RESERVATION`
 # (
-#     `id`          BIGINT       NOT NULL,
+#     `id`          BIGINT       NOT NULL AUTO_INCREMENT,
 #     `user_id`     BIGINT       NOT NULL,
 #     `show_id`     BIGINT       NOT NULL,
 #     `created_at`  DATETIME     NOT NULL DEFAULT NOW(),
@@ -103,7 +103,7 @@ DROP TABLE IF EXISTS `RESERVED_SEAT`;
 #
 # CREATE TABLE `RESERVED_SEAT`
 # (
-#     `id`                          BIGINT   NOT NULL,
+#     `id`                          BIGINT   NOT NULL AUTO_INCREMENT,
 #     `reservation_id`              BIGINT   NOT NULL,
 #     `time_schedule_seat_grade_id` BIGINT   NOT NULL,
 #     `created_at`                  DATETIME NOT NULL DEFAULT NOW(),
@@ -231,7 +231,7 @@ DROP TABLE IF EXISTS `RESERVED_SEAT`;
 
 CREATE TABLE `SHOWS`
 (
-    `id`           BIGINT       NOT NULL,
+    `id`           BIGINT       NOT NULL AUTO_INCREMENT,
     `title`        VARCHAR(255) NOT NULL COMMENT '공연 제목',
     `genre`        VARCHAR(255) NOT NULL COMMENT '공연 장르',
     `sub_genre`    VARCHAR(255) NULL COMMENT '세부 장르',
@@ -253,7 +253,7 @@ CREATE TABLE `SHOWS`
 
 CREATE TABLE `USERS`
 (
-    `id`           BIGINT       NOT NULL,
+    `id`           BIGINT       NOT NULL AUTO_INCREMENT,
     `email`        VARCHAR(255) NOT NULL COMMENT '사용자 이메일 주소',
     `password`     VARCHAR(255) NOT NULL COMMENT '사용자 계정 비밀번호',
     `name`         VARCHAR(50)  NOT NULL COMMENT '사용자 이름',
@@ -267,7 +267,7 @@ CREATE TABLE `USERS`
 
 CREATE TABLE `SCHEDULED_SHOW_SEAT`
 (
-    `id`             BIGINT       NOT NULL,
+    `id`             BIGINT       NOT NULL AUTO_INCREMENT,
     `show_id`        BIGINT       NOT NULL,
     `show_date_time` DATETIME     NOT NULL,
     `seat_grade`     VARCHAR(255) NOT NULL,
@@ -279,7 +279,7 @@ CREATE TABLE `SCHEDULED_SHOW_SEAT`
 
 CREATE TABLE `RESERVATION`
 (
-    `id`                     BIGINT   NOT NULL,
+    `id`                     BIGINT   NOT NULL AUTO_INCREMENT,
     `user_id`                BIGINT   NOT NULL,
     `scheduled_show_seat_id` BIGINT   NOT NULL,
     `created_at`             DATETIME NOT NULL DEFAULT NOW(),
