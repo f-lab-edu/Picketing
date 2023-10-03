@@ -1,6 +1,7 @@
 package com.picketing.www.business.service.reservation;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class ScheduledShowSeatService {
 
 	public ScheduledShowSeat getScheduledShowSeat(Show show, String showTime, SeatGrade seatGrade) {
 		return scheduledShowSeatRepository.findScheduledShowSeatByShowAndShowDateTimeAndSeatGrade(show,
-				LocalDateTime.parse(showTime),
+				LocalDateTime.parse(showTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
 				seatGrade)
 			.orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
 	}

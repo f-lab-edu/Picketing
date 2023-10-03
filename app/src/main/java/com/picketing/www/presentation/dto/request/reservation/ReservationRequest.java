@@ -12,7 +12,7 @@ public record ReservationRequest(
 
 	String showTime,
 
-	List<ReservationSeatRequest> reservationSeatRequests
+	List<ReservationSeatRequest> seatGradeList
 ) {
 
 	@Builder

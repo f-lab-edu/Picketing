@@ -11,7 +11,7 @@ public record MakeReservationResponse(
 
 	@Builder
 	public record ReservationIdResponse(
-		Long reservationId
+		Long id
 	) {
 	}
 }

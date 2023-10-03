@@ -25,7 +25,8 @@ public class ShowService {
 	// private final SeatGradeService seatGradeService;
 
 	public List<Show> getShowList(Genre genre, SubGenre subGenre, Pageable pageable) {
-		return showRepository.findShowsByGenreAndSubGenre(genre, subGenre, pageable);
+		// return showRepository.findShowsByGenreAndSubGenre(genre, subGenre, pageable);
+		return new ArrayList<>();
 	}
 
 	public List<SeatGrade> getShowSeatGradeList(Long showId) {
@@ -36,6 +37,7 @@ public class ShowService {
 	}
 
 	public Show getShowById(Long showId) {
-		return showRepository.findShowById(showId).orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
+		return showRepository.findById(showId)
+			.orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
 	}
 }

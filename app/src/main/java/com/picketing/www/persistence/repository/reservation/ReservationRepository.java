@@ -9,5 +9,5 @@ import com.picketing.www.business.domain.reservation.ScheduledShowSeat;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-	long countByShowSeat(ScheduledShowSeat scheduledShowSeat);
+	long countReservationsByShowSeat(ScheduledShowSeat scheduledShowSeat);
 }

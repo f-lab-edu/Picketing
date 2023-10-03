@@ -3,6 +3,8 @@ package com.picketing.www.business.service.reservation;
 import static com.picketing.www.presentation.dto.request.reservation.ReservationRequest.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Service;
 
@@ -45,17 +47,14 @@ public class ReservationService {
 		String showTime = request.showTime();
 
 		// 각 좌석이 구매 가능한지 확인
-		if (checkAvailable(show, showTime, request.reservationSeatRequests())) {
+		if (!checkAvailable(show, showTime, request.seatGradeList())) {
 			throw new CustomException(ErrorCode.ALREADY_RESERVED);
 		}
 
-		List<Reservation> reservations = request.reservationSeatRequests()
+		List<Reservation> reservations = request.seatGradeList()
 			.stream()
-			.map(r -> reservationFactory.convertToReservation(user,
-					scheduledShowSeatService.getScheduledShowSeat(show, showTime, SeatGrade.valueOf(r.seatGrade()))
-				)
-			)
-			.toList();
+			.flatMap(seatRequest -> makeReservationPerCount(user, show, showTime, seatRequest).stream())
+			.collect(Collectors.toList());
 
 		return reservationRepository.saveAll(reservations);
 	}
@@ -63,13 +62,21 @@ public class ReservationService {
 	private boolean checkAvailable(Show show, String showTime, List<ReservationSeatRequest> seatRequestList) {
 		return seatRequestList.stream()
 			.allMatch(s -> {
-				int count = s.count();
 				SeatGrade currentSeatGrade = SeatGrade.valueOf(s.seatGrade());
+				long reservedCount = reservationRepository.countReservationsByShowSeat(
+					scheduledShowSeatService.getScheduledShowSeat(show, showTime,
+						currentSeatGrade));
 
-				long reservedCount = reservationRepository.countByShowSeat(
-					scheduledShowSeatService.getScheduledShowSeat(show, showTime, currentSeatGrade));
-
-				return reservedCount < count;
+				return ((currentSeatGrade.getCount() - reservedCount) - s.count()) >= 0;
 			});
+	}
+
+	private List<Reservation> makeReservationPerCount(User user, Show show, String showTime,
+		ReservationSeatRequest request) {
+		return IntStream.range(0, request.count())
+			.mapToObj(i -> reservationFactory.convertSeatToReservation(user,
+				scheduledShowSeatService.getScheduledShowSeat(show, showTime, SeatGrade.valueOf(request.seatGrade()))
+			))
+			.collect(Collectors.toList());
 	}
 }

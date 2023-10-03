@@ -12,7 +12,6 @@ import com.picketing.www.business.domain.show.seat.SeatGrade;
 
 @Repository
 public interface ScheduledShowSeatRepository extends JpaRepository<ScheduledShowSeat, Long> {
-
 	Optional<ScheduledShowSeat> findScheduledShowSeatByShowAndShowDateTimeAndSeatGrade(Show show,
 		LocalDateTime startDateTime,
 		SeatGrade seatGrade);

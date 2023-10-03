@@ -25,11 +25,11 @@ public class ReservationFactory {
 
 	public ReservationIdResponse convertReservationId(Reservation reservation) {
 		return ReservationIdResponse.builder()
-			.reservationId(reservation.getId())
+			.id(reservation.getId())
 			.build();
 	}
 
-	public Reservation convertToReservation(User user, ScheduledShowSeat showSeat) {
+	public Reservation convertSeatToReservation(User user, ScheduledShowSeat showSeat) {
 		return Reservation.builder()
 			.user(user)
 			.showSeat(showSeat)
