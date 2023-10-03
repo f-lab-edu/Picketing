@@ -22,7 +22,7 @@ public class ReservationFactory {
 			)
 			.build();
 	}
-	
+
 	public ReservationIdResponse convertReservationId(Reservation reservation) {
 		return ReservationIdResponse.builder()
 			.reservationId(reservation.getId())
