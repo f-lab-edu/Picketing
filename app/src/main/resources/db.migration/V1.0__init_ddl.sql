@@ -272,7 +272,7 @@ CREATE TABLE `SCHEDULED_SHOW_SEAT`
     `show_date_time` DATETIME     NOT NULL,
     `seat_grade`     VARCHAR(255) NOT NULL,
     `created_at`     DATETIME     NOT NULL DEFAULT NOW(),
-    `modified_at`    DATETIME     NOT NULL DEFAULT NULL,
+    `modified_at`    DATETIME     NULL     DEFAULT NULL,
     primary key (`id`)
 ) engine = InnoDB
   DEFAULT CHARSET = utf8mb4;
@@ -283,7 +283,7 @@ CREATE TABLE `RESERVATION`
     `user_id`                BIGINT   NOT NULL,
     `scheduled_show_seat_id` BIGINT   NOT NULL,
     `created_at`             DATETIME NOT NULL DEFAULT NOW(),
-    `modified_at`            DATETIME NOT NULL DEFAULT NULL,
+    `modified_at`            DATETIME NULL     DEFAULT NULL,
     primary key (`id`)
 ) engine = InnoDB
   DEFAULT CHARSET = utf8mb4;
