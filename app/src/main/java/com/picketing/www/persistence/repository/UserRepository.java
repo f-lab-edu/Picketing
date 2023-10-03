@@ -10,9 +10,9 @@ import com.picketing.www.business.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	Optional<User> findUserById(Long id);
+	Optional<User> findById(Long id);
 
-	Optional<User> findUserByEmail(String email);
+	Optional<User> findByEmail(String email);
 
 	boolean existsByEmail(String email);
 }

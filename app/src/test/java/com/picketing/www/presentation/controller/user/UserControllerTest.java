@@ -53,7 +53,7 @@ class UserControllerTest {
 		@Disabled
 		@DisplayName("200:존재하는 데이터 정상 조회")
 		void success() throws Exception {
-			Mockito.when(userRepository.findUserById(anyLong()))
+			Mockito.when(userRepository.findById(anyLong()))
 				.thenReturn(Optional.of(User.builder()
 					.id(1L)
 					.email("test@email.com")
@@ -74,7 +74,7 @@ class UserControllerTest {
 		@Disabled
 		@DisplayName("404:존재하지 않는 데이터")
 		void failedBecauseNotFound() throws Exception {
-			Mockito.when(userRepository.findUserById(anyLong()))
+			Mockito.when(userRepository.findById(anyLong()))
 				.thenReturn(null);
 			mockMvc.perform(MockMvcRequestBuilders
 					.get("/api/users/99999")
@@ -187,7 +187,7 @@ class UserControllerTest {
 		void success() throws Exception {
 			Mockito.when(passwordEncoder.encode(anyString()))
 				.thenReturn("1234567890");
-			Mockito.when(userRepository.findUserByEmail(Mockito.anyString()))
+			Mockito.when(userRepository.findByEmail(Mockito.anyString()))
 				.thenReturn(
 					Optional.of(User.builder()
 						.id(1L)
@@ -217,7 +217,7 @@ class UserControllerTest {
 		void badRequest() throws Exception {
 			Mockito.when(passwordEncoder.encode("test1234@"))
 				.thenReturn("not_equals_text");
-			Mockito.when(userRepository.findUserByEmail(Mockito.anyString()))
+			Mockito.when(userRepository.findByEmail(Mockito.anyString()))
 				.thenReturn(
 					Optional.of(User.builder()
 						.id(1L)
