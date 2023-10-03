@@ -36,5 +36,4 @@ public class Reservation extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "scheduled_show_seat_id")
 	private ScheduledShowSeat showSeat;
-	
 }
