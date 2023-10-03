@@ -15,46 +15,49 @@ VALUES ('user3@gmail.com',
 
 INSERT INTO `SHOWS` (title, genre, sub_genre, start_date, end_date, venue, running_time, intermission, age_group,
                      details, is_bookable, owner_id, created_at)
-VALUES ('Charlie Puth', 'CONCERT', 'FOREIGN', CURRENT_DATE, CURRENT_DATE, 'KSPO DOME', 110, 0, 'FIFTHTEEN',
+VALUES ('Charlie Puth', 'CONCERT', 'FOREIGN', DATE_FORMAT('2023-10-20', '%Y-%m-%d'),
+        DATE_FORMAT('2023-10-22', '%Y-%m-%d'), 'KSPO DOME', 110, 0, 'FOURTEEN',
         '찰리푸스 내한 공연 - 서울', 1, 1, now());
 INSERT INTO `SHOWS` (title, genre, sub_genre, start_date, end_date, venue, running_time, intermission, age_group,
                      details, is_bookable, owner_id, created_at)
-VALUES ('Sam Smith', 'CONCERT', 'FOREIGN', CURRENT_DATE, CURRENT_DATE, 'KSPO DOME', 120, 0, 'NINETEEN',
+VALUES ('Sam Smith', 'CONCERT', 'FOREIGN', DATE_FORMAT('2023-10-17', '%Y-%m-%d'),
+        DATE_FORMAT('2023-10-18', '%Y-%m-%d'), 'KSPO DOME', 120, 0, 'NINETEEN',
         '샘 스미스 in 서울', 1, 1, now());
 INSERT INTO `SHOWS` (title, genre, sub_genre, start_date, end_date, venue, running_time, intermission, age_group,
                      details, is_bookable, owner_id, created_at)
-VALUES ('임영웅 IMHERO - 서울', 'CONCERT', 'DOMESTIC', CURRENT_DATE, CURRENT_DATE, 'KSPO DOME', 150, 0, 'SEVEN',
+VALUES ('임영웅 IMHERO - 서울', 'CONCERT', 'DOMESTIC', DATE_FORMAT('2023-10-27', '%Y-%m-%d'),
+        DATE_FORMAT('2023-11-05', '%Y-%m-%d'), 'KSPO DOME', 150, 0, 'SEVEN',
         'IMHERO in Seoul', 1, 1, now());
 
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (1, now(), 'VIP', now());
+VALUES (1, DATE_FORMAT('2023-10-20 18:00', '%Y-%m-%d %H:%i'), 'VIP', now());
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (1, now(), 'SR', now());
+VALUES (1, DATE_FORMAT('2023-10-20 18:00', '%Y-%m-%d %H:%i'), 'SR', now());
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (1, now(), 'R', now());
+VALUES (1, DATE_FORMAT('2023-10-20 18:00', '%Y-%m-%d %H:%i'), 'R', now());
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (1, now(), 'S', now());
+VALUES (1, DATE_FORMAT('2023-10-20 18:00', '%Y-%m-%d %H:%i'), 'S', now());
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (1, now(), 'A', now());
+VALUES (1, DATE_FORMAT('2023-10-20 18:00', '%Y-%m-%d %H:%i'), 'A', now());
 
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (2, now(), 'VIP', now());
+VALUES (2, DATE_FORMAT('2023-10-17 19:00', '%Y-%m-%d %H:%i'), 'VIP', now());
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (2, now(), 'SR', now());
+VALUES (2, DATE_FORMAT('2023-10-17 18:00', '%Y-%m-%d %H:%i'), 'SR', now());
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (2, now(), 'R', now());
+VALUES (2, DATE_FORMAT('2023-10-17 18:00', '%Y-%m-%d %H:%i'), 'R', now());
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (2, now(), 'S', now());
+VALUES (2, DATE_FORMAT('2023-10-17 18:00', '%Y-%m-%d %H:%i'), 'S', now());
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (2, now(), 'A', now());
+VALUES (2, DATE_FORMAT('2023-10-17 18:00', '%Y-%m-%d %H:%i'), 'A', now());
 
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (3, now(), 'VIP', now());
+VALUES (3, DATE_FORMAT('2023-10-27 20:00', '%Y-%m-%d %H:%i'), 'VIP', now());
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (3, now(), 'SR', now());
+VALUES (3, DATE_FORMAT('2023-10-27 20:00', '%Y-%m-%d %H:%i'), 'SR', now());
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (3, now(), 'R', now());
+VALUES (3, DATE_FORMAT('2023-10-27 20:00', '%Y-%m-%d %H:%i'), 'R', now());
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (3, now(), 'S', now());
+VALUES (3, DATE_FORMAT('2023-10-27 20:00', '%Y-%m-%d %H:%i'), 'S', now());
 INSERT INTO `SCHEDULED_SHOW_SEAT` (show_id, show_date_time, seat_grade, created_at)
-VALUES (3, now(), 'A', now());
+VALUES (3, DATE_FORMAT('2023-10-27 20:00', '%Y-%m-%d %H:%i'), 'A', now());
