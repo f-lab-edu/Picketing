@@ -8,6 +8,10 @@ import lombok.Builder;
 public record ReservationRequest(
 	Long showId,
 
+	Long userId,
+
+	String showTime,
+
 	List<ReservationSeatRequest> reservationSeatRequests
 ) {
 

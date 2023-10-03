@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.picketing.www.application.exception.CustomException;
+import com.picketing.www.application.exception.ErrorCode;
 import com.picketing.www.business.domain.show.Show;
 import com.picketing.www.business.domain.show.seat.SeatGrade;
 import com.picketing.www.business.type.Genre;
@@ -31,5 +33,9 @@ public class ShowService {
 		// 	.orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
 		// return seatGradeService.getSeatGradeList(showId);
 		return new ArrayList<>();
+	}
+
+	public Show getShowById(Long showId) {
+		return showRepository.findShowById(showId).orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
 	}
 }

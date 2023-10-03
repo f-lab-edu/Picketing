@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.picketing.www.business.domain.User;
 import com.picketing.www.presentation.dto.response.reservation.MakeReservationResponse;
 
 @Component
@@ -21,10 +22,17 @@ public class ReservationFactory {
 			)
 			.build();
 	}
-
+	
 	public ReservationIdResponse convertReservationId(Reservation reservation) {
 		return ReservationIdResponse.builder()
 			.reservationId(reservation.getId())
+			.build();
+	}
+
+	public Reservation convertToReservation(User user, ScheduledShowSeat showSeat) {
+		return Reservation.builder()
+			.user(user)
+			.showSeat(showSeat)
 			.build();
 	}
 }

@@ -23,7 +23,7 @@ public class ReservationController {
 	@PostMapping
 	public MakeReservationResponse makeReservation(@RequestBody ReservationRequest requestDto) {
 		return reservationFactory.convertReservationToResponse(
-			reservationService.makeReserations(requestDto.showId(), requestDto.reservationSeatRequests())
+			reservationService.makeReservations(requestDto)
 		);
 	}
 }
