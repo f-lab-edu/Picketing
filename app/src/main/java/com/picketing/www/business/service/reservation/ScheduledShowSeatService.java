@@ -1,5 +1,7 @@
 package com.picketing.www.business.service.reservation;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Service;
 
 import com.picketing.www.application.exception.CustomException;
@@ -18,7 +20,9 @@ public class ScheduledShowSeatService {
 	private final ScheduledShowSeatRepository scheduledShowSeatRepository;
 
 	public ScheduledShowSeat getScheduledShowSeat(Show show, String showTime, SeatGrade seatGrade) {
-		return scheduledShowSeatRepository.findByShowAndShowDateTimeAndSeatGrade(show.getId(), showTime, seatGrade)
+		return scheduledShowSeatRepository.findScheduledShowSeatByShowAndShowDateTimeAndSeatGrade(show,
+				LocalDateTime.parse(showTime),
+				seatGrade)
 			.orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
 	}
 }

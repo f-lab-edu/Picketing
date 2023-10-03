@@ -21,8 +21,8 @@ import com.picketing.www.presentation.dto.request.reservation.ReservationRequest
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class ReservationService {
 
 	private final ShowService showService;
@@ -51,8 +51,8 @@ public class ReservationService {
 
 		List<Reservation> reservations = request.reservationSeatRequests()
 			.stream()
-			.map(r -> reservationFactory.convertToReservation(
-					user, scheduledShowSeatService.getScheduledShowSeat(show, showTime, SeatGrade.valueOf(r.seatGrade()))
+			.map(r -> reservationFactory.convertToReservation(user,
+					scheduledShowSeatService.getScheduledShowSeat(show, showTime, SeatGrade.valueOf(r.seatGrade()))
 				)
 			)
 			.toList();
