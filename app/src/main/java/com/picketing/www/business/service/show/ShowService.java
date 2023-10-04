@@ -1,5 +1,7 @@
 package com.picketing.www.business.service.show;
 
+import static com.picketing.www.presentation.dto.response.show.seat.RemainingSeatsResponse.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.picketing.www.application.exception.CustomException;
 import com.picketing.www.application.exception.ErrorCode;
-import com.picketing.www.business.domain.reservation.Reservation;
 import com.picketing.www.business.domain.reservation.ScheduledShowSeat;
 import com.picketing.www.business.domain.reservation.ScheduledShowSeatFactory;
 import com.picketing.www.business.domain.show.Show;
@@ -19,7 +20,7 @@ import com.picketing.www.business.service.reservation.ScheduledShowSeatService;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
 import com.picketing.www.persistence.repository.show.ShowRepository;
-import com.picketing.www.presentation.dto.response.show.seat.RemainingSeatsResponse;
+import com.picketing.www.presentation.dto.response.show.seat.ScheduledShowSeatGradeResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -53,17 +54,32 @@ public class ShowService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<RemainingSeatsResponse.RemainingSeatDetail> getRemainingSeats(Long showId, String showTime) {
+	public List<RemainingSeatDetail> getRemainingSeats(Long showId, String showTime) {
+		List<RemainingSeatDetail> cntList = new ArrayList<>();
+
 		// 공연의 등급별 좌석 리스트
 		List<ScheduledShowSeat> scheduledShowSeatList = scheduledShowSeatService.getScheduledShowSeatList(
 			getShowById(showId), showTime);
 
-		scheduledShowSeatService.getScheduledShowSeatList()
+		List<ScheduledShowSeatGradeResponse> result = scheduledShowSeatList.stream()
+			.map(scheduledShowSeatFactory::convertShowSeat)
+			.toList();
 
 		scheduledShowSeatList.forEach(showSeat -> {
 			// 예약된 좌석 리스트
-			List<Reservation> reservedSeatList = reservationService.getReservationsByShowSeat(showSeat);
+			// List<Reservation> reservedSeatList = reservationService.getReservationsByShowSeat(showSeat);
+			ScheduledShowSeatGradeResponse response = scheduledShowSeatFactory.convertShowSeat(
+				showSeat);
+			Long reserved = reservationService.countReservationsByShowSeat(showSeat);
+			int remainSeatCnt = Integer.parseInt(
+				String.valueOf(response.seatGrade().getCount() - reserved));
+
+			cntList.add(RemainingSeatDetail.builder()
+				.seatGrade(response.seatGrade().getName())
+				.remainCnt(remainSeatCnt).build());
 		});
+
+		return cntList;
 	}
 
 }

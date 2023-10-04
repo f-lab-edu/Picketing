@@ -85,7 +85,7 @@ public class ReservationService {
 		return reservationRepository.countReservationsByShowSeat(scheduledShowSeat);
 	}
 
-	// public List<Reservation> getReservationsByShowSeat(ScheduledShowSeat scheduledShowSeat) {
-	// 	return reservationRepository.findAllByShowSeat(scheduledShowSeat);
-	// }
+	public List<Reservation> getReservationsByShowSeat(ScheduledShowSeat scheduledShowSeat) {
+		return reservationRepository.findAllByShowSeat(scheduledShowSeat);
+	}
 }
