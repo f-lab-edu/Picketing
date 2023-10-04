@@ -42,6 +42,23 @@ package com.picketing.www.business.domain.show.seat;
 
 import org.springframework.stereotype.Component;
 
+import com.picketing.www.presentation.dto.response.show.seat.ScheduledShowSeatGradeResponse;
+import com.picketing.www.presentation.dto.response.show.seat.SeatGradeResponse;
+
 @Component
 public class SeatGradeFactory {
+
+	public SeatGradeResponse convertSeatGradeToResponse(SeatGrade seatGrade) {
+		return SeatGradeResponse.builder()
+			.seatGrade(seatGrade.getName())
+			.totalCount(seatGrade.getCount())
+			.build();
+	}
+
+	public SeatGradeResponse convertSeatGradeFromShowSeat(ScheduledShowSeatGradeResponse scheduledShowSeat) {
+		return SeatGradeResponse.builder()
+			.seatGrade(scheduledShowSeat.seatGrade().getName())
+			.totalCount(scheduledShowSeat.seatGrade().getCount())
+			.build();
+	}
 }

@@ -1,6 +1,7 @@
 package com.picketing.www.persistence.repository.reservation;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,6 @@ public interface ScheduledShowSeatRepository extends JpaRepository<ScheduledShow
 	Optional<ScheduledShowSeat> findScheduledShowSeatByShowAndShowDateTimeAndSeatGrade(Show show,
 		LocalDateTime startDateTime,
 		SeatGrade seatGrade);
+
+	List<ScheduledShowSeat> findAllByShowAndShowDateTime(Show show, LocalDateTime showDateTime);
 }

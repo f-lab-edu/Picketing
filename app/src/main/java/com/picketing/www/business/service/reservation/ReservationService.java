@@ -13,6 +13,7 @@ import com.picketing.www.application.exception.ErrorCode;
 import com.picketing.www.business.domain.User;
 import com.picketing.www.business.domain.reservation.Reservation;
 import com.picketing.www.business.domain.reservation.ReservationFactory;
+import com.picketing.www.business.domain.reservation.ScheduledShowSeat;
 import com.picketing.www.business.domain.show.Show;
 import com.picketing.www.business.domain.show.seat.SeatGrade;
 import com.picketing.www.business.service.show.ShowService;
@@ -63,7 +64,7 @@ public class ReservationService {
 		return seatRequestList.stream()
 			.allMatch(seatRequest -> {
 				SeatGrade currentSeatGrade = seatRequest.seatGrade();
-				long reservedCount = reservationRepository.countReservationsByShowSeat(
+				long reservedCount = countReservationsByShowSeat(
 					scheduledShowSeatService.getScheduledShowSeat(show, showTime,
 						currentSeatGrade));
 
@@ -79,4 +80,12 @@ public class ReservationService {
 			))
 			.collect(Collectors.toList());
 	}
+
+	public Long countReservationsByShowSeat(ScheduledShowSeat scheduledShowSeat) {
+		return reservationRepository.countReservationsByShowSeat(scheduledShowSeat);
+	}
+
+	// public List<Reservation> getReservationsByShowSeat(ScheduledShowSeat scheduledShowSeat) {
+	// 	return reservationRepository.findAllByShowSeat(scheduledShowSeat);
+	// }
 }
