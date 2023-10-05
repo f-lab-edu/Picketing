@@ -2,6 +2,8 @@ package com.picketing.www.presentation.dto.request.reservation;
 
 import java.util.List;
 
+import com.picketing.www.business.domain.show.seat.SeatGrade;
+
 import lombok.Builder;
 
 @Builder
@@ -17,8 +19,7 @@ public record ReservationRequest(
 
 	@Builder
 	public record ReservationSeatRequest(
-		String seatGrade,
-
+		SeatGrade seatGrade,
 		int count
 	) {
 	}

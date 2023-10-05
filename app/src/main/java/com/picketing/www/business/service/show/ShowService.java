@@ -22,13 +22,13 @@ public class ShowService {
 
 	private final ShowRepository showRepository;
 
-	// private final SeatGradeService seatGradeService;
-
+	// TODO 카테고리에 따른 공연 목록 조회 로직 구현
 	public List<Show> getShowList(Genre genre, SubGenre subGenre, Pageable pageable) {
 		// return showRepository.findShowsByGenreAndSubGenre(genre, subGenre, pageable);
 		return new ArrayList<>();
 	}
 
+	// TODO 공연의 좌석 등급 목록 조회 로직 구현
 	public List<SeatGrade> getShowSeatGradeList(Long showId) {
 		// showRepository.findShowById(showId)
 		// 	.orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));

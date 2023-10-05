@@ -47,7 +47,7 @@ public class ReservationService {
 		String showTime = request.showTime();
 
 		// 각 좌석이 구매 가능한지 확인
-		if (!checkAvailable(show, showTime, request.seatGradeList())) {
+		if (!isBookable(show, showTime, request.seatGradeList())) {
 			throw new CustomException(ErrorCode.ALREADY_RESERVED);
 		}
 
@@ -59,15 +59,15 @@ public class ReservationService {
 		return reservationRepository.saveAll(reservations);
 	}
 
-	private boolean checkAvailable(Show show, String showTime, List<ReservationSeatRequest> seatRequestList) {
+	private boolean isBookable(Show show, String showTime, List<ReservationSeatRequest> seatRequestList) {
 		return seatRequestList.stream()
-			.allMatch(s -> {
-				SeatGrade currentSeatGrade = SeatGrade.valueOf(s.seatGrade());
+			.allMatch(seatRequest -> {
+				SeatGrade currentSeatGrade = seatRequest.seatGrade();
 				long reservedCount = reservationRepository.countReservationsByShowSeat(
 					scheduledShowSeatService.getScheduledShowSeat(show, showTime,
 						currentSeatGrade));
 
-				return ((currentSeatGrade.getCount() - reservedCount) - s.count()) >= 0;
+				return ((currentSeatGrade.getCount() - reservedCount) - seatRequest.count()) >= 0;
 			});
 	}
 
@@ -75,7 +75,7 @@ public class ReservationService {
 		ReservationSeatRequest request) {
 		return IntStream.range(0, request.count())
 			.mapToObj(i -> reservationFactory.convertSeatToReservation(user,
-				scheduledShowSeatService.getScheduledShowSeat(show, showTime, SeatGrade.valueOf(request.seatGrade()))
+				scheduledShowSeatService.getScheduledShowSeat(show, showTime, request.seatGrade())
 			))
 			.collect(Collectors.toList());
 	}
