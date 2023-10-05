@@ -40,8 +40,13 @@
 
 package com.picketing.www.business.domain.show.seat;
 
+import static com.picketing.www.presentation.dto.response.show.seat.RemainingSeatsResponse.*;
+
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
+import com.picketing.www.presentation.dto.response.show.seat.RemainingSeatsResponse;
 import com.picketing.www.presentation.dto.response.show.seat.ScheduledShowSeatGradeResponse;
 import com.picketing.www.presentation.dto.response.show.seat.SeatGradeResponse;
 
@@ -59,6 +64,12 @@ public class SeatGradeFactory {
 		return SeatGradeResponse.builder()
 			.seatGrade(scheduledShowSeat.seatGrade().getName())
 			.totalCount(scheduledShowSeat.seatGrade().getCount())
+			.build();
+	}
+
+	public RemainingSeatsResponse convertRemainingSeats(List<RemainingSeatDetail> seatDetail) {
+		return builder()
+			.remainSeats(seatDetail)
 			.build();
 	}
 }

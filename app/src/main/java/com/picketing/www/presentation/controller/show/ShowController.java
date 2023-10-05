@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.picketing.www.business.domain.show.Show;
 import com.picketing.www.business.domain.show.ShowFactory;
+import com.picketing.www.business.domain.show.seat.SeatGradeFactory;
 import com.picketing.www.business.service.show.ShowService;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
@@ -32,6 +33,8 @@ public class ShowController {
 	private final ShowFactory showFactory;
 
 	private final ShowService showService;
+
+	private final SeatGradeFactory seatGradeFactory;
 
 	@GetMapping
 	public Page<ShowMainResponse> getShowListWithPagination(
@@ -60,6 +63,8 @@ public class ShowController {
 		@PathVariable Long showId,
 		@RequestParam(value = "showTime", required = true) String showTime
 	) {
-		return showService.getRemainingSeats(showId, showTime);
+		return seatGradeFactory.convertRemainingSeats(
+			showService.getRemainingSeats(showId, showTime)
+		);
 	}
 }
