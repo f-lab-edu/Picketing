@@ -42,7 +42,8 @@ public class ShowController {
 			.collect(Collectors.toList());
 		return new PageImpl<>(response, pageable, response.size());
 	}
-	//
+
+	// TODO 공연 좌석 목록 조회 API 구현
 	// @GetMapping("/{showId}/seatGrades")
 	// public ShowSeatGradeResponse getShowSeatGradeList(
 	// 	@PathVariable Long showId

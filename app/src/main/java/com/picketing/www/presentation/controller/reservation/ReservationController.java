@@ -1,16 +1,29 @@
 package com.picketing.www.presentation.controller.reservation;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.picketing.www.business.domain.reservation.ReservationFactory;
+import com.picketing.www.business.service.reservation.ReservationService;
+import com.picketing.www.presentation.dto.request.reservation.ReservationRequest;
+import com.picketing.www.presentation.dto.response.reservation.MakeReservationResponse;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/reservation")
 public class ReservationController {
 
-	@PostMapping("/{showId}")
-	public String makeReservation(@PathVariable Long showId) {
-		return null;
+	private final ReservationFactory reservationFactory;
+	private final ReservationService reservationService;
+
+	@PostMapping
+	public MakeReservationResponse makeReservation(@RequestBody ReservationRequest requestDto) {
+		return reservationFactory.convertReservationToResponse(
+			reservationService.makeReservations(requestDto)
+		);
 	}
 }

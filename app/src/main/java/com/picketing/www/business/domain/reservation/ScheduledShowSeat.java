@@ -1,8 +1,14 @@
 package com.picketing.www.business.domain.reservation;
 
+import java.time.LocalDateTime;
+
+import com.picketing.www.business.domain.show.Show;
+import com.picketing.www.business.domain.show.seat.SeatGrade;
 import com.picketing.www.persistence.table.BaseEntity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,20 +23,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "SCHEDULED_SHOW_SEAT")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder(access = AccessLevel.PROTECTED)
-@Table(name = "RESERVED_SEAT")
 @Getter(AccessLevel.PROTECTED)
-public class ReservedSeat extends BaseEntity {
+public class ScheduledShowSeat extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "reservation_id")
-	private Reservation reservation;
+	@JoinColumn(name = "show_id")
+	private Show show;
 
-	// private TimeScheduleSeatGrade timeScheduleSeatGrade;
+	private LocalDateTime showDateTime;
+
+	@Enumerated(EnumType.STRING)
+	private SeatGrade seatGrade;
 }
