@@ -16,7 +16,6 @@ import com.picketing.www.business.domain.reservation.ReservationFactory;
 import com.picketing.www.business.domain.reservation.ScheduledShowSeat;
 import com.picketing.www.business.domain.show.Show;
 import com.picketing.www.business.domain.show.seat.SeatGrade;
-import com.picketing.www.business.service.show.ShowService;
 import com.picketing.www.business.service.user.UserService;
 import com.picketing.www.persistence.repository.reservation.ReservationRepository;
 import com.picketing.www.presentation.dto.request.reservation.ReservationRequest;
@@ -28,8 +27,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReservationService {
 
-	private final ShowService showService;
-
 	private final ScheduledShowSeatService scheduledShowSeatService;
 
 	private final UserService userService;
@@ -39,11 +36,9 @@ public class ReservationService {
 	private final ReservationFactory reservationFactory;
 
 	@Transactional
-	public List<Reservation> makeReservations(ReservationRequest request) {
+	public List<Reservation> makeReservations(Show show, ReservationRequest request) {
 		// TODO 이후 세션에서 userId 가지고 올 수 있도록 수정 필요
 		User user = userService.get(request.userId());
-
-		Show show = showService.getShowById(request.showId());
 
 		String showTime = request.showTime();
 

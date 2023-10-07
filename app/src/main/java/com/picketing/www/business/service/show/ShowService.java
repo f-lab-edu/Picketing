@@ -30,6 +30,7 @@ public class ShowService {
 
 	private final ShowRepository showRepository;
 	private final ReservationService reservationService;
+
 	private final ScheduledShowSeatService scheduledShowSeatService;
 
 	private final ScheduledShowSeatFactory scheduledShowSeatFactory;
@@ -68,8 +69,7 @@ public class ShowService {
 		scheduledShowSeatList.forEach(showSeat -> {
 			// 예약된 좌석 리스트
 			// List<Reservation> reservedSeatList = reservationService.getReservationsByShowSeat(showSeat);
-			ScheduledShowSeatGradeResponse response = scheduledShowSeatFactory.convertShowSeat(
-				showSeat);
+			ScheduledShowSeatGradeResponse response = scheduledShowSeatFactory.convertShowSeat(showSeat);
 			Long reserved = reservationService.countReservationsByShowSeat(showSeat);
 			int remainSeatCnt = Integer.parseInt(
 				String.valueOf(response.seatGrade().getCount() - reserved));
