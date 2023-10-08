@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.picketing.www.application.exception.ErrorCode;
 import com.picketing.www.business.domain.UserFactory;
 import com.picketing.www.business.domain.reservation.ReservationFactory;
 import com.picketing.www.business.domain.reservation.ScheduledShowSeat;
@@ -89,11 +90,6 @@ class ReservationControllerTest {
 			userRepository.save(userFactory.create(userSignUpRequest));
 			session = new MockHttpSession();
 			session.setAttribute("login_user", 1L);
-		}
-
-		@Test
-		@DisplayName("정상적으로 예약 (예매) 생성")
-		void success() throws Exception {
 			// given
 			SaveShowRequest saveShowRequest = new SaveShowRequest(
 				"찰리푸스 내한 공연",
@@ -116,6 +112,11 @@ class ReservationControllerTest {
 
 			scheduledShowSeatRepository.save(scheduledShowSeat);
 
+		}
+
+		@Test
+		@DisplayName("정상적으로 예약 (예매) 생성")
+		void success() throws Exception {
 			// when
 			ReservationRequest reservationRequest = new ReservationRequest(
 				1L, 1L,
@@ -136,6 +137,31 @@ class ReservationControllerTest {
 				.andDo(print())
 				.andExpect(status().isOk());
 
+		}
+
+		@Test
+		@DisplayName("예매 요청 수량이 잔여 좌석보다 많은 경우, 오류 발생하는지 테스트")
+		void should_not_make_a_reservation_when_count_is_negative() throws Exception {
+			ReservationRequest reservationRequest = new ReservationRequest(
+				1L, 1L,
+				LocalDateTime.of(2023, 10, 20, 18, 00),
+				List.of(new ReservationRequest.ReservationSeatRequest(
+					SeatGrade.VIP, 500
+				))
+			);
+
+			// then
+			mockMvc.perform(MockMvcRequestBuilders
+					.post("/api/reservation")
+					.session(session)
+					.accept(MediaType.APPLICATION_JSON)
+					.content(objectMapper.writeValueAsBytes(reservationRequest))
+					.contentType(MediaType.APPLICATION_JSON)
+				)
+				.andDo(print())
+				.andExpect(status().is4xxClientError())
+				.andExpect(jsonPath("$.code").value(ErrorCode.ALREADY_RESERVED.getCode()))
+				.andExpect(jsonPath("$.message").value(ErrorCode.ALREADY_RESERVED.getMessage()));
 		}
 	}
 
