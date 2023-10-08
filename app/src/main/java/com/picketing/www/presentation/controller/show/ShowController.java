@@ -1,5 +1,6 @@
 package com.picketing.www.presentation.controller.show;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +63,7 @@ public class ShowController {
 	@GetMapping("/{showId}/seat/remaining-counts")
 	public RemainingSeatsResponse getRemainingSeatCountsByShowAndTime(
 		@PathVariable Long showId,
-		@RequestParam(value = "showTime", required = true) String showTime
+		@RequestParam(value = "showTime", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime showTime
 	) {
 		return seatGradeFactory.convertRemainingSeats(
 			showService.getRemainingSeats(showId, showTime)

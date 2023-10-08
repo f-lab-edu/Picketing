@@ -2,6 +2,7 @@ package com.picketing.www.business.service.reservation;
 
 import static com.picketing.www.presentation.dto.request.reservation.ReservationRequest.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -40,7 +41,7 @@ public class ReservationService {
 		// TODO 이후 세션에서 userId 가지고 올 수 있도록 수정 필요
 		User user = userService.get(request.userId());
 
-		String showTime = request.showTime();
+		LocalDateTime showTime = request.showTime();
 
 		// 각 좌석이 구매 가능한지 확인
 		if (!isBookable(show, showTime, request.seatGradeList())) {
@@ -55,7 +56,7 @@ public class ReservationService {
 		return reservationRepository.saveAll(reservations);
 	}
 
-	private boolean isBookable(Show show, String showTime, List<ReservationSeatRequest> seatRequestList) {
+	private boolean isBookable(Show show, LocalDateTime showTime, List<ReservationSeatRequest> seatRequestList) {
 		return seatRequestList.stream()
 			.allMatch(seatRequest -> {
 				SeatGrade currentSeatGrade = seatRequest.seatGrade();
@@ -67,7 +68,7 @@ public class ReservationService {
 			});
 	}
 
-	private List<Reservation> makeReservationPerCount(User user, Show show, String showTime,
+	private List<Reservation> makeReservationPerCount(User user, Show show, LocalDateTime showTime,
 		ReservationSeatRequest request) {
 		return IntStream.range(0, request.count())
 			.mapToObj(i -> reservationFactory.convertSeatToReservation(user,
