@@ -17,8 +17,6 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		Exception {
 		HttpSession session = request.getSession();
 		Long userId = (Long)session.getAttribute("login_user");
-		System.out.println("LoginCheckInterceptor.preHandle");
-		System.out.println("userId = " + userId);
 
 		if (userId == null || userId == 0L) {
 			throw new CustomException(ErrorCode.UNAUTHORIZED);
