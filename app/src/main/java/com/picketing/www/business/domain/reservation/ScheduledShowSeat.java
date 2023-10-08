@@ -42,4 +42,10 @@ public class ScheduledShowSeat extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	private SeatGrade seatGrade;
+
+	public ScheduledShowSeat(Show show, LocalDateTime showDateTime, SeatGrade seatGrade) {
+		this.show = show;
+		this.showDateTime = showDateTime;
+		this.seatGrade = seatGrade;
+	}
 }
