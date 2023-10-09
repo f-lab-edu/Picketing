@@ -36,24 +36,30 @@ public class ReservationService {
 
 	private final ReservationFactory reservationFactory;
 
-	@Transactional
 	public List<Reservation> makeReservations(Show show, ReservationRequest request) {
-		// TODO 이후 세션에서 userId 가지고 올 수 있도록 수정 필요
+
 		User user = userService.get(request.userId());
 
 		LocalDateTime showTime = request.showTime();
 
-		// 각 좌석이 구매 가능한지 확인
-		if (!isBookable(show, showTime, request.seatGradeList())) {
-			throw new CustomException(ErrorCode.ALREADY_RESERVED);
-		}
+        List<ReservationSeatRequest> seats = request.seatGradeList();
 
-		List<Reservation> reservations = request.seatGradeList()
-			.stream()
-			.flatMap(seatRequest -> makeReservationPerCount(user, show, showTime, seatRequest).stream())
-			.collect(Collectors.toList());
+        return makeReservations(user, show, showTime, seats);
 
-		return reservationRepository.saveAll(reservations);
+	}
+
+	public List<Reservation> makeReservations(User user, Show show, LocalDateTime showTime, List<ReservationSeatRequest> seats ) {
+
+        if (!isBookable(show, showTime, seats)) {
+            throw new CustomException(ErrorCode.ALREADY_RESERVED);
+        }
+
+        List<Reservation> reservations = seats
+                .stream()
+                .flatMap(seatRequest -> makeReservationPerCount(user, show, showTime, seatRequest).stream())
+                .collect(Collectors.toList());
+
+        return reservationRepository.saveAll(reservations);
 	}
 
 	private boolean isBookable(Show show, LocalDateTime showTime, List<ReservationSeatRequest> seatRequestList) {
