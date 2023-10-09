@@ -45,10 +45,10 @@ public class ReservationService {
         List<ReservationSeatRequest> seats = request.seatGradeList();
 
         return makeReservations(user, show, showTime, seats);
-
 	}
 
-	public List<Reservation> makeReservations(User user, Show show, LocalDateTime showTime, List<ReservationSeatRequest> seats ) {
+	@Transactional
+    public List<Reservation> makeReservations(User user, Show show, LocalDateTime showTime, List<ReservationSeatRequest> seats ) {
 
         if (!isBookable(show, showTime, seats)) {
             throw new CustomException(ErrorCode.ALREADY_RESERVED);
