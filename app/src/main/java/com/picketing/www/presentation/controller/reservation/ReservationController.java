@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.picketing.www.business.domain.reservation.ReservationFactory;
 import com.picketing.www.business.service.reservation.ReservationService;
+import com.picketing.www.business.service.show.ShowService;
 import com.picketing.www.presentation.dto.request.reservation.ReservationRequest;
 import com.picketing.www.presentation.dto.response.reservation.MakeReservationResponse;
 
@@ -20,10 +21,12 @@ public class ReservationController {
 	private final ReservationFactory reservationFactory;
 	private final ReservationService reservationService;
 
+	private final ShowService showService;
+
 	@PostMapping
 	public MakeReservationResponse makeReservation(@RequestBody ReservationRequest requestDto) {
 		return reservationFactory.convertReservationToResponse(
-			reservationService.makeReservations(requestDto)
+			reservationService.makeReservations(showService.getShowById(requestDto.showId()), requestDto)
 		);
 	}
 }
