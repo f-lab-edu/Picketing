@@ -5,6 +5,7 @@ import static com.picketing.www.presentation.dto.response.show.seat.RemainingSea
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -44,11 +45,13 @@ public class ShowService {
 	}
 
 	// TODO 공연의 좌석 등급 목록 조회 로직 구현
-	public List<SeatGrade> getShowSeatGradeList(Long showId) {
-		// showRepository.findShowById(showId)
-		// 	.orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
-		// return seatGradeService.getSeatGradeList(showId);
-		return new ArrayList<>();
+	public List<SeatGrade> getShowSeatGradeList(Long showId, LocalDateTime showTime) {
+		Show show = showRepository.findById(showId)
+			.orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
+		return scheduledShowSeatService.getScheduledShowSeatList(show, showTime)
+			.stream()
+			.map(ScheduledShowSeat::getSeatGrade)
+			.collect(Collectors.toList());
 	}
 
 	public Show getShowById(Long showId) {

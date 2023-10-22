@@ -1,6 +1,5 @@
 package com.picketing.www.presentation.dto.response.show;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import lombok.Builder;
@@ -16,9 +15,8 @@ public record ShowSeatGradeResponse(
 
 	@Builder
 	public record ShowSeatGradeResponseDto(
-		Long showId,
 		String seatGradeName,
-		BigDecimal price
+		Long price
 	) {
 	}
 }

@@ -40,6 +40,7 @@ public class ScheduledShowSeat extends BaseEntity {
 
 	private LocalDateTime showDateTime;
 
+	@Getter
 	@Enumerated(EnumType.STRING)
 	private SeatGrade seatGrade;
 
