@@ -40,12 +40,15 @@
 
 package com.picketing.www.business.domain.show.seat;
 
+import static com.picketing.www.presentation.dto.response.show.ShowSeatGradeResponse.*;
 import static com.picketing.www.presentation.dto.response.show.seat.RemainingSeatsResponse.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.picketing.www.presentation.dto.response.show.ShowSeatGradeResponse;
 import com.picketing.www.presentation.dto.response.show.seat.RemainingSeatsResponse;
 import com.picketing.www.presentation.dto.response.show.seat.ScheduledShowSeatGradeResponse;
 import com.picketing.www.presentation.dto.response.show.seat.SeatGradeResponse;
@@ -53,11 +56,12 @@ import com.picketing.www.presentation.dto.response.show.seat.SeatGradeResponse;
 @Component
 public class SeatGradeFactory {
 
-	public SeatGradeResponse convertSeatGradeToResponse(SeatGrade seatGrade) {
-		return SeatGradeResponse.builder()
-			.seatGrade(seatGrade.getName())
-			.totalCount(seatGrade.getCount())
-			.build();
+	public ShowSeatGradeResponse convertSeatGradeToResponse(List<SeatGrade> seatGrade) {
+		return new ShowSeatGradeResponse(
+			seatGrade.stream()
+				.map(this::convertSeatGradeToDto)
+				.collect(Collectors.toList())
+		);
 	}
 
 	public SeatGradeResponse convertSeatGradeFromShowSeat(ScheduledShowSeatGradeResponse scheduledShowSeat) {
@@ -67,8 +71,15 @@ public class SeatGradeFactory {
 			.build();
 	}
 
+	public ShowSeatGradeResponseDto convertSeatGradeToDto(SeatGrade seatGrade) {
+		return ShowSeatGradeResponseDto.builder()
+			.seatGradeName(seatGrade.getName())
+			.price(seatGrade.getPrice())
+			.build();
+	}
+
 	public RemainingSeatsResponse convertRemainingSeats(List<RemainingSeatDetail> seatDetail) {
-		return builder()
+		return RemainingSeatsResponse.builder()
 			.remainSeats(seatDetail)
 			.build();
 	}
