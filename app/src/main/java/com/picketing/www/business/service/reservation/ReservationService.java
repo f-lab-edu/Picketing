@@ -37,7 +37,6 @@ public class ReservationService {
 	private final ReservationFactory reservationFactory;
 
 	public List<Reservation> makeReservations(Show show, ReservationRequest request) {
-
 		User user = userService.get(request.userId());
 
 		LocalDateTime showTime = request.showTime();

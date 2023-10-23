@@ -3,8 +3,8 @@ package com.picketing.www.presentation.dto.request.reservation;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.picketing.www.business.domain.show.seat.SeatGrade;
 
 import jakarta.validation.constraints.Min;
@@ -19,8 +19,10 @@ public record ReservationRequest(
 	@Positive
 	Long userId,
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	LocalDateTime showTime,
+
+	@JsonProperty(value = "reservationSeatRequests")
 	List<ReservationSeatRequest> seatGradeList
 ) {
 
