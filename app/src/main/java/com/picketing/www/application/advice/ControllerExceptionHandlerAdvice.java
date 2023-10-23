@@ -14,6 +14,7 @@ public class ControllerExceptionHandlerAdvice {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorResponse> otherExceptionHandler(Exception ex) {
+		System.out.println("ex.getMessage() = " + ex.getMessage());
 		return ResponseEntity
 			.status(HttpStatus.INTERNAL_SERVER_ERROR)
 			.body(ErrorResponse.error(ErrorCode.INTERNAL_UNKNOWN_ERROR));
@@ -21,6 +22,7 @@ public class ControllerExceptionHandlerAdvice {
 
 	@ExceptionHandler(CustomException.class)
 	public ResponseEntity<ErrorResponse> customExceptionHandler(CustomException ex) {
+		System.out.println("ex.getMessage() = " + ex.getMessage());
 		return ResponseEntity
 			.status(ex.getErrorCode().getHttpStatus())
 			.body(ErrorResponse.error(ex.getErrorCode()));

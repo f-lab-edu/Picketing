@@ -55,7 +55,7 @@ public class ShowService {
 	}
 
 	public Show getShowById(Long showId) {
-		return showRepository.findById(showId)
+		return showRepository.findShowById(showId)
 			.orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
 	}
 
