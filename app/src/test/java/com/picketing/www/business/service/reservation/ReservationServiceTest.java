@@ -130,23 +130,21 @@ class ReservationServiceTest {
 	@Test
 	@DisplayName("잔여 좌석이 30석인 A석에, 이미 4명이 예매를 완료하였고, 남은 26자리에 30명이 동시에 참여하는 상황 테스트")
 	void make_reservations_for_ticketing() throws InterruptedException {
-		final int RESERVATION_PARTICIPANTS_NUMBER = 30;
-		final int MAXIMUM_RESERVATION_NUMBER = 26;
+		final int participants_number = 30;
+		final int maximum_number = 26;
 
 		// given
-		CountDownLatch countDownLatch = new CountDownLatch(RESERVATION_PARTICIPANTS_NUMBER);
+		CountDownLatch countDownLatch = new CountDownLatch(participants_number);
 
 		List<MakingReservationWorker> workers = Stream
-			.generate(() -> new MakingReservationWorker(savedUser, show
-				, LocalDateTime.of(2023, 10, 20, 18, 00)
-				, countDownLatch
-				, List.of(ReservationSeatRequest.builder()
+			.generate(() -> new MakingReservationWorker(savedUser, show, LocalDateTime.of(2023, 10, 20, 18, 00),
+				countDownLatch, List.of(ReservationSeatRequest.builder()
 				.seatGrade(SeatGrade.A)
 				.count(1)
 				.build()
 			)
 			))
-			.limit(RESERVATION_PARTICIPANTS_NUMBER)
+			.limit(participants_number)
 			.collect(Collectors.toList());
 
 		// when
@@ -156,7 +154,7 @@ class ReservationServiceTest {
 		// then
 		Long reservedCount = reservationRepository.countReservationsByShowSeat(scheduledShowSeat);
 
-		Assertions.assertThat(reservedCount).isEqualTo(MAXIMUM_RESERVATION_NUMBER);
+		Assertions.assertThat(reservedCount).isEqualTo(maximum_number);
 	}
 
 	private class MakingReservationWorker implements Runnable {
