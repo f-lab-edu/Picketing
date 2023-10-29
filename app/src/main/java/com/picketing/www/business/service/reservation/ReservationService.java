@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.picketing.www.application.exception.CustomException;
 import com.picketing.www.application.exception.ErrorCode;
@@ -21,7 +23,6 @@ import com.picketing.www.business.service.user.UserService;
 import com.picketing.www.persistence.repository.reservation.ReservationRepository;
 import com.picketing.www.presentation.dto.request.reservation.ReservationRequest;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -49,17 +50,22 @@ public class ReservationService {
 	@Transactional
 	public List<Reservation> makeReservations(User user, Show show, LocalDateTime showTime,
 		List<ReservationSeatRequest> seats) {
+		List<Reservation> reservationList = null;
+		try {
 
-		if (!isBookable(show, showTime, seats)) {
+			if (!isBookable(show, showTime, seats)) {
+				throw new CustomException(ErrorCode.ALREADY_RESERVED);
+			}
+
+			List<Reservation> reservations = seats
+				.stream()
+				.flatMap(seatRequest -> makeReservationPerCount(user, show, showTime, seatRequest).stream())
+				.collect(Collectors.toList());
+			reservationList = reservationRepository.saveAll(reservations);
+		} catch (ObjectOptimisticLockingFailureException ex) {
 			throw new CustomException(ErrorCode.ALREADY_RESERVED);
 		}
-
-		List<Reservation> reservations = seats
-			.stream()
-			.flatMap(seatRequest -> makeReservationPerCount(user, show, showTime, seatRequest).stream())
-			.collect(Collectors.toList());
-
-		return reservationRepository.saveAll(reservations);
+		return reservationList;
 	}
 
 	private boolean isBookable(Show show, LocalDateTime showTime, List<ReservationSeatRequest> seatRequestList) {
@@ -81,6 +87,11 @@ public class ReservationService {
 				scheduledShowSeatService.getScheduledShowSeat(show, showTime, request.seatGrade())
 			))
 			.collect(Collectors.toList());
+	}
+
+	@Transactional
+	public Reservation makeOneReservation(User user, Show show, LocalDateTime showTime) {
+		return reservationRepository.save
 	}
 
 	public Long countReservationsByShowSeat(ScheduledShowSeat scheduledShowSeat) {
