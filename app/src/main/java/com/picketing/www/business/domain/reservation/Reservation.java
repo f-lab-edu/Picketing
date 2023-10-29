@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,4 +37,7 @@ public class Reservation extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "scheduled_show_seat_id")
 	private ScheduledShowSeat showSeat;
+
+	@Version
+	private Integer version;
 }
