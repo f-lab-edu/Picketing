@@ -35,4 +35,8 @@ public class ReservationFactory {
 			.showSeat(showSeat)
 			.build();
 	}
+
+	public ScheduledShowSeat convertShowSeatByReservation(Reservation reservation) {
+		return reservation.getShowSeat();
+	}
 }
