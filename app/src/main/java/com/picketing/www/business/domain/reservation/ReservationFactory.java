@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import com.picketing.www.business.domain.User;
+import com.picketing.www.business.domain.show.seat.SeatGrade;
 import com.picketing.www.presentation.dto.response.reservation.MakeReservationResponse;
 
 @Component
@@ -34,5 +35,9 @@ public class ReservationFactory {
 			.user(user)
 			.showSeat(showSeat)
 			.build();
+	}
+
+	public SeatGrade convertShowSeatGradeByReservation(Reservation reservation) {
+		return reservation.getShowSeat().getSeatGrade();
 	}
 }
