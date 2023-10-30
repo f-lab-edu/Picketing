@@ -78,7 +78,7 @@ public class ReservationService {
 				.stream()
 				.flatMap(seatRequest -> makeReservationPerCount(user, show, showTime, seatRequest).stream())
 				.collect(Collectors.toList());
-			toMakeReservations = reservationRepository.saveAll(reservations)
+			toMakeReservations = reservationRepository.saveAll(reservations);
 		} catch (ObjectOptimisticLockingFailureException ex) {
 			throw new CustomException(ErrorCode.ALREADY_RESERVED);
 		}
