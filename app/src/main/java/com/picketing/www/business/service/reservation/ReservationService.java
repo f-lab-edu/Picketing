@@ -4,6 +4,8 @@ import static com.picketing.www.presentation.dto.request.reservation.Reservation
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -38,6 +40,7 @@ public class ReservationService {
 	private final ReservationFactory reservationFactory;
 
 	public List<Reservation> makeReservations(Show show, ReservationRequest request) {
+
 		User user = userService.get(request.userId());
 
 		LocalDateTime showTime = request.showTime();
@@ -50,10 +53,24 @@ public class ReservationService {
 	@Transactional
 	public List<Reservation> makeReservations(User user, Show show, LocalDateTime showTime,
 		List<ReservationSeatRequest> seats) {
-		List<Reservation> reservationList = null;
+		List<Reservation> toMakeReservations = null;
 		try {
+			// 예약 정보를 가지고 오고 -> 추가하는 과정에서 동시성 문제가 발생
+			List<List<Reservation>> reservationList = seats.stream()
+				.map(
+					seat -> reservationRepository.findByShowSeatWithOptimisticLock(
+						scheduledShowSeatService.getScheduledShowSeat(show, showTime, seat.seatGrade()))
+				).toList();
 
-			if (!isBookable(show, showTime, seats)) {
+			Map<SeatGrade, Integer> reservedSeatCountMap = new ConcurrentHashMap<>();
+			reservationList.forEach((reservation -> {
+				Reservation current = reservation.get(0);
+				SeatGrade currentSeat = reservationFactory.convertShowSeatByReservation(current).getSeatGrade();
+				int reservedCount = reservation.size();
+				reservedSeatCountMap.put(currentSeat, reservedCount);
+			}));
+
+			if (!isBookable(reservedSeatCountMap, seats)) {
 				throw new CustomException(ErrorCode.ALREADY_RESERVED);
 			}
 
@@ -61,22 +78,22 @@ public class ReservationService {
 				.stream()
 				.flatMap(seatRequest -> makeReservationPerCount(user, show, showTime, seatRequest).stream())
 				.collect(Collectors.toList());
-			reservationList = reservationRepository.saveAll(reservations);
+			toMakeReservations = reservationRepository.saveAll(reservations)
 		} catch (ObjectOptimisticLockingFailureException ex) {
 			throw new CustomException(ErrorCode.ALREADY_RESERVED);
 		}
-		return reservationList;
+
+		return toMakeReservations;
 	}
 
-	private boolean isBookable(Show show, LocalDateTime showTime, List<ReservationSeatRequest> seatRequestList) {
+	private boolean isBookable(Map<SeatGrade, Integer> map, List<ReservationSeatRequest> seatRequestList) {
 		return seatRequestList.stream()
 			.allMatch(seatRequest -> {
 				SeatGrade currentSeatGrade = seatRequest.seatGrade();
-				long reservedCount = countReservationsByShowSeat(
-					scheduledShowSeatService.getScheduledShowSeat(show, showTime,
-						currentSeatGrade));
+				Integer purchaseCount = seatRequest.count();
+				Integer reservedCount = map.get(currentSeatGrade);
 
-				return ((currentSeatGrade.getCount() - reservedCount) - seatRequest.count()) >= 0;
+				return ((currentSeatGrade.getCount() - reservedCount) - purchaseCount >= 0);
 			});
 	}
 
@@ -87,11 +104,6 @@ public class ReservationService {
 				scheduledShowSeatService.getScheduledShowSeat(show, showTime, request.seatGrade())
 			))
 			.collect(Collectors.toList());
-	}
-
-	@Transactional
-	public Reservation makeOneReservation(User user, Show show, LocalDateTime showTime) {
-		return reservationRepository.save
 	}
 
 	public Long countReservationsByShowSeat(ScheduledShowSeat scheduledShowSeat) {
