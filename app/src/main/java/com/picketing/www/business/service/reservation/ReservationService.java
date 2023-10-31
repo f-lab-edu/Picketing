@@ -4,10 +4,15 @@ import static com.picketing.www.presentation.dto.request.reservation.Reservation
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.picketing.www.application.exception.CustomException;
 import com.picketing.www.application.exception.ErrorCode;
@@ -21,9 +26,10 @@ import com.picketing.www.business.service.user.UserService;
 import com.picketing.www.persistence.repository.reservation.ReservationRepository;
 import com.picketing.www.presentation.dto.request.reservation.ReservationRequest;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
@@ -36,41 +42,59 @@ public class ReservationService {
 
 	private final ReservationFactory reservationFactory;
 
+	private final Logger logger = LoggerFactory.getLogger(ReservationService.class);
+
+	@Transactional
 	public List<Reservation> makeReservations(Show show, ReservationRequest request) {
 
 		User user = userService.get(request.userId());
 
 		LocalDateTime showTime = request.showTime();
 
-        List<ReservationSeatRequest> seats = request.seatGradeList();
+		List<ReservationSeatRequest> seats = request.reservationSeatRequests();
 
-        return makeReservations(user, show, showTime, seats);
+		return makeReservations(user, show, showTime, seats);
 	}
 
 	@Transactional
-    public List<Reservation> makeReservations(User user, Show show, LocalDateTime showTime, List<ReservationSeatRequest> seats ) {
+	public List<Reservation> makeReservations(User user, Show show, LocalDateTime showTime,
+		List<ReservationSeatRequest> seats) {
 
-        if (!isBookable(show, showTime, seats)) {
-            throw new CustomException(ErrorCode.ALREADY_RESERVED);
-        }
+		// 예약 정보를 가지고 오고 -> 추가하는 과정에서 동시성 문제가 발생
+		List<List<Reservation>> reservationList = seats.stream()
+			.map(
+				seat -> reservationRepository.findByShowSeatWithPessimisticLock(
+					scheduledShowSeatService.getScheduledShowSeat(show, showTime, seat.seatGrade()))
+			).toList();
 
-        List<Reservation> reservations = seats
-                .stream()
-                .flatMap(seatRequest -> makeReservationPerCount(user, show, showTime, seatRequest).stream())
-                .collect(Collectors.toList());
+		Map<SeatGrade, Integer> reservedSeatCountMap = new ConcurrentHashMap<>();
+		reservationList.forEach((reservation -> {
+			Reservation current = reservation.get(0);
+			SeatGrade currentSeat = reservationFactory.convertShowSeatGradeByReservation(current);
+			int reservedCount = reservation.size();
+			reservedSeatCountMap.put(currentSeat, reservedCount);
+		}));
 
-        return reservationRepository.saveAll(reservations);
+		if (!isBookable(reservedSeatCountMap, seats)) {
+			throw new CustomException(ErrorCode.ALREADY_RESERVED);
+		}
+
+		List<Reservation> reservations = seats
+			.stream()
+			.flatMap(seatRequest -> makeReservationPerCount(user, show, showTime, seatRequest).stream())
+			.collect(Collectors.toList());
+
+		return reservationRepository.saveAll(reservations);
 	}
 
-	private boolean isBookable(Show show, LocalDateTime showTime, List<ReservationSeatRequest> seatRequestList) {
+	private boolean isBookable(Map<SeatGrade, Integer> map, List<ReservationSeatRequest> seatRequestList) {
 		return seatRequestList.stream()
 			.allMatch(seatRequest -> {
 				SeatGrade currentSeatGrade = seatRequest.seatGrade();
-				long reservedCount = countReservationsByShowSeat(
-					scheduledShowSeatService.getScheduledShowSeat(show, showTime,
-						currentSeatGrade));
+				Integer purchaseCount = seatRequest.count();
+				Integer reservedCount = map.get(currentSeatGrade);
 
-				return ((currentSeatGrade.getCount() - reservedCount) - seatRequest.count()) >= 0;
+				return ((currentSeatGrade.getCount() - reservedCount) - purchaseCount >= 0);
 			});
 	}
 
