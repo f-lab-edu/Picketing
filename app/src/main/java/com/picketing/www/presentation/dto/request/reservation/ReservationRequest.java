@@ -19,9 +19,9 @@ public record ReservationRequest(
 	@Positive
 	Long userId,
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
 	LocalDateTime showTime,
-	List<ReservationSeatRequest> seatGradeList
+	List<ReservationSeatRequest> reservationSeatRequests
 ) {
 
 	@Builder

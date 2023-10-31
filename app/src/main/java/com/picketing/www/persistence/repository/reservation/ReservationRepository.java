@@ -26,7 +26,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	@Query(value = "select r from Reservation r where r.showSeat = :scheduledShowSeat")
 	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	@QueryHints({
-		@QueryHint(name = "javax.persistence.lock.timeout", value = "1000")
+		@QueryHint(name = "jakarta.persistence.lock.timeout", value = "1000")
 	})
 	List<Reservation> findByShowSeatWithPessimisticLock(
 		@Param("scheduledShowSeat") ScheduledShowSeat scheduledShowSeat);

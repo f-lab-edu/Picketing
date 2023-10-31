@@ -44,13 +44,14 @@ public class ReservationService {
 
 	private final Logger logger = LoggerFactory.getLogger(ReservationService.class);
 
+	@Transactional
 	public List<Reservation> makeReservations(Show show, ReservationRequest request) {
 
 		User user = userService.get(request.userId());
 
 		LocalDateTime showTime = request.showTime();
 
-		List<ReservationSeatRequest> seats = request.seatGradeList();
+		List<ReservationSeatRequest> seats = request.reservationSeatRequests();
 
 		return makeReservations(user, show, showTime, seats);
 	}

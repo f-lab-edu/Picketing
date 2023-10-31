@@ -64,7 +64,7 @@ public class ShowController {
 	public RemainingSeatsResponse getRemainingSeatCountsByShowAndTime(
 		@PathVariable Long showId,
 		@RequestParam(value = "showTime", required = true)
-		@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime showTime
+		@DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm") LocalDateTime showTime
 	) {
 		return seatGradeFactory.convertRemainingSeats(
 			showService.getRemainingSeats(showId, showTime)
