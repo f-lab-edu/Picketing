@@ -23,6 +23,7 @@ import com.picketing.www.business.service.show.ShowService;
 import com.picketing.www.business.type.Genre;
 import com.picketing.www.business.type.SubGenre;
 import com.picketing.www.presentation.dto.response.show.ShowMainResponse;
+import com.picketing.www.presentation.dto.response.show.ShowSeatGradeResponse;
 import com.picketing.www.presentation.dto.response.show.seat.RemainingSeatsResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -50,15 +51,15 @@ public class ShowController {
 		return new PageImpl<>(response, pageable, response.size());
 	}
 
-	// TODO 공연 좌석 목록 조회 API 구현
-	// @GetMapping("/{showId}/seatGrades")
-	// public ShowSeatGradeResponse getShowSeatGradeList(
-	// 	@PathVariable Long showId
-	// ) {
-	// 	return seatGradeFactory.convertSeatGradeToResponse(
-	// 		showService.getShowSeatGradeList(showId)
-	// 	);
-	// }
+	@GetMapping("/{showId}/seatGrades")
+	public ShowSeatGradeResponse getShowSeatGradeList(
+		@PathVariable Long showId,
+		@RequestParam(value = "showTime") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime showTime
+	) {
+		return seatGradeFactory.convertSeatGradeToResponse(
+			showService.getShowSeatGradeList(showId, showTime)
+		);
+	}
 
 	@GetMapping("/{showId}/seat/remaining-counts")
 	public RemainingSeatsResponse getRemainingSeatCountsByShowAndTime(

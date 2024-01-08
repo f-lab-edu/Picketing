@@ -37,29 +37,29 @@ public class ReservationService {
 	private final ReservationFactory reservationFactory;
 
 	public List<Reservation> makeReservations(Show show, ReservationRequest request) {
-
 		User user = userService.get(request.userId());
 
 		LocalDateTime showTime = request.showTime();
 
-        List<ReservationSeatRequest> seats = request.seatGradeList();
+		List<ReservationSeatRequest> seats = request.seatGradeList();
 
-        return makeReservations(user, show, showTime, seats);
+		return makeReservations(user, show, showTime, seats);
 	}
 
 	@Transactional
-    public List<Reservation> makeReservations(User user, Show show, LocalDateTime showTime, List<ReservationSeatRequest> seats ) {
+	public List<Reservation> makeReservations(User user, Show show, LocalDateTime showTime,
+		List<ReservationSeatRequest> seats) {
 
-        if (!isBookable(show, showTime, seats)) {
-            throw new CustomException(ErrorCode.ALREADY_RESERVED);
-        }
+		if (!isBookable(show, showTime, seats)) {
+			throw new CustomException(ErrorCode.ALREADY_RESERVED);
+		}
 
-        List<Reservation> reservations = seats
-                .stream()
-                .flatMap(seatRequest -> makeReservationPerCount(user, show, showTime, seatRequest).stream())
-                .collect(Collectors.toList());
+		List<Reservation> reservations = seats
+			.stream()
+			.flatMap(seatRequest -> makeReservationPerCount(user, show, showTime, seatRequest).stream())
+			.collect(Collectors.toList());
 
-        return reservationRepository.saveAll(reservations);
+		return reservationRepository.saveAll(reservations);
 	}
 
 	private boolean isBookable(Show show, LocalDateTime showTime, List<ReservationSeatRequest> seatRequestList) {

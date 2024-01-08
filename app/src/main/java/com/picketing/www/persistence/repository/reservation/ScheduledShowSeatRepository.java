@@ -17,5 +17,5 @@ public interface ScheduledShowSeatRepository extends JpaRepository<ScheduledShow
 		LocalDateTime startDateTime,
 		SeatGrade seatGrade);
 
-	List<ScheduledShowSeat> findAllByShowAndShowDateTime(Show show, LocalDateTime showDateTime);
+	List<ScheduledShowSeat> findAllByShowAndShowDateTime(Show show, LocalDateTime startDateTime);
 }
